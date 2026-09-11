@@ -1,94 +1,22 @@
-# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+﻿
+# =========================
+# 11.11 Ignored Files
+# =========================
 
-# compiled output
-dist
-tmp
-out-tsc
-*.tsbuildinfo
-.expo
-.expo-shared
+# FFmpeg temporary files
+*.log.mbtree.temp
+ffmpeg2pass*
+*.log
 
-# dependencies
-node_modules
+# Temporary files
+*.temp
+*.tmp
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-firebase-debug.log
-yarn-error.log
-testem.log
-/typings
-
-# System Files
-.DS_Store
-Thumbs.db
-
-# server-side secrets (keep examples tracked)
-.env
-.env.*
-!.env.example
-.dev.vars
-.dev.vars.*
-!.dev.vars.example
-
-# Vite cache
-.cache/
-.wrangler/
-
-# Local Edge/Playwright profiles and screenshots created by 11.11 runtime QA.
-# The active app is nested under artifacts/, so the root .tmp rule alone does
-# not cover this path.
-artifacts/eleven-eleven/.tmp/
-
-# Blender autosaves and deterministic intermediate media outputs.
-*.blend1
-artifacts/eleven-eleven/art/blender/intermediate/
-artifacts/eleven-eleven/art/blender/renders/
-artifacts/eleven-eleven/art/blender/exports/
-
-# Isolated Unity technical proofs. Keep source, ProjectSettings, and pinned
-# Packages manifests; exclude generated editor/build state at any depth.
-artifacts/eleven-eleven/art/unity/**/Library/
-artifacts/eleven-eleven/art/unity/**/Temp/
-artifacts/eleven-eleven/art/unity/**/Obj/
-artifacts/eleven-eleven/art/unity/**/Logs/
-artifacts/eleven-eleven/art/unity/**/UserSettings/
-artifacts/eleven-eleven/art/unity/**/MemoryCaptures/
-artifacts/eleven-eleven/art/unity/**/Builds/
-artifacts/eleven-eleven/art/unity/**/*.csproj
-artifacts/eleven-eleven/art/unity/**/*.sln
-
-# Isolated Godot technical proofs. Keep project.godot, scenes, scripts, and
-# authored resources; exclude editor import state and any future build output.
-artifacts/eleven-eleven/art/godot/**/.godot/
-artifacts/eleven-eleven/art/godot/**/.mono/
-artifacts/eleven-eleven/art/godot/**/builds/
-artifacts/eleven-eleven/art/godot/**/exports/
-artifacts/eleven-eleven/art/godot/**/*.translation
-
-# Vercel - ignore pnpm lockfile to prevent Vercel from using pnpm
-pnpm-lock.yaml
+# Build files
 node_modules/
-.env
-.dev.vars
+dist/
+build/
+
+# Godot generated files
 .godot/
-*.blend1
+
