@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "11.11/foundation/launch-context/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "sessionId", "accountScopeHash", "locale", "motionTier", "qualityTier", "contentVersion", "expiresAt"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "sessionId": { "type": "string", "minLength": 16, "maxLength": 160 },
+    "accountScopeHash": { "type": "string", "minLength": 16, "maxLength": 128 },
+    "locale": { "enum": ["ar", "en"] },
+    "motionTier": { "enum": ["full", "reduced"] },
+    "qualityTier": { "enum": ["auto", "low", "medium", "high", "ultra"] },
+    "checkpoint": { "type": ["object", "null"] },
+    "contentVersion": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "expiresAt": { "type": "integer", "minimum": 0 }
+  }
+}

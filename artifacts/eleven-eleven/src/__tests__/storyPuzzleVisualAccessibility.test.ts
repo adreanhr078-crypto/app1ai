@@ -75,8 +75,9 @@ describe('Story puzzle visual asset accessibility', () => {
     const roomLoader = source('src/features/gameplay/components/RoomLoader.tsx');
     const director = source('src/features/cinematics/components/CinematicDirector.tsx');
 
-    assert.match(transition, /part-1-opening-v2\.webm/);
-    assert.match(transition, /part-1-opening-v2-poster\.webp/);
+    assert.match(transition, /part-1-opening-v3\.webm/);
+    assert.match(transition, /part-1-opening-v3\.mp4/);
+    assert.match(transition, /part-1-opening-v3-poster\.webp/);
     // Playback failure/retry is exercised in e2e/screen-break.spec.ts.
     // Keep this source check on the authority boundary, not handler formatting.
     assert.doesNotMatch(transition, /onError=\{finish\}/);

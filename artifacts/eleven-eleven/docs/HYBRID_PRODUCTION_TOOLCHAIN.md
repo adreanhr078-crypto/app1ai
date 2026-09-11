@@ -2,11 +2,12 @@
 
 ## Runtime decision
 
-11.11 remains web-first. Blender authors characters, environments, animation,
-and fixed cinematic frames; Three.js/React Three Fiber renders interactive GLB
-inside the current application. Portable Godot is an isolated measured candidate
-and Unity is a future workstation greenlight decision; neither is a dependency
-of Part 1 or the first third-person vertical slice.
+The React/Cloudflare application remains the authoritative service, account,
+Manhwa, and accessible UI shell. Blender authors characters, environments,
+animation, and fixed cinematic frames. Godot 4.7.2 is the Owner-selected
+production runtime for third-person play; Three.js/React Three Fiber is the
+temporary opening reference until the bounded parity gate passes. Unity remains
+closed unless the Owner reopens the engine decision.
 
 This decision preserves login, server-owned rewards, puzzles, progression,
 Arabic/English UI, and the existing browser/mobile reach while allowing one
@@ -60,7 +61,7 @@ No system installer is required by the pipeline.
 | GLB validation   | pinned Khronos `gltf-validator`                     |
 | Image inspection | pinned Sharp; ImageMagick optional                  |
 | Browser QA       | `EDGE_EXE`; Microsoft Edge only                     |
-| Engine candidate | `GODOT_EXE`; verified portable Godot 4.7.2 Standard |
+| Production engine | `GODOT_EXE`; verified portable Godot 4.7.2 Standard |
 
 Run:
 
@@ -76,20 +77,21 @@ npm run godot:smoke
 raw GLB export, strict validation, Meshopt/KTX preparation, strict validation,
 Blender re-import, PNG render, VP9 WebM encode, poster extraction, and ffprobe.
 
-## Godot portable candidate contract
+## Godot bounded production-foundation contract
 
 Godot 4.7.2 Standard is verified from its official Windows x86*64 ZIP at
 `C:/Tools/Godot-4.7.2-stable`. The archive SHA-512 matches the official release
 checksum and `\_sc*`keeps editor state self-contained beside the executable.
 The exact artifact, hashes, and restrictions are recorded in`tools/godot/godot-toolchain.manifest.json`.
 
-Only `godot:doctor` and the tracked non-Canon `godot:smoke` proof are authorized.
-No .NET build, export templates, runtime embedding, Canon scene, or gameplay
-authority has been added. Godot must later be compared with Three/R3F using the
-same neutral room and assets across startup time, frame time, peak memory, input,
-GLB animation, build size, streaming, mobile thermals, accessibility, bilingual
-UI, and authoritative receipt integration. One runtime wins that measured gate;
-the project will not maintain duplicate gameplay engines.
+The bounded `sector-11-foundation` project is authorized for character, camera,
+movement, animation, interaction, lighting, and parity evidence. No .NET build,
+export templates, broad world, combat, final Canon environment, or gameplay
+authority is authorized. Godot is measured against the existing reference for
+startup time, frame time, peak memory, input, GLB animation, build size,
+streaming, thermals, accessibility, bilingual UI, and receipt integration.
+Three/R3F freezes as a reference only after Godot passes; the project will not
+maintain duplicate shipped gameplay engines.
 
 ## Unity readiness contract
 
@@ -119,9 +121,9 @@ after a measured proof needs them. Availability never changes the current
 
 The Owner has declined installing Unity on the current machine. Do not download
 or run its installer unless a later explicit Owner instruction changes that
-decision. The active local 3D production path is therefore portable Blender
-plus Three.js/React Three Fiber in the existing web runtime. A future Unity
-comparison may run on a separately approved workstation or cloud environment.
+decision. The active local 3D production path is portable Blender plus Godot,
+with the existing Three/R3F slice retained only for parity evidence. A future
+Unity comparison requires a new Owner decision.
 
 ## Asset flow
 
@@ -172,10 +174,11 @@ Nothing becomes a production asset until its rights, source, Canon continuity,
 performance budget, accessible fallback, and gameplay integration are recorded.
 No voice or music from another anime may be copied.
 
-Local ComfyUI/Stable Diffusion is intentionally deferred on the current 8GB
-Intel-UHD machine. Audacity is deferred until approved VO/SFX exists.
+The local ComfyUI custom nodes are present, but generation is blocked until
+licensed compatible checkpoint, VAE, IPAdapter, ControlNet, and motion weights
+pass a recorded smoke workflow. Audacity is deferred until approved VO/SFX exists.
 
-## Handoff when the Manhwa is final
+## Approved Part 1 handoff and production gate
 
 1. Attach the full ordered pages and final Arabic text separately.
 2. Assign a publication version and file hashes.

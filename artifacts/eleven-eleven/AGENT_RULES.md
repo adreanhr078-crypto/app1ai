@@ -8,13 +8,16 @@ Before analysis, planning, design, code, content, or asset work, read in order:
 
 1. `docs/PROJECT_VISION.md`
 2. `docs/project-memory.json`
-3. `docs/internal/narrative/current/ar/manifest.json`
-4. The current Story Bible and Narrative Master selected by that manifest when
+3. `docs/internal/production/PROJECT_MASTER_BLUEPRINT_2026-09-11.ar.md`
+4. `docs/internal/narrative/current/ar/manifest.json`
+5. The current Story Bible and Narrative Master selected by that manifest when
    the task touches story, characters, puzzles, cinematics, dialogue, or world
    design.
 
-The product vision controls product direction. The narrative manifest controls
-Canon. Neither source silently overrides the other.
+The product vision and Master Blueprint control product direction, production
+order, and quality gates. The narrative manifest controls Canon. The Blueprint
+does not turn provisional post-Part-1 story direction into Canon, and no source
+silently overrides another.
 
 Use `$11-11-game-director` for any roadmap, phase, system-order, Manhwa,
 third-person, progression, economy, or cross-system decision.
@@ -85,8 +88,10 @@ missing runtime evidence into PASS.
 - Echo is the protagonist. Yuki is the white-haired childhood friend.
 - Echo's direct-skin neck identifier is `EX-011`; Zero may add an evolving
   layer around it but never replaces it.
-- The final Manhwa handoff is required before locking story-specific gameplay,
-  cinematic chronology, final character production, or replacement puzzles.
+- The approved 70-page Part 1 Manhwa handoff is complete. Lock Part 1 gameplay,
+  cinematics, characters, or replacement puzzles only through an approved
+  page-to-scene matrix and the relevant asset/experience gate. Post-Part-1
+  events remain provisional until a versioned Canon update is Owner-approved.
 - There is no arbitrary target count for puzzles, memories, cinematics,
   achievements, characters, or endings. Content exists only when it earns a
   distinct player decision, emotion, discovery, or gameplay purpose.

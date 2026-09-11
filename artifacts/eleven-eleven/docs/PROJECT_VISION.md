@@ -1,8 +1,8 @@
 # 11.11 Owner Product Vision and Production Charter
 
 Status: **OWNER APPROVED**  
-Version: **1.0**  
-Approved: **2026-08-28**
+Version: **1.1**
+Approved: **2026-09-11**
 
 This document is durable product memory for every designer, developer, artist,
 writer, tester, and agent working on 11.11. It records the Owner's desired game,
@@ -34,18 +34,19 @@ third person, relationships, transformation, and chess as part of Echo's mind.
 3. **Third person arrives early.** After a short Manhwa introduction and one or
    two fair system puzzles, a signature screen-breaking event carries the
    player into the 3D system. Target discovery window: the first 15-25 minutes,
-   subject to the final Manhwa and playtest evidence.
-4. **Combat is earned.** Before Echo's transformation, play emphasizes escape,
-   exploration, environmental puzzles, scanning, stealth, and survival. The
-   transformation unlocks combat and carries narrative cost.
+   subject to the approved Part 1 page-to-scene matrix and playtest evidence.
+4. **Supernatural combat is earned.** Before Echo's transformation, play emphasizes
+   escape, exploration, environmental puzzles, scanning, stealth, and survival.
+   Human combat, including lethal action, is permitted without Zero powers.
+   The transformation unlocks Zero-powered combat and carries narrative cost.
 5. **The two worlds persist.** The system contains dangerous rooms, corrupted
    memories, failed experiments, security constructs, puzzles, and combat. The
    hospital, home, and school provide relationships, investigation, recovery,
    chess, and reality fractures. Story missions move between both.
 6. **Echo keeps his gravitas.** The moving UI/3D guide should be a distinct,
    original assistant rather than a miniature duplicate of Echo. Its identity,
-   name, origin, and possible connection to Zero remain provisional until the
-   final Manhwa is reviewed.
+   name, origin, and possible connection to Zero remain provisional until a
+   versioned Canon update is Owner-approved.
 7. **Chess is Echo's favorite hobby.** It supports characterization,
    relationships, school life, tactical mastery, optional competition, and
    psychological conflict. It is not a disconnected menu game.
@@ -68,6 +69,31 @@ third person, relationships, transformation, and chess as part of Echo's mind.
     approved phase. Paid randomness is optional, never required for the story,
     and requires economy, integrity, accessibility, regional/legal, probability
     disclosure, spending-safety, and Owner gates.
+13. **Godot is the target production engine.** The existing Three/R3F slice is
+    the measured visual and interaction reference during migration. A bounded
+    parity gate proves the Godot controller, camera, animation, loading,
+    performance, accessibility bridge, and server-contract integration before
+    broad production; it does not reopen an indefinite engine contest.
+14. **VRoid starts every principal anime character.** VRoid Studio establishes
+    the base body, face, and proportions; Blender must then provide the authored
+    identity, hair, clothing, materials, topology, deformation, facial shapes,
+    LODs, collision, animation, and validated GLB delivery. A raw VRoid export
+    is never a final character asset.
+15. **The journey expands after the Manhwa arc.** The game follows the approved
+    Manhwa through Echo's apparent system exit, then opens into a dense anime
+    urban world built around hospital, home, school, streets, vehicles, bonds,
+    and practical story missions. After the player has invested in that life,
+    evidence reveals that the exit was false and the wish was not fulfilled.
+    Exact post-Part-1 events remain provisional narrative until Canon authoring
+    and Owner approval.
+16. **External benchmarks measure craft.** Genshin Impact and ANANTA may inform
+    evaluation of animation clarity, visual pleasure, movement feel, encounter
+    readability, density, polish, and performance. 11.11 retains original
+    characters, visual motifs, world logic, UI, music, story, and mechanics.
+17. **Generated cinema has a cost gate.** Gemini is the first exploratory video
+    route. Flow is the governed fallback when Gemini is unavailable or a locked
+    hero beat needs it. Every request starts with one output, records model and
+    credit cost, and reserves premium generations for approved shots.
 
 ## Player identity direction
 
@@ -77,7 +103,7 @@ and future playable vessel. This permits Echo to retain agency and speak to the
 player while the player controls his actions.
 
 This is an approved product direction, not final story Canon. Reconcile and
-lock it only after reviewing the completed Manhwa. Do not build dialogue or
+lock it only through an Owner-approved Canon update. Do not build dialogue or
 cinematics that make it irreversible before that review.
 
 ## Intended player journey
@@ -95,7 +121,7 @@ unfinished menus.
 8. Echo explores rooms, scans evidence, solves environmental puzzles, hides,
    survives, and attempts to escape.
 9. The system's torture and pressure culminate in Echo's transformation.
-10. The transformation unlocks combat and changes abilities, presentation, and
+10. The transformation unlocks Zero-powered combat and changes abilities, presentation, and
     relationships without replacing the permanent `EX-011` skin identifier.
 11. A hard tonal cut wakes Echo in the hospital.
 12. The player reaches home and school, meets Yuki and Shizuka, investigates
@@ -127,7 +153,7 @@ separate milestone.
 
 1. Canon authority, authentication, save integrity, reward authority, rollout,
    accessibility, localization, performance measurement, and quality gates.
-2. Final Manhwa ingestion and story-to-gameplay blueprint.
+2. Approved Part 1 Manhwa ingestion and story-to-gameplay blueprint.
 3. Connected system UI, first objective, Manhwa memory layer, and fair opening
    puzzles.
 4. Screen-breaking transition, loading/fallback architecture, and first 3D
@@ -137,9 +163,10 @@ separate milestone.
 6. Original guide character across UI and 3D, with contextual and optional
    guidance that never solves or grants authority.
 7. Environmental puzzles, scanning, stealth/escape, enemy perception, and one
-   complete pre-transformation mission.
+   complete pre-transformation mission. Bounded human combat, including lethal
+   action without Zero powers, may be produced here after controller and threat gates.
 8. Transformation cinematic and gameplay consequence.
-9. Combat foundation, abilities, enemy AI, damage/recovery, readable feedback,
+9. Zero-powered combat expansion, abilities, enemy AI, damage/recovery, readable feedback,
    and accessibility alternatives.
 10. Hospital, home, school, quest, dialogue, relationship, schedule, and world
     state systems.
@@ -195,16 +222,17 @@ No shop, gacha, broad roster, or open world belongs in this proof.
 ## Engine decision
 
 The current application remains the authoritative account, UI, Manhwa, puzzle,
-chess, progression, and service shell. The first measured third-person proof may
-use the existing Three/R3F runtime. Portable Godot and a future Unity workstation
-are explicitly allowed as measured engine candidates when a bounded technical
-proof shows materially better combat, animation, world streaming, tooling, or
-cross-platform quality.
+chess, progression, and service shell. Godot is the Owner-selected production
+engine for third-person play, combat, animation, and the later urban world. The
+existing Three/R3F slice remains a temporary, measurable reference for the
+opening experience while the Godot parity scene is built.
 
-Do not migrate by enthusiasm. Compare actual startup cost, memory, frame time,
-input, asset streaming, visual fidelity, mobile thermals, build size,
-accessibility bridge, persistence, and integration with server receipts. Choose
-one production owner for each gameplay surface and prevent duplicate authority.
+The parity gate compares startup cost, memory, frame time, input, asset
+streaming, visual fidelity, mobile thermals, build size, accessibility bridge,
+persistence, and server-receipt integration. Its result controls migration
+work and remediation. Reversing the Godot decision requires blocker evidence
+and an explicit Owner decision. Ship only one 3D gameplay runtime; do not keep
+parallel implementations alive as permanent products.
 
 ## Verified production tooling
 
@@ -214,7 +242,7 @@ pipeline reports both Draco and MeshOptimizer libraries available. This makes
 non-Canon technical prototypes, performance tests, and deterministic asset
 pipeline work safe to begin during the current phase. It does **not** unlock
 final Echo/Yuki/guide models, story cinematics, or Canon environments before
-the completed Manhwa gate.
+the approved page-to-scene matrix and relevant asset/experience gate.
 
 The supporting local pipeline is also verified: FFmpeg/FFprobe for delivery
 media, KTX2 tooling for GPU textures, glTF Transform and the Khronos validator
@@ -223,18 +251,19 @@ Microsoft Edge as the required runtime QA target. Exact observed versions and
 verification date live in `docs/project-memory.json` so later agents can check
 for drift instead of assuming readiness.
 
-Godot 4.7.2 Standard is verified as a self-contained portable candidate on the
-current workstation. Its headless import/scene proof is deliberately non-Canon;
-availability does not select it as the production runtime, permit an open world,
-or give it authority over authentication, saves, rewards, or story progression.
+Godot 4.7.2 Standard is verified as a self-contained portable installation on
+the current workstation and is the target production runtime. Its existing
+headless import/scene proof establishes tool availability only; production
+readiness still depends on the bounded parity and migration gates. Godot never
+receives authority over authentication, saves, rewards, or story progression.
 
-Unity remains an allowed future production option, not the current runtime by
-default. It must earn a greenlight through the measured engine comparison above.
+Unity remains an allowed future production option, not the selected runtime.
+It requires the Owner to reopen the engine decision.
 The Owner has declined a local Unity installation; do not install or download
 its Windows installer without a new explicit instruction. Continue local 3D
-proofs with portable Blender, the existing Three/R3F runtime, and isolated Godot
-benchmarks. A future Unity evaluation may use a separately approved workstation
-or cloud environment.
+proofs with portable Blender, use Three/R3F only as the current reference, and
+build the measured Godot parity slice. A future Unity evaluation may use a
+separately approved workstation or cloud environment only after that decision.
 
 ## Visual identity
 
@@ -253,7 +282,7 @@ materials—not maximum shader cost on every surface.
 
 ## Guide character contract
 
-The guide is currently **UNNAMED AND PROVISIONAL** pending the final Manhwa.
+The guide is currently **UNNAMED AND PROVISIONAL** pending a versioned Canon update.
 
 - It is not Mini Echo and must not weaken or duplicate Echo.
 - It moves between UI surfaces only when guidance is useful.
@@ -303,7 +332,7 @@ Quality means all of the following, not only visual fidelity:
 
 No phase receives PASS because it took a long time or produced many assets.
 
-## Handoff after the final Manhwa arrives
+## Handoff after the approved Part 1 Manhwa
 
 1. Preserve ordered original pages and hashes.
 2. Extract final text, transcripts, visual descriptions, characters, locations,
@@ -317,6 +346,42 @@ No phase receives PASS because it took a long time or produced many assets.
 7. Build, test, self-critique, repair, and quality-gate one phase at a time.
 
 ## Change control
+
+### Owner direction — 2026-09-11: Production engine, character pipeline, and post-exit arc
+
+The Owner selected Godot as the production engine and requires principal anime
+characters to begin in VRoid Studio and receive a full Blender identity and
+game-readiness pass before Godot integration. The quality target is to compete
+with leading anime action RPGs in visual pleasure, animation, combat feel,
+emotional attachment, and psychological curiosity while keeping 11.11 original.
+
+The approved product direction follows the Manhwa-led system journey until
+Echo's apparent exit. It then expands into a dense anime urban world with
+hospital, home, school, streets, bikes, cars, relationships, and practical story
+missions. Much later, accumulated inconsistencies reveal that the exit was an
+illusion and the wish was not fulfilled, reopening the question of whether the
+people around Echo are real and whether their lives still deserve protection.
+This direction is durable product memory; its exact events, dialogue, and new
+characters are provisional until added to a versioned Canon update.
+
+The governing production plan is
+`docs/internal/production/PROJECT_MASTER_BLUEPRINT_2026-09-11.ar.md`. It defines
+the G0–G12 gates, the VRoid→Blender→GLB→Godot path, ethical return systems,
+cinematic credit governance, and the evidence required before expansion.
+
+### Owner direction — 2026-09-10: Human combat before transformation
+
+The Owner explicitly permits killing before transformation, without using any
+Zero abilities. Human combat is therefore an allowed pre-transformation design
+option; Zero powers remain locked until transformation. This supersedes earlier
+blanket statements that all combat must unlock after transformation, including
+older skill wording. It does not advance the active opening-room phase or insert
+combat into its cinematic. Produce human encounters only after movement,
+interaction, and threat foundations pass their gates. This changes the gameplay
+permission, not any specific approved Manhwa event or character outcome. Existing
+account, save, puzzle, and reward systems remain authoritative. The roadmap now
+allows bounded human survival combat before the contract, then supernatural
+combat after it.
 
 ### Owner direction — 2026-09-03: Approved Part 1 and Manhwa-anchored opening
 

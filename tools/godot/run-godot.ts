@@ -1,9 +1,9 @@
 /**
- * Safe Godot entry point for isolated, non-Canon 11.11 technical proofs.
+ * Safe Godot entry point for isolated proofs and the bounded 11.11 foundation.
  *
  * This wrapper never installs an engine, downloads export templates, modifies
- * PATH, or accepts arbitrary game projects. Only doctor and the repository's
- * bounded technical smoke proof are allowed while Godot remains deferred.
+ * PATH, or accepts arbitrary game projects. Commands resolve only tracked,
+ * allow-listed projects and never grant gameplay authority.
  */
 
 import { spawn } from "node:child_process";
@@ -26,12 +26,23 @@ const TECHNICAL_PROOF_ROOT = resolve(
   "technical-proofs",
 );
 const DEFAULT_PROOF = resolve(TECHNICAL_PROOF_ROOT, "engine-smoke");
+const FOUNDATION_PROJECT = resolve(
+  TECHNICAL_PROOF_ROOT,
+  "sector-11-foundation",
+);
 const LOG_ROOT = resolve(
   REPO_ROOT,
   "artifacts",
   "eleven-eleven",
   ".tmp",
   "godot-smoke",
+);
+const FOUNDATION_LOG_ROOT = resolve(
+  REPO_ROOT,
+  "artifacts",
+  "eleven-eleven",
+  ".tmp",
+  "godot-foundation",
 );
 const DEFAULT_TIMEOUT_MS = 2 * 60_000;
 const MAX_TIMEOUT_MS = 10 * 60_000;
@@ -68,6 +79,15 @@ export function resolveTechnicalProofPath(requested = DEFAULT_PROOF): string {
     throw new Error(`Godot technical proof is missing project.godot: ${proof}`);
   }
   return proof;
+}
+
+export function resolveFoundationProjectPath(): string {
+  if (!existsSync(join(FOUNDATION_PROJECT, "project.godot"))) {
+    throw new Error(
+      `Godot foundation is missing project.godot: ${FOUNDATION_PROJECT}`,
+    );
+  }
+  return FOUNDATION_PROJECT;
 }
 
 function consoleSibling(candidate: string): string {
@@ -195,23 +215,82 @@ async function smoke(
   return 0;
 }
 
+async function importFoundation(
+  executable: string,
+  project: string,
+  timeoutMs: number,
+): Promise<number> {
+  mkdirSync(FOUNDATION_LOG_ROOT, { recursive: true });
+  const result = await runGodot(
+    executable,
+    ["--headless", "--path", project, "--import"],
+    timeoutMs,
+  );
+  writeFileSync(join(FOUNDATION_LOG_ROOT, "import.log"), result.output, "utf8");
+  if (result.timedOut || result.code !== 0) {
+    console.error(result.timedOut ? "Foundation import timed out." : "Foundation import failed.");
+    return result.code || 1;
+  }
+  console.log("GODOT_FOUNDATION_IMPORT_OK");
+  return 0;
+}
+
+async function runFoundationMarker(
+  executable: string,
+  project: string,
+  timeoutMs: number,
+  marker: string,
+  logName: string,
+  userArgs: string[] = [],
+): Promise<number> {
+  mkdirSync(FOUNDATION_LOG_ROOT, { recursive: true });
+  const result = await runGodot(
+    executable,
+    ["--headless", "--path", project, ...userArgs],
+    timeoutMs,
+  );
+  writeFileSync(join(FOUNDATION_LOG_ROOT, logName), result.output, "utf8");
+  if (result.timedOut || result.code !== 0 || !result.output.includes(marker)) {
+    console.error(
+      result.timedOut
+        ? `Foundation ${logName} timed out.`
+        : `Foundation marker was not produced: ${marker}`,
+    );
+    return result.code || 1;
+  }
+  console.log(marker);
+  return 0;
+}
+
 export async function main(): Promise<number> {
   const raw = process.argv.slice(2);
   if (raw.length === 0 || raw[0] !== "--") {
     console.error(
-      "Usage: run-godot.ts -- doctor | smoke [technical-proof-path]",
+      "Usage: run-godot.ts -- doctor | smoke [technical-proof-path] | foundation-import | foundation-test | foundation-smoke | foundation-run",
     );
     return 2;
   }
   const [command, proofArgument, ...extra] = raw.slice(1);
-  if (!command || extra.length > 0 || !["doctor", "smoke"].includes(command)) {
+  const allowed = [
+    "doctor",
+    "smoke",
+    "foundation-import",
+    "foundation-test",
+    "foundation-smoke",
+    "foundation-run",
+  ];
+  if (!command || extra.length > 0 || !allowed.includes(command)) {
     console.error(
-      "Only `doctor` and `smoke [technical-proof-path]` are allowed.",
+      "Only doctor, smoke, foundation-import, foundation-test, foundation-smoke, and foundation-run are allowed.",
     );
     return 2;
   }
   if (command === "doctor" && proofArgument) {
     console.error("`doctor` does not accept a project path.");
+    return 2;
+  }
+  if (command.startsWith("foundation-") && proofArgument) {
+    console.error(`\`${command}\` does not accept a project path.`);
     return 2;
   }
 
@@ -227,11 +306,36 @@ export async function main(): Promise<number> {
   if (command === "doctor") return doctor(executable);
 
   try {
-    const proof = resolveTechnicalProofPath(proofArgument);
     const timeoutMs = parseGodotTimeout();
     const doctorCode = await doctor(executable);
     if (doctorCode !== 0) return doctorCode;
-    return smoke(executable, proof, timeoutMs);
+    if (command === "smoke") {
+      return smoke(executable, resolveTechnicalProofPath(proofArgument), timeoutMs);
+    }
+    const foundation = resolveFoundationProjectPath();
+    const importCode = await importFoundation(executable, foundation, timeoutMs);
+    if (importCode !== 0 || command === "foundation-import") return importCode;
+    if (command === "foundation-run") {
+      const result = await runGodot(executable, ["--path", foundation], timeoutMs);
+      return result.timedOut ? 124 : result.code;
+    }
+    if (command === "foundation-test") {
+      return runFoundationMarker(
+        executable,
+        foundation,
+        timeoutMs,
+        "FOUNDATION_TESTS_PASS",
+        "tests.log",
+        ["--", "--foundation-tests"],
+      );
+    }
+    return runFoundationMarker(
+      executable,
+      foundation,
+      timeoutMs,
+      "FOUNDATION_SMOKE_OK",
+      "smoke.log",
+    );
   } catch (error) {
     console.error(error instanceof Error ? error.message : String(error));
     return 2;

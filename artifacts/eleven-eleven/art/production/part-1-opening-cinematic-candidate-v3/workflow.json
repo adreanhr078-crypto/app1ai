@@ -1,0 +1,11 @@
+﻿{
+    "version":  "v3-previs",
+    "status":  "PREVIS_NOT_RUNTIME_APPROVED",
+    "visual_source":  "public/assets/cinematics/promotional/echo-network-part1-opening-anime-animatic-v1.webm",
+    "visual_source_method":  "clean project-authored seven-plate Blender animatic",
+    "sound_source":  "procedural FFmpeg synthesis; no external music or samples",
+    "duration_seconds":  40,
+    "resolution":  "1920x1080",
+    "fps":  24,
+    "build_script":  "build_previs.ps1"
+}

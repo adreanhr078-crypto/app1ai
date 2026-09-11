@@ -14,7 +14,7 @@
   "optional": ["imagemagick"],
   "deferred": {
     "unity": "Tooling is prepared and pinned in tools/unity/unity-toolchain.manifest.json. Windows has no supported portable Editor; install and activate only after the measured engine greenlight.",
-    "godot": "Godot 4.7.2 Standard is verified as a self-contained portable candidate. It is limited to isolated non-Canon proofs until the measured engine greenlight.",
+    "godot": "Godot 4.7.2 Standard is the verified portable production target. Work is limited to the bounded Sector 11 foundation and measured parity gate until FOUNDATION_PASS.",
     "comfyui": "Use connected generation tools instead on the current 8 GB Intel-UHD workstation.",
     "audacity": "Add when approved VO, music, or recorded SFX enters production."
   },

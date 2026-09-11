@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "verified-deferred-portable-candidate",
+  "status": "verified-portable-production-target-bounded-foundation",
   "engine": "Godot Standard",
   "version": "4.7.2-stable",
   "officialBuild": "4.7.2.stable.official.ed1daf0bf",
@@ -16,21 +16,22 @@
   "portableSelfContainedRequired": true,
   "dotNetRequired": false,
   "exportTemplatesDownloaded": false,
-  "runtimeIntegrationApproved": false,
-  "productionGreenlight": false,
+  "runtimeIntegrationApproved": true,
+  "productionGreenlight": "foundation-and-measured-parity-only",
   "currentPhaseChanged": false,
   "openWorldAuthorized": false,
   "allowedNow": [
     "resolver-and-doctor-tests",
     "headless-import-and-scene-smoke",
     "neutral-room-performance-benchmark",
-    "non-canon-glb-import-and-animation-comparison"
+    "non-canon-glb-import-and-animation-comparison",
+    "bounded-sector-11-foundation",
+    "character-camera-movement-animation-and-basic-interaction-proof"
   ],
   "forbiddenNow": [
-    "runtime-embedding",
     "duplicate-gameplay-authority",
     "auth-save-reward-or-api-authority",
-    "canon-character-or-environment-production",
+    "bulk-character-or-environment-production",
     "final-cinematics",
     "open-world-production",
     "export-platform-module-downloads"

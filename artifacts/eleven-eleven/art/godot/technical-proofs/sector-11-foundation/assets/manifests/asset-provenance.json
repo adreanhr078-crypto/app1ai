@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "assetId": "echo-foundation-v1-technical-placeholder",
+  "runtimePath": "res://assets/characters/echo/echo_foundation_v1.glb",
+  "sha256": "0E2D77B34D273A5CF67478325277C4C150D5DFC482353112893DA360A439B860",
+  "bytes": 399832,
+  "source": "art/production/echo-character-vertical-slice-v2/echo-v2.raw.glb",
+  "sourceType": "procedural-blender-placeholder",
+  "vroidStage": "BLOCKED_NO_SAVED_VROID_OR_VRM_BASE",
+  "canonStatus": "NON_CANON_TECHNICAL_PLACEHOLDER",
+  "visualAcceptance": "REJECTED_BELOW_TARGET",
+  "allowedUse": ["godot-import", "animation-wiring", "movement", "camera", "interaction", "technical-smoke"],
+  "forbiddenUse": ["marketing", "canon-cinematic", "final-character", "quality-benchmark-pass"],
+  "replacementGate": "Export an Owner-approved VRoid Echo base, preserve its VRoid source, complete Blender identity/optimization/animation work, validate GLB, then pass Manhwa fidelity review."
+}

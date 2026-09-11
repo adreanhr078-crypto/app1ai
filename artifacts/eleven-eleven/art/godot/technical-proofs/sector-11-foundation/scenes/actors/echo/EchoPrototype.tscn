@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/actors/echo_motor.gd" id="1"]
+[ext_resource type="PackedScene" path="res://assets/characters/echo/echo_foundation_v1.glb" id="2"]
+
+[sub_resource type="CapsuleShape3D" id="Capsule"]
+radius = 0.34
+height = 1.82
+
+[sub_resource type="StandardMaterial3D" id="FallbackMaterial"]
+albedo_color = Color(0.055, 0.075, 0.11, 1)
+metallic = 0.3
+roughness = 0.46
+
+[sub_resource type="CapsuleMesh" id="FallbackMesh"]
+material = SubResource("FallbackMaterial")
+radius = 0.32
+height = 1.76
+
+[node name="EchoPrototype" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.91, 0)
+shape = SubResource("Capsule")
+
+[node name="FallbackSilhouette" type="MeshInstance3D" parent="."]
+visible = false
+position = Vector3(0, 0.88, 0)
+mesh = SubResource("FallbackMesh")
+
+[node name="EchoVisual_NON_CANON" parent="." instance=ExtResource("2")]
+

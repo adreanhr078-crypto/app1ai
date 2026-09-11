@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "visionVersion": "1.0",
-  "updatedAt": "2026-09-09",
+  "visionVersion": "1.1",
+  "updatedAt": "2026-09-11",
   "ownerApproved": true,
   "ownerDirective": "Build an original world-class hybrid anime game with quality over speed, using as many evidence-gated phases and professional tools as needed.",
   "currentPhase": "PART_3_SCREEN_BREAK_AND_FIRST_3D_ESCAPE_VERTICAL_SLICE",
@@ -26,7 +26,7 @@
       "intent": "Use Blender and owner-supplied reference art to plan an original premium-anime opening and a short trailer preview, with the Owner-approved Part 1 Manhwa as the visual and narrative reference.",
       "constraints": [
         "Do not treat a promotional preview as a final Canon cinematic or live progression transition.",
-        "Do not lock character models, chronology, transformation timing, dialogue, or a final environment before the final Manhwa gate.",
+        "Part 1 Manhwa handoff is complete; do not lock character models, chronology, transformation timing, dialogue, or a final environment before the approved page-to-scene matrix and relevant asset/experience gate.",
         "Do not make a launch cinematic choice grant rewards, branch Canon, or bypass the post-login Mission Control home screen.",
         "Use a reduced-motion/static-poster fallback and keep delivery media lazy-loaded if later integrated."
       ],
@@ -54,9 +54,16 @@
       "scanning",
       "stealth",
       "escape",
-      "survival"
+      "survival",
+      "human-combat-including-lethal-action-without-zero-powers"
     ],
-    "combatUnlock": "after-echo-transformation",
+    "combatUnlock": "human-combat-permitted-before-transformation-zero-powers-only-after-transformation",
+    "preTransformationCombatDirective": {
+      "approvedAt": "2026-09-10",
+      "ownerInstruction": "Killing before transformation is allowed without using Zero powers.",
+      "phaseImpact": "No current-phase advance; bounded human encounters follow movement, interaction, and threat gates.",
+      "canonImpact": "Gameplay permission only; no specific Manhwa event or character outcome is rewritten."
+    },
     "realityHubs": ["hospital", "home", "school"],
     "systemWorldRole": "missions-dungeons-puzzles-threats-combat-memories",
     "manhwaRole": "memory-archive-flashbacks-other-viewpoints-clues-discoveries-recaps",
@@ -64,7 +71,34 @@
     "chessRole": "echo-favorite-hobby-character-relationship-and-mastery-system",
     "puzzleCountPolicy": "story-and-mechanic-value-not-a-fixed-count",
     "graphicsPolicy": "auto-low-medium-high-ultra-with-player-override",
-    "enginePolicy": "three-r3f-current-runtime-godot-portable-candidate-unity-future-candidate-all-require-measured-greenlight",
+    "enginePolicy": "godot-production-target-three-r3f-temporary-reference-one-shipped-3d-runtime",
+    "engineDecision": {
+      "approvedAt": "2026-09-11",
+      "target": "godot",
+      "migrationGate": "rebuild-and-measure-one-parity-scene-before-broad-production",
+      "reversalPolicy": "requires-technical-blocker-evidence-and-explicit-owner-decision",
+      "authorityBoundary": "web-services-remain-authoritative-for-auth-save-rewards-and-progression"
+    },
+    "characterPipeline": "vroid-base-to-blender-authored-identity-to-validated-glb-to-godot",
+    "characterPipelineRules": [
+      "principal-anime-characters-start-in-vroid-studio",
+      "raw-vroid-export-is-never-a-final-production-asset",
+      "blender-pass-must-cover-identity-hair-clothing-materials-topology-deformation-facial-shapes-lods-collision-and-animation",
+      "godot-import-and-runtime-capture-are-required-before-acceptance"
+    ],
+    "postPartOneStructure": "manhwa-led-system-journey-to-apparent-exit-then-dense-anime-urban-open-world",
+    "falseExitArc": "after-earned-urban-life-evidence-reveals-the-exit-was-false-and-the-wish-was-not-fulfilled",
+    "urbanWorldFeatures": [
+      "hospital",
+      "home",
+      "school",
+      "dense-streets",
+      "bikes",
+      "cars",
+      "relationship-driven-practical-story-missions"
+    ],
+    "visualBenchmark": "compete-with-leading-anime-action-rpgs-in-craft-animation-clarity-visual-pleasure-and-polish-with-original-ip",
+    "cinematicGenerationPolicy": "gemini-first-flow-governed-fallback-one-output-first-log-every-credit-use-quality-only-for-locked-hero-beats",
     "economyPolicy": "fun-progression-and-integrity-before-store-or-random-pulls"
   },
   "provisionalUntilFinalManhwa": {
@@ -76,6 +110,11 @@
     "exactHospitalAndSchoolChronology": null,
     "finalPuzzleRoster": null,
     "finalPlayableCharacterRoster": null
+  },
+  "futureArcStatus": {
+    "status": "owner-approved-product-direction-pending-versioned-canon-authoring",
+    "scope": "post-part-1-urban-world-false-exit-and-deeper-simulation",
+    "constraint": "Do not present invented events, dialogue, or new characters as Canon until Owner-approved Canon publication."
   },
   "canonLocks": {
     "protagonist": "echo",
@@ -92,9 +131,9 @@
     "signature-interface-fracture",
     "3d-system-arrival",
     "guide-manifestation-and-action-tutorial",
-    "exploration-scan-puzzle-stealth-escape",
+    "exploration-scan-puzzle-stealth-escape-optional-human-combat-without-zero",
     "torture-pressure-and-echo-transformation",
-    "combat-unlock-and-consequence",
+    "zero-powered-combat-unlock-and-consequence",
     "hospital-awakening",
     "home-school-yuki-shizuka-relationships",
     "echo-chess-hobby",
@@ -104,14 +143,14 @@
   ],
   "systemsReleaseOrder": [
     "authority-auth-save-rollout-accessibility-localization-performance-quality",
-    "final-manhwa-ingestion-and-story-to-gameplay-blueprint",
+    "approved-part-1-manhwa-ingestion-and-story-to-gameplay-blueprint",
     "connected-ui-manhwa-and-opening-puzzles",
     "screen-break-transition-and-first-3d-environment",
     "third-person-controller-camera-input-interaction-checkpoints-quality-tiers",
     "original-guide-ui-and-3d-presence",
-    "environmental-puzzles-scanning-stealth-escape-and-threat-ai",
+    "environmental-puzzles-scanning-stealth-escape-threat-ai-and-bounded-human-combat-without-zero",
     "transformation-cinematic-and-gameplay-change",
-    "combat-abilities-enemy-ai-feedback-and-accessibility",
+    "zero-powered-combat-abilities-enemy-ai-feedback-and-accessibility",
     "hospital-home-school-quests-dialogue-relationships-and-world-state",
     "echo-chess-journey-then-optional-casual-and-ranked",
     "character-progression-abilities-equipment-party-profile-and-collection",
@@ -162,7 +201,7 @@
       "dracoLibrary": true,
       "meshOptimizerLibrary": true,
       "verifiedAt": "2026-08-29",
-      "productionConstraint": "Do not lock final characters, story cinematics, or Canon environments before the final Manhwa gate."
+      "productionConstraint": "Do not lock final characters, story cinematics, or Canon environments before the approved Part 1 page-to-scene matrix and relevant asset/experience gate."
     },
     "assetPipeline": {
       "status": "verified-ready",
@@ -191,11 +230,11 @@
       "productionGreenlight": false,
       "localInstallAuthorized": false,
       "installerDownloadAuthorized": false,
-      "activeLocalAlternative": "portable-blender-plus-three-r3f-with-isolated-godot-comparison",
+      "activeLocalAlternative": "portable-blender-plus-godot-production-target-with-three-r3f-as-temporary-reference",
       "constraint": "Do not download or install Unity on this machine without a new explicit Owner instruction. A supported Windows Editor requires official installation and activation."
     },
     "godot": {
-      "status": "verified-deferred-portable-candidate",
+      "status": "verified-portable-production-target-pending-parity-gate",
       "version": "4.7.2.stable.official.ed1daf0bf",
       "distribution": "official-standard-windows-x86_64-zip",
       "portableRoot": "C:/Tools/Godot-4.7.2-stable",
@@ -206,15 +245,37 @@
       "headlessSceneSmoke": true,
       "dotNetRequired": false,
       "exportTemplatesDownloaded": false,
-      "runtimeIntegrationApproved": false,
-      "productionGreenlight": false,
+      "runtimeIntegrationApproved": true,
+      "productionGreenlight": "bounded-parity-and-migration-work-only",
       "verifiedAt": "2026-08-29",
-      "constraint": "Use only isolated non-Canon technical proofs until the final Manhwa gate and a measured single-runtime engine decision."
+      "constraint": "Build the bounded parity and migration proof first. Broad production remains gated; Godot has no authority over authentication, saves, rewards, or story progression."
+    },
+    "comfyUi": {
+      "status": "custom-nodes-verified-generation-blocked-by-missing-model-weights",
+      "verifiedAt": "2026-09-11",
+      "portableCustomNodesRoot": "C:/Users/yasmo/Desktop/11.11-AI-PORTABLE-KIT/PHASE-5-ANIME-AAA-VISUAL-UPGRADE/ComfyUI-Enhancements/custom_nodes",
+      "verifiedNodeFamilies": [
+        "AnimateDiff-Evolved",
+        "ControlNet-Auxiliary-Preprocessors",
+        "ComfyUI-Impact-Pack",
+        "ComfyUI-KJNodes",
+        "ComfyUI-VideoHelperSuite",
+        "ComfyUI-Essentials",
+        "rgthree-comfy",
+        "WAS-Node-Suite"
+      ],
+      "additionalInstalledNodeFamilies": [
+        "ComfyUI_IPAdapter_plus",
+        "ComfyUI-Manager"
+      ],
+      "blockingGate": "Select licensed compatible anime checkpoint, VAE, IPAdapter, ControlNet, and motion weights; record provenance and hashes; then pass one reproducible smoke workflow before production use.",
+      "apiObservedRunning": false
     }
   },
   "sourceOfTruth": {
     "productVision": "docs/PROJECT_VISION.md",
     "productMemory": "docs/project-memory.json",
-    "canonManifest": "docs/internal/narrative/current/ar/manifest.json"
+    "canonManifest": "docs/internal/narrative/current/ar/manifest.json",
+    "productionBlueprint": "docs/internal/production/PROJECT_MASTER_BLUEPRINT_2026-09-11.ar.md"
   }
 }

@@ -1,63 +1,163 @@
-# Production Phase Roadmap
+# 11:11 Production Phase Roadmap
 
-Do not skip phases. Do not build Phase 5 features until Phase 3 is proven.
+Status: **AUTHORITATIVE ROADMAP INDEX**
+Updated: **2026-09-11**
 
-## Phase 2.1 — Stabilization (Current Phase)
-**Objective**: Fix the existing codebase to pass the Phase 2 quality gate.
-- [ ] Fix `devFullStack.test.ts` realtime expectation failure.
-- [ ] Fix `campaignAccessibility.test.ts` CSS assertion failure.
-- [x] Fix UTF-8 mojibake in `playerExperienceEntitlements.ts` (Done).
-- [ ] Ensure full `npm run check` and `agent:postflight` pass cleanly.
+This roadmap derives from
+`docs/internal/production/PROJECT_MASTER_BLUEPRINT_2026-09-11.ar.md` and
+`docs/project-memory.json`. The machine-readable `currentPhase` remains the
+authority for work that may begin now. Historical Phase 2.1/3.x labels are
+superseded because they incorrectly treated Three/R3F as the final engine and
+did not cover the Owner-approved urban false-exit direction.
 
-## Phase 3.0 — R3F Engine Proof & First Environment
-**Objective**: Validate Three/R3F as the final 3D runtime.
-- Design modular `RoomDefinition` system with lazy GLB loading.
-- Create the "Opening Lab" environment in Blender (based on Manhwa reference).
-- Wire the Screen Break transition to seamlessly enter the 3D room.
-- Profile and optimize performance.
+Do not skip a gate. Do not interpret a prototype, generated image, video, raw
+VRoid export, or tool installation as a completed production phase.
 
-## Phase 3.1 — Echo Character Production
-**Objective**: Create the premium anime protagonist.
-- Model, rig, and texture Echo in Blender.
-- Implement idle, walk, run, and interaction animations.
-- Integrate into R3F with a state-machine `AnimationController`.
+## Active phase
 
-## Phase 3.2 — Movement & Interactions
-**Objective**: Make the 3D space playable.
-- Third-person character controller (touch/keyboard/gamepad).
-- Advanced camera system (wall occlusion, follow, orbit).
-- Interaction system (raycasting, proximity UI).
+`PART_3_SCREEN_BREAK_AND_FIRST_3D_ESCAPE_VERTICAL_SLICE`
 
-## Phase 3.3 — The Guide Character
-**Objective**: Companion system.
-- Model, rig, and animate the floating Guide.
-- Wire to `eleven-eleven-echo-agent` WebSocket for deterministic behavior.
+The active deliverable remains a cohesive opening: authoritative cover puzzle
+receipt → screen fracture → skippable and accessible cinematic → controllable
+Echo in one escape room. The current implementation is evidence for this gate,
+not permission to start the open world.
 
-## Phase 3.4 — Room 1 Vertical Slice
-**Objective**: The first complete gameplay loop.
-- Explore Room 1 -> Inspect Clues -> Recover Memory -> Solve Environmental Puzzle -> Unlock Door -> Trigger Cinematic.
+## G0 — Blueprint and Canon map
 
-## Phase 4.0 — Cinematic Framework
-**Objective**: Story delivery.
-- Build `CinematicDirector` to play data-driven sequences.
-- Produce Blender-rendered MP4/WebM sequences for major beats.
+**Exit evidence:** the current Manhwa, product direction, provisional future
+arc, gameplay exposures, dependencies, and acceptance tests have one traceable
+map. This roadmap and the Project Master Blueprint satisfy the planning portion;
+implementation evidence remains separate.
 
-## Phase 5.0 — Pre-Contract Combat
-**Objective**: Human survival gameplay.
-- Basic human combat/evasion.
-- Enemy AI patrol/chase logic.
-- Kinja laboratory sequence.
+## G1 — Repair and prove the current opening
 
-## Phase 6.0 — Zero Contract
-**Objective**: The emotional climax.
-- Interactive Zero transformation sequence.
-- Power system unlock and post-contract abilities.
+**Deliverable:** complete the current screen-break/first-room vertical slice in
+its existing reference implementation and close every local release defect.
 
-## Phase 7.0 — System Exit
-**Objective**: Tonal shift to reality.
-- Hospital awakening.
-- Yuki and Shizuka interactions.
+**Exit evidence:** Arabic/English Edge runtime, puzzle receipt integrity,
+refresh/resume, skip, mute, Reduced Motion, responsive controls, fallback,
+performance, player-comprehension review, and media validation all pass.
 
-## Phase 8.0+ — Open World Architecture
-**Objective**: Scale the game.
-- Zone loading, NPC frameworks, side quests.
+## G2 — Mind-slice specification and Echo proof
+
+**Deliverable:** a testable 20–30 minute storyboard/greybox specification and one
+high-quality provisional Echo that actually passes VRoid Studio → Blender → GLB,
+with locomotion clips, LOD, facial deformation, and identity acceptance. This is
+one hero proof for migration, not roster production.
+
+**Exit evidence:** identity, deformation, animation, and asset budgets pass, and
+a paper/greybox playtest predicts clear objectives, motive, change, and the next
+question before content migration.
+
+## G3 — Measured Godot migration
+
+**Deliverable:** rebuild the approved parity room, Echo controller, camera,
+three interactions, transition, accessibility bridge, and server-command
+boundary in Godot.
+
+**Exit evidence:** startup, frame time, memory, input, streaming, visual parity,
+build size, fallback, and persistence integration meet every mandatory budget
+recorded in the Blueprint. A remediation plan earns `PARTIAL` and extends G3;
+it does not grant exit or freeze the reference runtime. Godot becomes the sole
+production 3D runtime only after PASS. Any exception or reversal requires
+explicit Owner approval backed by measured evidence.
+
+## G4 — Godot mind-entry slice and character expansion
+
+**Deliverable:** implement the 20–30 minute room cluster, scan, memory evidence,
+puzzle, stealth/chase, and unanswered question in Godot using the accepted Echo;
+then expand the pipeline only to the guide, Yuki, or Shizuka when the slice needs
+them.
+
+**Exit evidence:** blinded playtest demonstrates clear objectives, attachment,
+curiosity, satisfying control, and no spoiler leakage; every used character also
+passes identity, deformation, animation, material, and runtime budgets. Raw VRoid
+output cannot pass this gate.
+
+## G5 — Human survival combat
+
+**Deliverable:** one grounded encounter before transformation with no Zero
+powers: weighted strikes, readable reactions, dodge/block timing, enemy morale
+and search behavior, environmental options, consequence, and accessibility.
+
+**Exit evidence:** the encounter rewards observation and timing, does not become
+button mashing, and lethal action carries authored narrative response.
+
+## G6 — Contract, transformation, and Zero combat
+
+**Deliverable:** the psychological collapse, unknown contract, transformation,
+and the first supernatural encounter where Zero power feels earned and costly.
+
+**Exit evidence:** animation, camera, audio, hit stop, VFX readability, combos,
+skills, enemy counters, and Echo/Zero relationship state pass combat and story
+playtests without replacing Echo's permanent `EX-011` mark.
+
+## G7 — Apparent exit and hospital recovery [PROVISIONAL — NO CONTENT LOCK]
+
+**Deliverable:** tonal cut from the system into the hospital, followed by home,
+Yuki/Shizuka contact, investigation, recovery, chess characterization, and small
+reality fractures.
+
+**Exit evidence:** the player believes relief is possible, values the people in
+the world, and retains one fair unresolved inconsistency.
+
+## G8 — Dense urban district [PROVISIONAL — NO CONTENT LOCK]
+
+**Deliverable:** one authored district connecting hospital, home, school, the
+11:11 café, streets, interiors, pedestrians, schedules, bikes, cars, secrets,
+and relationship-driven story missions.
+
+**Exit evidence:** traversal, vehicle introduction, world streaming, NPC state,
+quest continuity, recovery, accessibility, and performance pass. Density and
+meaning take priority over map size.
+
+## G9 — False-exit reveal [PROVISIONAL — NO CONTENT LOCK]
+
+**Deliverable:** a chain of practical urban missions exposes repeatable evidence
+that the exit was false and Echo's wish was not fulfilled.
+
+**Exit evidence:** the reveal recontextualizes earlier clues without erasing the
+value of relationships. The player can explain the evidence and wants to pursue
+the deeper simulation question.
+
+## G10 — Urban open-world vertical slice [PROVISIONAL — NO CONTENT LOCK]
+
+**Deliverable:** one full district loop combining story, bonds, school life,
+vehicle traversal, investigation, combat, a system breach, memory discovery,
+authoritative reward, world consequence, and welcoming return.
+
+**Exit evidence:** the loop is fun across repeated sessions, technically stable,
+original in identity, and viable to author at production scale.
+
+## G11 — Pre-production lock
+
+**Deliverable:** release story boundary, world/content bible, quest and encounter
+tools, asset factories, staffing plan, platform targets, budget, schedule, legal
+and provenance policy, localization/accessibility plan, and measured content cost.
+
+**Exit evidence:** the team can forecast a district, mission, character, enemy,
+cinematic, and localization pass from measured work rather than aspiration.
+
+## G12 — Production to release
+
+Production proceeds through content-complete campaign, Alpha, Beta, release
+candidate, certification, launch, monitoring, recovery, and live support. New
+systems stop at pre-production lock; each build is playable end to end and all
+missing content or evidence is explicit.
+
+## Permanent constraints
+
+- Server services own authentication, saves, progression, rewards, receipts,
+  inventory, puzzle truth, and economy. Godot sends commands and consumes
+  short-lived state; it does not mint authority.
+- Principal anime characters use the mandatory VRoid→Blender→GLB→Godot path.
+- Gemini is the first video exploration route; Flow follows the credit policy in
+  the Blueprint. Start with one output and log every charged generation.
+- ComfyUI custom nodes are tooling, not a quality result. No generation begins
+  until licensed compatible model weights, hashes, provenance, and a reproducible
+  smoke workflow pass.
+- Genshin Impact and ANANTA are craft benchmarks only. Copying characters,
+  assets, UI, music, story, silhouettes, or signature systems is forbidden.
+- Retention comes from attachment, mastery, secrets, world response, and welcome
+  returns. Punitive streaks, fake urgency, spam, and coercive monetization remain
+  outside the product.

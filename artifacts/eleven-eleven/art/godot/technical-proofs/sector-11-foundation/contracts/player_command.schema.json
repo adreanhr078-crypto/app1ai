@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "11.11/foundation/player-command/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "commandId", "sessionId", "contentVersion", "roomId", "eventId", "clientSequence"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "commandId": { "type": "string", "minLength": 8, "maxLength": 160 },
+    "sessionId": { "type": "string", "minLength": 8, "maxLength": 160 },
+    "contentVersion": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "roomId": { "const": "sector-11-foundation" },
+    "eventId": { "enum": ["request_clock", "request_photo", "request_door"] },
+    "prerequisiteReceiptIds": { "type": "array", "items": { "type": "string", "maxLength": 160 }, "maxItems": 16 },
+    "clientSequence": { "type": "integer", "minimum": 0 }
+  }
+}

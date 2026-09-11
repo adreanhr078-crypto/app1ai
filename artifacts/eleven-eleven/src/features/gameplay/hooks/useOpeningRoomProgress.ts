@@ -26,6 +26,8 @@ export const OPENING_ROOM_CONTROLS_SEEN_FLAG =
   'opening_room_controls_seen';
 export const OPENING_ROOM_CINEMATIC_SEEN_FLAG =
   'opening_room_cinematic_seen';
+export const OPENING_ROOM_HANDOFF_PENDING_KEY =
+  '11-11:opening-room-handoff-pending';
 
 function readOpeningRoomFlags(
   activeFlags: Readonly<Record<string, boolean>>,

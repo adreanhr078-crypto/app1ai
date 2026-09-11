@@ -14,6 +14,7 @@ import { completeOpeningRecovery, PlayerProgressionApiError } from '../../infras
 import { OPENING_COVER_PUZZLE_ID } from '../../domain/opening/openingProgress';
 import { GameButton, GlassPanel } from '../../ui/design-system';
 import { ScreenBreakRuntime } from './ScreenBreakRuntime';
+import { OPENING_ROOM_HANDOFF_PENDING_KEY } from '../gameplay/hooks/useOpeningRoomProgress';
 import './opening-recovery.css';
 
 const COVER_IMAGE = '/manhwa/echo-network-final-2026-09-v1/page-001.webp';
@@ -352,6 +353,15 @@ export default function OpeningRecoveryScreen() {
                 'opening_room_cinematic_seen',
                 true,
               );
+              try {
+                window.sessionStorage.setItem(
+                  OPENING_ROOM_HANDOFF_PENDING_KEY,
+                  'true',
+                );
+              } catch {
+                // The handoff flourish is presentation-only; progression must
+                // still continue when storage is unavailable.
+              }
               setTransitionFinished(true);
               setStatus('receipt');
             }}

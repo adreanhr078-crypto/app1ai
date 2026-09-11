@@ -5,6 +5,7 @@ import { resolve } from "node:path";
 import {
   matchesPinnedGodotVersion,
   parseGodotTimeout,
+  resolveFoundationProjectPath,
   resolveTechnicalProofPath,
 } from "./run-godot";
 
@@ -39,5 +40,12 @@ test("allows the tracked smoke proof and rejects arbitrary projects", () => {
   assert.throws(
     () => resolveTechnicalProofPath(resolve("artifacts", "eleven-eleven")),
     /must stay inside/,
+  );
+});
+
+test("resolves only the tracked Sector 11 foundation", () => {
+  assert.match(
+    resolveFoundationProjectPath(),
+    /art[\\/]godot[\\/]technical-proofs[\\/]sector-11-foundation$/,
   );
 });

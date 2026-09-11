@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/bootstrap/foundation_main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://scenes/sector_11/Sector11Foundation.tscn" id="2_room"]
+[ext_resource type="PackedScene" path="res://scenes/actors/echo/EchoPrototype.tscn" id="3_echo"]
+[ext_resource type="PackedScene" path="res://scenes/camera/ThirdPersonCameraRig.tscn" id="4_camera"]
+[ext_resource type="PackedScene" path="res://scenes/interaction/InteractionProbe.tscn" id="5_probe"]
+[ext_resource type="PackedScene" path="res://scenes/ui/FoundationHUD.tscn" id="6_hud"]
+[ext_resource type="Script" path="res://scripts/integration/session_bridge.gd" id="7_bridge"]
+[ext_resource type="Script" path="res://scripts/telemetry/frame_probe.gd" id="8_probe"]
+
+[node name="FoundationMain" type="Node"]
+script = ExtResource("1_main")
+
+[node name="SessionBridge" type="Node" parent="."]
+script = ExtResource("7_bridge")
+
+[node name="FoundationWorld" type="Node3D" parent="."]
+
+[node name="Sector11Foundation" parent="FoundationWorld" instance=ExtResource("2_room")]
+
+[node name="EchoPrototype" parent="FoundationWorld" instance=ExtResource("3_echo")]
+position = Vector3(0, 0.05, 2.4)
+
+[node name="ThirdPersonCameraRig" parent="FoundationWorld" instance=ExtResource("4_camera")]
+target_path = NodePath("../EchoPrototype")
+position = Vector3(0, 1.35, 2.4)
+
+[node name="InteractionProbe" parent="FoundationWorld" instance=ExtResource("5_probe")]
+actor_path = NodePath("../EchoPrototype")
+
+[node name="FoundationHUD" parent="." instance=ExtResource("6_hud")]
+interaction_probe_path = NodePath("../FoundationWorld/InteractionProbe")
+
+[node name="FrameProbe" type="Node" parent="."]
+script = ExtResource("8_probe")
+

@@ -637,3 +637,39 @@
 [data-gds-motion="reduced"] .gameplay-canvas {
   animation: none;
 }
+.opening-room-handoff {
+  position: absolute;
+  inset: 0;
+  z-index: 24;
+  overflow: hidden;
+  pointer-events: none;
+  background: #000;
+  animation: opening-room-consciousness 1450ms cubic-bezier(.22,.72,.18,1) both;
+}
+.opening-room-handoff::before,
+.opening-room-handoff::after {
+  content: '';
+  position: absolute;
+  inset-inline: -8%;
+  height: 54%;
+  background: #000;
+  filter: drop-shadow(0 0 1.5rem rgb(92 225 255 / 22%));
+}
+.opening-room-handoff::before { inset-block-start: 0; animation: opening-eye-top 1450ms cubic-bezier(.22,.72,.18,1) both; }
+.opening-room-handoff::after { inset-block-end: 0; animation: opening-eye-bottom 1450ms cubic-bezier(.22,.72,.18,1) both; }
+.opening-room-handoff i {
+  position: absolute;
+  inset: 42% 0 auto;
+  height: 16%;
+  background: radial-gradient(ellipse at center, rgb(105 231 255 / 20%), transparent 62%);
+  animation: opening-room-signal-bloom 1450ms ease-out both;
+}
+.opening-room-handoff[data-motion='reduced'] { animation-duration: 350ms; }
+.opening-room-handoff[data-motion='reduced']::before,
+.opening-room-handoff[data-motion='reduced']::after,
+.opening-room-handoff[data-motion='reduced'] i { animation-duration: 350ms; }
+
+@keyframes opening-room-consciousness { 0%, 54% { background: #000; } 100% { background: transparent; } }
+@keyframes opening-eye-top { 0%, 18% { transform: translateY(0); } 72%, 100% { transform: translateY(-104%); } }
+@keyframes opening-eye-bottom { 0%, 18% { transform: translateY(0); } 72%, 100% { transform: translateY(104%); } }
+@keyframes opening-room-signal-bloom { 0%, 26% { opacity: 0; transform: scaleX(.35); } 58% { opacity: 1; } 100% { opacity: 0; transform: scaleX(1.15); } }

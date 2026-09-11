@@ -47,6 +47,7 @@ import {
   ThirdPersonCamera,
   type ThirdPersonCameraConfig,
 } from './ThirdPersonCamera';
+import { OPENING_ROOM_HANDOFF_PENDING_KEY } from '../hooks/useOpeningRoomProgress';
 
 interface GameWorldProps {
   paused: boolean;
@@ -131,6 +132,15 @@ export function GameWorld({
   const playerRef = useRef<Group | null>(null);
   const cameraYawRef = useRef(0);
   const [canvasReady, setCanvasReady] = useState(false);
+  const [handoffActive, setHandoffActive] = useState(() => {
+    try {
+      return window.sessionStorage.getItem(
+        OPENING_ROOM_HANDOFF_PENDING_KEY,
+      ) === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [nearestInteractionId, setNearestInteractionId] = useState<
     string | null
   >(null);
@@ -180,6 +190,20 @@ export function GameWorld({
       clearTimeout(narrativeTimerRef.current);
     }
   }, []);
+
+  useEffect(() => {
+    if (!handoffActive || !canvasReady) return undefined;
+    try {
+      window.sessionStorage.removeItem(OPENING_ROOM_HANDOFF_PENDING_KEY);
+    } catch {
+      // Presentation state may be ephemeral in restricted browser modes.
+    }
+    const timer = window.setTimeout(
+      () => setHandoffActive(false),
+      motion === 'reduced' ? 350 : 1450,
+    );
+    return () => window.clearTimeout(timer);
+  }, [canvasReady, handoffActive, motion]);
 
   const handleInteract = useCallback(() => {
     if (
@@ -266,6 +290,7 @@ export function GameWorld({
   const controls = usePlayerControls({
     enabled: !paused
       && !cinematicActive
+      && !handoffActive
       && !showTutorial
       && !memoryBeatActive
       && roomCompletionStatus !== 'submitting'
@@ -314,6 +339,7 @@ export function GameWorld({
   const stageCopy = PUZZLE_STAGE_COPY[puzzle.stage];
   const inputEnabled = !paused
     && !cinematicActive
+    && !handoffActive
     && !showTutorial
     && !memoryBeatActive
     && roomCompletionStatus !== 'submitting'
@@ -332,6 +358,7 @@ export function GameWorld({
       data-canvas-ready={canvasReady}
       data-puzzle-stage={puzzle.stage}
       data-cinematic-active={cinematicActive}
+      data-handoff-active={handoffActive}
       data-active-interaction={activeInteractionId ?? undefined}
     >
       {!canvasReady && (
@@ -405,6 +432,17 @@ export function GameWorld({
           />
         </Suspense>
       </Canvas>
+
+      {handoffActive && (
+        <div
+          className="opening-room-handoff"
+          data-motion={motion}
+          role="status"
+          aria-label="Echo regains consciousness in the opening room"
+        >
+          <i aria-hidden="true" />
+        </div>
+      )}
 
       <CinematicDirector
         sequence={cinematicActive ? OPENING_CINEMATIC_SEQUENCE : null}

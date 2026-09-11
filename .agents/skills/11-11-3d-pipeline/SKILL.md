@@ -15,10 +15,10 @@ metadata:
 
 # 11.11 3D Pipeline
 
-The active runtime is web-first: Blender authors assets and Three/R3F renders
-interactive GLB. Unity is deferred until a measured browser vertical slice
-fails its quality or performance gate. Never introduce another runtime merely
-because it is installed.
+The React/Cloudflare application remains the authoritative service and UI shell.
+Godot is the Owner-selected production runtime for third-person play; Three/R3F
+is the temporary opening reference until the bounded parity gate passes. Blender
+authors validated GLB assets. Never keep two shipped gameplay runtimes.
 
 ## Required lifecycle
 
@@ -78,8 +78,10 @@ Interact. One rig may produce GLB, a Mini Echo sprite atlas, and fixed WebM.
 - Required: portable Blender, FFmpeg/ffprobe, portable KTX tools, pinned glTF
   Transform, Khronos validator, Sharp, and Microsoft Edge.
 - ImageMagick is optional; Sharp is the supported fallback.
-- ComfyUI is deferred on low-memory Intel-UHD hardware. Connected image/video
-  applications may be used for concepts only under the rights rule above.
+- ComfyUI custom nodes are installed, but generation remains blocked until the
+  licensed checkpoint, VAE, IPAdapter, ControlNet, and motion weights pass the
+  recorded smoke gate. Connected applications may support concepts under the
+  rights and credit rules.
 - Audacity is deferred until approved VO/SFX exists.
 
 ## Frozen authority

@@ -365,19 +365,19 @@ export function checkTools(): ToolCheck[] {
     }),
     checkExecutable({
       id: "godot",
-      requirement: "deferred",
+      requirement: "required",
       knownPaths: [resolveGodotExecutable()].filter(
         (candidate): candidate is string => Boolean(candidate),
       ),
       versionArgs: ["--version"],
-      note: "Verified portable candidate for isolated non-Canon proofs; it is not the selected production runtime.",
+      note: "Verified portable production target for the bounded Sector 11 foundation and measured parity gate.",
     }),
     {
       id: "comfyui",
       requirement: "deferred",
       found: false,
       healthy: false,
-      note: "Deliberately deferred on this 8 GB Intel-UHD machine; use connected generation tools for concepts.",
+      note: "Custom nodes are present, but generation stays deferred until licensed compatible model weights pass the recorded smoke gate.",
     },
   ];
 }

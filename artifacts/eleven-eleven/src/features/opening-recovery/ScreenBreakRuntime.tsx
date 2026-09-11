@@ -6,6 +6,7 @@ interface ScreenBreakRuntimeProps {
   onComplete: () => void;
   showFracture?: boolean;
   videoUrl?: string;
+  fallbackVideoUrl?: string;
   posterUrl?: string;
 }
 
@@ -13,8 +14,9 @@ export function ScreenBreakRuntime({
   reducedMotion,
   onComplete,
   showFracture = true,
-  videoUrl = '/assets/cinematics/part-1-opening-v2.webm',
-  posterUrl = '/assets/cinematics/part-1-opening-v2-poster.webp',
+  videoUrl = '/assets/cinematics/part-1-opening-v3.webm',
+  fallbackVideoUrl = '/assets/cinematics/part-1-opening-v3.mp4',
+  posterUrl = '/assets/cinematics/part-1-opening-v3-poster.webp',
 }: ScreenBreakRuntimeProps) {
   const completedRef = useRef(false);
   const onCompleteRef = useRef(onComplete);
@@ -102,8 +104,8 @@ export function ScreenBreakRuntime({
         <video
           ref={videoRef}
           className="screen-break-runtime__video"
-          src={videoUrl}
           poster={posterUrl}
+          preload="auto"
           muted={!soundsEnabled}
           playsInline
           controls={!fracturing}
@@ -113,7 +115,10 @@ export function ScreenBreakRuntime({
           onEnded={finish}
           onError={() => { playbackAttemptRef.current += 1; setPlayback('error'); }}
           style={{ width: '100%', height: '100%', objectFit: 'contain', position: 'absolute', top: 0, left: 0 }}
-        />
+        >
+          <source src={videoUrl} type="video/webm" />
+          <source src={fallbackVideoUrl} type="video/mp4" />
+        </video>
       )}
       {fracturing && !reducedMotion && <div className="screen-break-runtime__fracture" aria-hidden="true" style={boardRect ? { inset: 'auto', left: boardRect.left, top: boardRect.top, width: boardRect.width, height: boardRect.height, overflow: 'visible' } : undefined}>
         {Array.from({ length: 24 }, (_, index) => {
