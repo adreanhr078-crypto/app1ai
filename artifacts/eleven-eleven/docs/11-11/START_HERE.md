@@ -1,5 +1,7 @@
 # START HERE: 11.11 Echo Network Architecture & Context
 
+> **Resume checkpoint (2026-09-11):** Read [G0 session handoff](../internal/production/SESSION_HANDOFF_G0_2026-09-11.ar.md) and the [Project Master Blueprint](../internal/production/PROJECT_MASTER_BLUEPRINT_2026-09-11.ar.md) first. Godot is the bounded production target pending quality/parity gates; the older Three.js/R3F authority statement below is superseded. G0 remains incomplete. Antigravity is restricted to simple, verifiable support tasks by the Owner.
+
 **Welcome to 11.11 — Echo Network.** If you are an AI agent, you must read this document before making any architectural or implementation decisions.
 
 ## The Core Product Vision

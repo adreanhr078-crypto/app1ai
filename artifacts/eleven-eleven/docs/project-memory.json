@@ -276,6 +276,7 @@
     "productVision": "docs/PROJECT_VISION.md",
     "productMemory": "docs/project-memory.json",
     "canonManifest": "docs/internal/narrative/current/ar/manifest.json",
-    "productionBlueprint": "docs/internal/production/PROJECT_MASTER_BLUEPRINT_2026-09-11.ar.md"
+    "productionBlueprint": "docs/internal/production/PROJECT_MASTER_BLUEPRINT_2026-09-11.ar.md",
+    "latestExecutionHandoff": "docs/internal/production/SESSION_HANDOFF_G0_2026-09-11.ar.md"
   }
 }
