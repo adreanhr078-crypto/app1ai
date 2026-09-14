@@ -1,12 +1,17 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
 
-// api/player/_shared.ts
+// .wrangler/tmp/pages-tpH1Qm/functionsWorker-0.8964023874302226.mjs
+var __defProp2 = Object.defineProperty;
+var __name2 = /* @__PURE__ */ __name((target, value) => __defProp2(target, "name", { value, configurable: true }), "__name");
+var __export = /* @__PURE__ */ __name((target, all) => {
+  for (var name in all)
+    __defProp2(target, name, { get: all[name], enumerable: true });
+}, "__export");
 var PlayerApiError = class extends Error {
+  static {
+    __name(this, "PlayerApiError");
+  }
   constructor(status, code, message) {
     super(message);
     this.status = status;
@@ -15,7 +20,7 @@ var PlayerApiError = class extends Error {
   status;
   code;
   static {
-    __name(this, "PlayerApiError");
+    __name2(this, "PlayerApiError");
   }
 };
 var UPSTREAM_TIMEOUT_MS = 12e3;
@@ -45,6 +50,7 @@ async function fetchUpstream(input, init = {}) {
   }
 }
 __name(fetchUpstream, "fetchUpstream");
+__name2(fetchUpstream, "fetchUpstream");
 async function readJsonBody(request, options) {
   const declaredLength = Number(request.headers.get("Content-Length") ?? 0);
   if (Number.isFinite(declaredLength) && declaredLength > options.maxBytes) {
@@ -92,18 +98,21 @@ async function readJsonBody(request, options) {
   }
 }
 __name(readJsonBody, "readJsonBody");
+__name2(readJsonBody, "readJsonBody");
 function cleanOptionalText(value, maximumLength) {
   if (typeof value !== "string") return null;
   const cleaned = value.replace(/[\u0000-\u001F\u007F]/g, "").trim().slice(0, maximumLength);
   return cleaned || null;
 }
 __name(cleanOptionalText, "cleanOptionalText");
+__name2(cleanOptionalText, "cleanOptionalText");
 function timestampFromMilliseconds(value) {
   const milliseconds = typeof value === "string" ? Number(value) : NaN;
   const date = Number.isFinite(milliseconds) ? new Date(milliseconds) : /* @__PURE__ */ new Date();
   return Number.isNaN(date.getTime()) ? (/* @__PURE__ */ new Date()).toISOString() : date.toISOString();
 }
 __name(timestampFromMilliseconds, "timestampFromMilliseconds");
+__name2(timestampFromMilliseconds, "timestampFromMilliseconds");
 function requireFirebaseConfig(env) {
   const projectId = env.FIREBASE_PROJECT_ID?.trim();
   const webApiKey = env.FIREBASE_WEB_API_KEY?.trim();
@@ -117,6 +126,7 @@ function requireFirebaseConfig(env) {
   return { projectId, webApiKey };
 }
 __name(requireFirebaseConfig, "requireFirebaseConfig");
+__name2(requireFirebaseConfig, "requireFirebaseConfig");
 function bearerToken(request) {
   const authorization = request.headers.get("Authorization") ?? "";
   const match2 = authorization.match(/^Bearer\s+(.+)$/i);
@@ -126,10 +136,12 @@ function bearerToken(request) {
   return match2[1].trim();
 }
 __name(bearerToken, "bearerToken");
+__name2(bearerToken, "bearerToken");
 function isLoopbackDevelopmentOrigin(origin) {
   return /^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/i.test(origin) || /^http:\/\/\[::1\](?::\d+)?$/i.test(origin);
 }
 __name(isLoopbackDevelopmentOrigin, "isLoopbackDevelopmentOrigin");
+__name2(isLoopbackDevelopmentOrigin, "isLoopbackDevelopmentOrigin");
 function corsHeaders(request, env) {
   const requestOrigin = request.headers.get("Origin") ?? "";
   const sameOrigin = requestOrigin === new URL(request.url).origin;
@@ -144,6 +156,7 @@ function corsHeaders(request, env) {
   };
 }
 __name(corsHeaders, "corsHeaders");
+__name2(corsHeaders, "corsHeaders");
 function jsonResponse(body, status, headers) {
   return new Response(JSON.stringify(body), {
     status,
@@ -154,6 +167,7 @@ function jsonResponse(body, status, headers) {
   });
 }
 __name(jsonResponse, "jsonResponse");
+__name2(jsonResponse, "jsonResponse");
 function errorResponse(error, headers) {
   if (error instanceof PlayerApiError) {
     return jsonResponse({
@@ -167,6 +181,7 @@ function errorResponse(error, headers) {
   }, 503, headers);
 }
 __name(errorResponse, "errorResponse");
+__name2(errorResponse, "errorResponse");
 async function authenticatePlayer(request, env) {
   const { webApiKey } = requireFirebaseConfig(env);
   const idToken = bearerToken(request);
@@ -205,6 +220,7 @@ async function authenticatePlayer(request, env) {
   };
 }
 __name(authenticatePlayer, "authenticatePlayer");
+__name2(authenticatePlayer, "authenticatePlayer");
 function firestoreDocumentUrl(env, documentPath) {
   const { projectId } = requireFirebaseConfig(env);
   const safePath = documentPath.split("/").map((segment) => encodeURIComponent(segment)).join("/");
@@ -213,6 +229,7 @@ function firestoreDocumentUrl(env, documentPath) {
   );
 }
 __name(firestoreDocumentUrl, "firestoreDocumentUrl");
+__name2(firestoreDocumentUrl, "firestoreDocumentUrl");
 async function readFirestoreDocument(env, idToken, documentPath) {
   const response = await fetchUpstream(firestoreDocumentUrl(env, documentPath), {
     headers: { Authorization: `Bearer ${idToken}` }
@@ -228,6 +245,7 @@ async function readFirestoreDocument(env, idToken, documentPath) {
   return response.json();
 }
 __name(readFirestoreDocument, "readFirestoreDocument");
+__name2(readFirestoreDocument, "readFirestoreDocument");
 async function writeFirestoreDocument(env, idToken, documentPath, fields, precondition) {
   const url = firestoreDocumentUrl(env, documentPath);
   if (typeof precondition?.exists === "boolean") {
@@ -264,33 +282,40 @@ async function writeFirestoreDocument(env, idToken, documentPath, fields, precon
   return response.json();
 }
 __name(writeFirestoreDocument, "writeFirestoreDocument");
+__name2(writeFirestoreDocument, "writeFirestoreDocument");
 function stringField(value) {
   return { stringValue: value };
 }
 __name(stringField, "stringField");
+__name2(stringField, "stringField");
 function integerField(value) {
   return { integerValue: String(Math.max(0, Math.floor(value))) };
 }
 __name(integerField, "integerField");
+__name2(integerField, "integerField");
 function timestampField(value) {
   return { timestampValue: value };
 }
 __name(timestampField, "timestampField");
+__name2(timestampField, "timestampField");
 function readStringField(document, key) {
   const value = document.fields?.[key]?.stringValue;
   return typeof value === "string" ? value : null;
 }
 __name(readStringField, "readStringField");
+__name2(readStringField, "readStringField");
 function readIntegerField(document, key) {
   const value = Number(document.fields?.[key]?.integerValue ?? 0);
   return Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
 }
 __name(readIntegerField, "readIntegerField");
+__name2(readIntegerField, "readIntegerField");
 function readTimestampField(document, key) {
   const value = document.fields?.[key]?.timestampValue;
   return typeof value === "string" ? value : null;
 }
 __name(readTimestampField, "readTimestampField");
+__name2(readTimestampField, "readTimestampField");
 function optionsResponse(request, env) {
   return new Response(null, {
     status: 204,
@@ -298,8 +323,7 @@ function optionsResponse(request, env) {
   });
 }
 __name(optionsResponse, "optionsResponse");
-
-// api/player/_database.ts
+__name2(optionsResponse, "optionsResponse");
 function requirePlayerDatabase(env) {
   if (!env.PLAYER_DB) {
     throw new PlayerApiError(
@@ -311,120 +335,117 @@ function requirePlayerDatabase(env) {
   return env.PLAYER_DB;
 }
 __name(requirePlayerDatabase, "requirePlayerDatabase");
-
-// ../node_modules/zod/v3/external.js
+__name2(requirePlayerDatabase, "requirePlayerDatabase");
 var external_exports = {};
 __export(external_exports, {
-  BRAND: () => BRAND,
-  DIRTY: () => DIRTY,
-  EMPTY_PATH: () => EMPTY_PATH,
-  INVALID: () => INVALID,
-  NEVER: () => NEVER,
-  OK: () => OK,
-  ParseStatus: () => ParseStatus,
-  Schema: () => ZodType,
-  ZodAny: () => ZodAny,
-  ZodArray: () => ZodArray,
-  ZodBigInt: () => ZodBigInt,
-  ZodBoolean: () => ZodBoolean,
-  ZodBranded: () => ZodBranded,
-  ZodCatch: () => ZodCatch,
-  ZodDate: () => ZodDate,
-  ZodDefault: () => ZodDefault,
-  ZodDiscriminatedUnion: () => ZodDiscriminatedUnion,
-  ZodEffects: () => ZodEffects,
-  ZodEnum: () => ZodEnum,
-  ZodError: () => ZodError,
-  ZodFirstPartyTypeKind: () => ZodFirstPartyTypeKind,
-  ZodFunction: () => ZodFunction,
-  ZodIntersection: () => ZodIntersection,
-  ZodIssueCode: () => ZodIssueCode,
-  ZodLazy: () => ZodLazy,
-  ZodLiteral: () => ZodLiteral,
-  ZodMap: () => ZodMap,
-  ZodNaN: () => ZodNaN,
-  ZodNativeEnum: () => ZodNativeEnum,
-  ZodNever: () => ZodNever,
-  ZodNull: () => ZodNull,
-  ZodNullable: () => ZodNullable,
-  ZodNumber: () => ZodNumber,
-  ZodObject: () => ZodObject,
-  ZodOptional: () => ZodOptional,
-  ZodParsedType: () => ZodParsedType,
-  ZodPipeline: () => ZodPipeline,
-  ZodPromise: () => ZodPromise,
-  ZodReadonly: () => ZodReadonly,
-  ZodRecord: () => ZodRecord,
-  ZodSchema: () => ZodType,
-  ZodSet: () => ZodSet,
-  ZodString: () => ZodString,
-  ZodSymbol: () => ZodSymbol,
-  ZodTransformer: () => ZodEffects,
-  ZodTuple: () => ZodTuple,
-  ZodType: () => ZodType,
-  ZodUndefined: () => ZodUndefined,
-  ZodUnion: () => ZodUnion,
-  ZodUnknown: () => ZodUnknown,
-  ZodVoid: () => ZodVoid,
-  addIssueToContext: () => addIssueToContext,
-  any: () => anyType,
-  array: () => arrayType,
-  bigint: () => bigIntType,
-  boolean: () => booleanType,
-  coerce: () => coerce,
-  custom: () => custom,
-  date: () => dateType,
-  datetimeRegex: () => datetimeRegex,
-  defaultErrorMap: () => en_default,
-  discriminatedUnion: () => discriminatedUnionType,
-  effect: () => effectsType,
-  enum: () => enumType,
-  function: () => functionType,
-  getErrorMap: () => getErrorMap,
-  getParsedType: () => getParsedType,
-  instanceof: () => instanceOfType,
-  intersection: () => intersectionType,
-  isAborted: () => isAborted,
-  isAsync: () => isAsync,
-  isDirty: () => isDirty,
-  isValid: () => isValid,
-  late: () => late,
-  lazy: () => lazyType,
-  literal: () => literalType,
-  makeIssue: () => makeIssue,
-  map: () => mapType,
-  nan: () => nanType,
-  nativeEnum: () => nativeEnumType,
-  never: () => neverType,
-  null: () => nullType,
-  nullable: () => nullableType,
-  number: () => numberType,
-  object: () => objectType,
-  objectUtil: () => objectUtil,
-  oboolean: () => oboolean,
-  onumber: () => onumber,
-  optional: () => optionalType,
-  ostring: () => ostring,
-  pipeline: () => pipelineType,
-  preprocess: () => preprocessType,
-  promise: () => promiseType,
-  quotelessJson: () => quotelessJson,
-  record: () => recordType,
-  set: () => setType,
-  setErrorMap: () => setErrorMap,
-  strictObject: () => strictObjectType,
-  string: () => stringType,
-  symbol: () => symbolType,
-  transformer: () => effectsType,
-  tuple: () => tupleType,
-  undefined: () => undefinedType,
-  union: () => unionType,
-  unknown: () => unknownType,
-  util: () => util,
-  void: () => voidType
+  BRAND: /* @__PURE__ */ __name(() => BRAND, "BRAND"),
+  DIRTY: /* @__PURE__ */ __name(() => DIRTY, "DIRTY"),
+  EMPTY_PATH: /* @__PURE__ */ __name(() => EMPTY_PATH, "EMPTY_PATH"),
+  INVALID: /* @__PURE__ */ __name(() => INVALID, "INVALID"),
+  NEVER: /* @__PURE__ */ __name(() => NEVER, "NEVER"),
+  OK: /* @__PURE__ */ __name(() => OK, "OK"),
+  ParseStatus: /* @__PURE__ */ __name(() => ParseStatus, "ParseStatus"),
+  Schema: /* @__PURE__ */ __name(() => ZodType, "Schema"),
+  ZodAny: /* @__PURE__ */ __name(() => ZodAny, "ZodAny"),
+  ZodArray: /* @__PURE__ */ __name(() => ZodArray, "ZodArray"),
+  ZodBigInt: /* @__PURE__ */ __name(() => ZodBigInt, "ZodBigInt"),
+  ZodBoolean: /* @__PURE__ */ __name(() => ZodBoolean, "ZodBoolean"),
+  ZodBranded: /* @__PURE__ */ __name(() => ZodBranded, "ZodBranded"),
+  ZodCatch: /* @__PURE__ */ __name(() => ZodCatch, "ZodCatch"),
+  ZodDate: /* @__PURE__ */ __name(() => ZodDate, "ZodDate"),
+  ZodDefault: /* @__PURE__ */ __name(() => ZodDefault, "ZodDefault"),
+  ZodDiscriminatedUnion: /* @__PURE__ */ __name(() => ZodDiscriminatedUnion, "ZodDiscriminatedUnion"),
+  ZodEffects: /* @__PURE__ */ __name(() => ZodEffects, "ZodEffects"),
+  ZodEnum: /* @__PURE__ */ __name(() => ZodEnum, "ZodEnum"),
+  ZodError: /* @__PURE__ */ __name(() => ZodError, "ZodError"),
+  ZodFirstPartyTypeKind: /* @__PURE__ */ __name(() => ZodFirstPartyTypeKind, "ZodFirstPartyTypeKind"),
+  ZodFunction: /* @__PURE__ */ __name(() => ZodFunction, "ZodFunction"),
+  ZodIntersection: /* @__PURE__ */ __name(() => ZodIntersection, "ZodIntersection"),
+  ZodIssueCode: /* @__PURE__ */ __name(() => ZodIssueCode, "ZodIssueCode"),
+  ZodLazy: /* @__PURE__ */ __name(() => ZodLazy, "ZodLazy"),
+  ZodLiteral: /* @__PURE__ */ __name(() => ZodLiteral, "ZodLiteral"),
+  ZodMap: /* @__PURE__ */ __name(() => ZodMap, "ZodMap"),
+  ZodNaN: /* @__PURE__ */ __name(() => ZodNaN, "ZodNaN"),
+  ZodNativeEnum: /* @__PURE__ */ __name(() => ZodNativeEnum, "ZodNativeEnum"),
+  ZodNever: /* @__PURE__ */ __name(() => ZodNever, "ZodNever"),
+  ZodNull: /* @__PURE__ */ __name(() => ZodNull, "ZodNull"),
+  ZodNullable: /* @__PURE__ */ __name(() => ZodNullable, "ZodNullable"),
+  ZodNumber: /* @__PURE__ */ __name(() => ZodNumber, "ZodNumber"),
+  ZodObject: /* @__PURE__ */ __name(() => ZodObject, "ZodObject"),
+  ZodOptional: /* @__PURE__ */ __name(() => ZodOptional, "ZodOptional"),
+  ZodParsedType: /* @__PURE__ */ __name(() => ZodParsedType, "ZodParsedType"),
+  ZodPipeline: /* @__PURE__ */ __name(() => ZodPipeline, "ZodPipeline"),
+  ZodPromise: /* @__PURE__ */ __name(() => ZodPromise, "ZodPromise"),
+  ZodReadonly: /* @__PURE__ */ __name(() => ZodReadonly, "ZodReadonly"),
+  ZodRecord: /* @__PURE__ */ __name(() => ZodRecord, "ZodRecord"),
+  ZodSchema: /* @__PURE__ */ __name(() => ZodType, "ZodSchema"),
+  ZodSet: /* @__PURE__ */ __name(() => ZodSet, "ZodSet"),
+  ZodString: /* @__PURE__ */ __name(() => ZodString, "ZodString"),
+  ZodSymbol: /* @__PURE__ */ __name(() => ZodSymbol, "ZodSymbol"),
+  ZodTransformer: /* @__PURE__ */ __name(() => ZodEffects, "ZodTransformer"),
+  ZodTuple: /* @__PURE__ */ __name(() => ZodTuple, "ZodTuple"),
+  ZodType: /* @__PURE__ */ __name(() => ZodType, "ZodType"),
+  ZodUndefined: /* @__PURE__ */ __name(() => ZodUndefined, "ZodUndefined"),
+  ZodUnion: /* @__PURE__ */ __name(() => ZodUnion, "ZodUnion"),
+  ZodUnknown: /* @__PURE__ */ __name(() => ZodUnknown, "ZodUnknown"),
+  ZodVoid: /* @__PURE__ */ __name(() => ZodVoid, "ZodVoid"),
+  addIssueToContext: /* @__PURE__ */ __name(() => addIssueToContext, "addIssueToContext"),
+  any: /* @__PURE__ */ __name(() => anyType, "any"),
+  array: /* @__PURE__ */ __name(() => arrayType, "array"),
+  bigint: /* @__PURE__ */ __name(() => bigIntType, "bigint"),
+  boolean: /* @__PURE__ */ __name(() => booleanType, "boolean"),
+  coerce: /* @__PURE__ */ __name(() => coerce, "coerce"),
+  custom: /* @__PURE__ */ __name(() => custom, "custom"),
+  date: /* @__PURE__ */ __name(() => dateType, "date"),
+  datetimeRegex: /* @__PURE__ */ __name(() => datetimeRegex, "datetimeRegex"),
+  defaultErrorMap: /* @__PURE__ */ __name(() => en_default, "defaultErrorMap"),
+  discriminatedUnion: /* @__PURE__ */ __name(() => discriminatedUnionType, "discriminatedUnion"),
+  effect: /* @__PURE__ */ __name(() => effectsType, "effect"),
+  enum: /* @__PURE__ */ __name(() => enumType, "enum"),
+  function: /* @__PURE__ */ __name(() => functionType, "function"),
+  getErrorMap: /* @__PURE__ */ __name(() => getErrorMap, "getErrorMap"),
+  getParsedType: /* @__PURE__ */ __name(() => getParsedType, "getParsedType"),
+  instanceof: /* @__PURE__ */ __name(() => instanceOfType, "instanceof"),
+  intersection: /* @__PURE__ */ __name(() => intersectionType, "intersection"),
+  isAborted: /* @__PURE__ */ __name(() => isAborted, "isAborted"),
+  isAsync: /* @__PURE__ */ __name(() => isAsync, "isAsync"),
+  isDirty: /* @__PURE__ */ __name(() => isDirty, "isDirty"),
+  isValid: /* @__PURE__ */ __name(() => isValid, "isValid"),
+  late: /* @__PURE__ */ __name(() => late, "late"),
+  lazy: /* @__PURE__ */ __name(() => lazyType, "lazy"),
+  literal: /* @__PURE__ */ __name(() => literalType, "literal"),
+  makeIssue: /* @__PURE__ */ __name(() => makeIssue, "makeIssue"),
+  map: /* @__PURE__ */ __name(() => mapType, "map"),
+  nan: /* @__PURE__ */ __name(() => nanType, "nan"),
+  nativeEnum: /* @__PURE__ */ __name(() => nativeEnumType, "nativeEnum"),
+  never: /* @__PURE__ */ __name(() => neverType, "never"),
+  null: /* @__PURE__ */ __name(() => nullType, "null"),
+  nullable: /* @__PURE__ */ __name(() => nullableType, "nullable"),
+  number: /* @__PURE__ */ __name(() => numberType, "number"),
+  object: /* @__PURE__ */ __name(() => objectType, "object"),
+  objectUtil: /* @__PURE__ */ __name(() => objectUtil, "objectUtil"),
+  oboolean: /* @__PURE__ */ __name(() => oboolean, "oboolean"),
+  onumber: /* @__PURE__ */ __name(() => onumber, "onumber"),
+  optional: /* @__PURE__ */ __name(() => optionalType, "optional"),
+  ostring: /* @__PURE__ */ __name(() => ostring, "ostring"),
+  pipeline: /* @__PURE__ */ __name(() => pipelineType, "pipeline"),
+  preprocess: /* @__PURE__ */ __name(() => preprocessType, "preprocess"),
+  promise: /* @__PURE__ */ __name(() => promiseType, "promise"),
+  quotelessJson: /* @__PURE__ */ __name(() => quotelessJson, "quotelessJson"),
+  record: /* @__PURE__ */ __name(() => recordType, "record"),
+  set: /* @__PURE__ */ __name(() => setType, "set"),
+  setErrorMap: /* @__PURE__ */ __name(() => setErrorMap, "setErrorMap"),
+  strictObject: /* @__PURE__ */ __name(() => strictObjectType, "strictObject"),
+  string: /* @__PURE__ */ __name(() => stringType, "string"),
+  symbol: /* @__PURE__ */ __name(() => symbolType, "symbol"),
+  transformer: /* @__PURE__ */ __name(() => effectsType, "transformer"),
+  tuple: /* @__PURE__ */ __name(() => tupleType, "tuple"),
+  undefined: /* @__PURE__ */ __name(() => undefinedType, "undefined"),
+  union: /* @__PURE__ */ __name(() => unionType, "union"),
+  unknown: /* @__PURE__ */ __name(() => unknownType, "unknown"),
+  util: /* @__PURE__ */ __name(() => util, "util"),
+  void: /* @__PURE__ */ __name(() => voidType, "void")
 });
-
-// ../node_modules/zod/v3/helpers/util.js
 var util;
 (function(util2) {
   util2.assertEqual = (_) => {
@@ -432,11 +453,13 @@ var util;
   function assertIs(_arg) {
   }
   __name(assertIs, "assertIs");
+  __name2(assertIs, "assertIs");
   util2.assertIs = assertIs;
   function assertNever(_x) {
     throw new Error();
   }
   __name(assertNever, "assertNever");
+  __name2(assertNever, "assertNever");
   util2.assertNever = assertNever;
   util2.arrayToEnum = (items) => {
     const obj = {};
@@ -479,6 +502,7 @@ var util;
     return array.map((val) => typeof val === "string" ? `'${val}'` : val).join(separator);
   }
   __name(joinValues, "joinValues");
+  __name2(joinValues, "joinValues");
   util2.joinValues = joinValues;
   util2.jsonStringifyReplacer = (_, value) => {
     if (typeof value === "bigint") {
@@ -519,7 +543,7 @@ var ZodParsedType = util.arrayToEnum([
   "map",
   "set"
 ]);
-var getParsedType = /* @__PURE__ */ __name((data) => {
+var getParsedType = /* @__PURE__ */ __name2((data) => {
   const t = typeof data;
   switch (t) {
     case "undefined":
@@ -560,8 +584,6 @@ var getParsedType = /* @__PURE__ */ __name((data) => {
       return ZodParsedType.unknown;
   }
 }, "getParsedType");
-
-// ../node_modules/zod/v3/ZodError.js
 var ZodIssueCode = util.arrayToEnum([
   "invalid_type",
   "invalid_literal",
@@ -580,13 +602,16 @@ var ZodIssueCode = util.arrayToEnum([
   "not_multiple_of",
   "not_finite"
 ]);
-var quotelessJson = /* @__PURE__ */ __name((obj) => {
+var quotelessJson = /* @__PURE__ */ __name2((obj) => {
   const json = JSON.stringify(obj, null, 2);
   return json.replace(/"([^"]+)":/g, "$1:");
 }, "quotelessJson");
 var ZodError = class _ZodError extends Error {
   static {
-    __name(this, "ZodError");
+    __name(this, "_ZodError");
+  }
+  static {
+    __name2(this, "ZodError");
   }
   get errors() {
     return this.issues;
@@ -614,7 +639,7 @@ var ZodError = class _ZodError extends Error {
       return issue.message;
     };
     const fieldErrors = { _errors: [] };
-    const processError = /* @__PURE__ */ __name((error) => {
+    const processError = /* @__PURE__ */ __name2((error) => {
       for (const issue of error.issues) {
         if (issue.code === "invalid_union") {
           issue.unionErrors.map(processError);
@@ -681,9 +706,7 @@ ZodError.create = (issues) => {
   const error = new ZodError(issues);
   return error;
 };
-
-// ../node_modules/zod/v3/locales/en.js
-var errorMap = /* @__PURE__ */ __name((issue, _ctx) => {
+var errorMap = /* @__PURE__ */ __name2((issue, _ctx) => {
   let message;
   switch (issue.code) {
     case ZodIssueCode.invalid_type:
@@ -784,20 +807,18 @@ var errorMap = /* @__PURE__ */ __name((issue, _ctx) => {
   return { message };
 }, "errorMap");
 var en_default = errorMap;
-
-// ../node_modules/zod/v3/errors.js
 var overrideErrorMap = en_default;
 function setErrorMap(map) {
   overrideErrorMap = map;
 }
 __name(setErrorMap, "setErrorMap");
+__name2(setErrorMap, "setErrorMap");
 function getErrorMap() {
   return overrideErrorMap;
 }
 __name(getErrorMap, "getErrorMap");
-
-// ../node_modules/zod/v3/helpers/parseUtil.js
-var makeIssue = /* @__PURE__ */ __name((params) => {
+__name2(getErrorMap, "getErrorMap");
+var makeIssue = /* @__PURE__ */ __name2((params) => {
   const { data, path, errorMaps, issueData } = params;
   const fullPath = [...path, ...issueData.path || []];
   const fullIssue = {
@@ -843,9 +864,13 @@ function addIssueToContext(ctx, issueData) {
   ctx.common.issues.push(issue);
 }
 __name(addIssueToContext, "addIssueToContext");
+__name2(addIssueToContext, "addIssueToContext");
 var ParseStatus = class _ParseStatus {
   static {
-    __name(this, "ParseStatus");
+    __name(this, "_ParseStatus");
+  }
+  static {
+    __name2(this, "ParseStatus");
   }
   constructor() {
     this.value = "valid";
@@ -903,24 +928,23 @@ var ParseStatus = class _ParseStatus {
 var INVALID = Object.freeze({
   status: "aborted"
 });
-var DIRTY = /* @__PURE__ */ __name((value) => ({ status: "dirty", value }), "DIRTY");
-var OK = /* @__PURE__ */ __name((value) => ({ status: "valid", value }), "OK");
-var isAborted = /* @__PURE__ */ __name((x) => x.status === "aborted", "isAborted");
-var isDirty = /* @__PURE__ */ __name((x) => x.status === "dirty", "isDirty");
-var isValid = /* @__PURE__ */ __name((x) => x.status === "valid", "isValid");
-var isAsync = /* @__PURE__ */ __name((x) => typeof Promise !== "undefined" && x instanceof Promise, "isAsync");
-
-// ../node_modules/zod/v3/helpers/errorUtil.js
+var DIRTY = /* @__PURE__ */ __name2((value) => ({ status: "dirty", value }), "DIRTY");
+var OK = /* @__PURE__ */ __name2((value) => ({ status: "valid", value }), "OK");
+var isAborted = /* @__PURE__ */ __name2((x) => x.status === "aborted", "isAborted");
+var isDirty = /* @__PURE__ */ __name2((x) => x.status === "dirty", "isDirty");
+var isValid = /* @__PURE__ */ __name2((x) => x.status === "valid", "isValid");
+var isAsync = /* @__PURE__ */ __name2((x) => typeof Promise !== "undefined" && x instanceof Promise, "isAsync");
 var errorUtil;
 (function(errorUtil2) {
   errorUtil2.errToObj = (message) => typeof message === "string" ? { message } : message || {};
   errorUtil2.toString = (message) => typeof message === "string" ? message : message?.message;
 })(errorUtil || (errorUtil = {}));
-
-// ../node_modules/zod/v3/types.js
 var ParseInputLazyPath = class {
   static {
     __name(this, "ParseInputLazyPath");
+  }
+  static {
+    __name2(this, "ParseInputLazyPath");
   }
   constructor(parent, value, path, key) {
     this._cachedPath = [];
@@ -940,7 +964,7 @@ var ParseInputLazyPath = class {
     return this._cachedPath;
   }
 };
-var handleResult = /* @__PURE__ */ __name((ctx, result) => {
+var handleResult = /* @__PURE__ */ __name2((ctx, result) => {
   if (isValid(result)) {
     return { success: true, data: result.value };
   } else {
@@ -968,7 +992,7 @@ function processCreateParams(params) {
   }
   if (errorMap2)
     return { errorMap: errorMap2, description };
-  const customMap = /* @__PURE__ */ __name((iss, ctx) => {
+  const customMap = /* @__PURE__ */ __name2((iss, ctx) => {
     const { message } = params;
     if (iss.code === "invalid_enum_value") {
       return { message: message ?? ctx.defaultError };
@@ -983,9 +1007,13 @@ function processCreateParams(params) {
   return { errorMap: customMap, description };
 }
 __name(processCreateParams, "processCreateParams");
+__name2(processCreateParams, "processCreateParams");
 var ZodType = class {
   static {
     __name(this, "ZodType");
+  }
+  static {
+    __name2(this, "ZodType");
   }
   get description() {
     return this._def.description;
@@ -1109,7 +1137,7 @@ var ZodType = class {
     return handleResult(ctx, result);
   }
   refine(check, message) {
-    const getIssueProperties = /* @__PURE__ */ __name((val) => {
+    const getIssueProperties = /* @__PURE__ */ __name2((val) => {
       if (typeof message === "string" || typeof message === "undefined") {
         return { message };
       } else if (typeof message === "function") {
@@ -1120,7 +1148,7 @@ var ZodType = class {
     }, "getIssueProperties");
     return this._refinement((val, ctx) => {
       const result = check(val);
-      const setError = /* @__PURE__ */ __name(() => ctx.addIssue({
+      const setError = /* @__PURE__ */ __name2(() => ctx.addIssue({
         code: ZodIssueCode.custom,
         ...getIssueProperties(val)
       }), "setError");
@@ -1192,7 +1220,7 @@ var ZodType = class {
     this["~standard"] = {
       version: 1,
       vendor: "zod",
-      validate: /* @__PURE__ */ __name((data) => this["~validate"](data), "validate")
+      validate: /* @__PURE__ */ __name2((data) => this["~validate"](data), "validate")
     };
   }
   optional() {
@@ -1298,10 +1326,12 @@ function timeRegexSource(args) {
   return `([01]\\d|2[0-3]):[0-5]\\d(:${secondsRegexSource})${secondsQuantifier}`;
 }
 __name(timeRegexSource, "timeRegexSource");
+__name2(timeRegexSource, "timeRegexSource");
 function timeRegex(args) {
   return new RegExp(`^${timeRegexSource(args)}$`);
 }
 __name(timeRegex, "timeRegex");
+__name2(timeRegex, "timeRegex");
 function datetimeRegex(args) {
   let regex = `${dateRegexSource}T${timeRegexSource(args)}`;
   const opts = [];
@@ -1312,6 +1342,7 @@ function datetimeRegex(args) {
   return new RegExp(`^${regex}$`);
 }
 __name(datetimeRegex, "datetimeRegex");
+__name2(datetimeRegex, "datetimeRegex");
 function isValidIP(ip, version) {
   if ((version === "v4" || !version) && ipv4Regex.test(ip)) {
     return true;
@@ -1322,6 +1353,7 @@ function isValidIP(ip, version) {
   return false;
 }
 __name(isValidIP, "isValidIP");
+__name2(isValidIP, "isValidIP");
 function isValidJWT(jwt, alg) {
   if (!jwtRegex.test(jwt))
     return false;
@@ -1345,6 +1377,7 @@ function isValidJWT(jwt, alg) {
   }
 }
 __name(isValidJWT, "isValidJWT");
+__name2(isValidJWT, "isValidJWT");
 function isValidCidr(ip, version) {
   if ((version === "v4" || !version) && ipv4CidrRegex.test(ip)) {
     return true;
@@ -1355,9 +1388,13 @@ function isValidCidr(ip, version) {
   return false;
 }
 __name(isValidCidr, "isValidCidr");
+__name2(isValidCidr, "isValidCidr");
 var ZodString = class _ZodString extends ZodType {
   static {
-    __name(this, "ZodString");
+    __name(this, "_ZodString");
+  }
+  static {
+    __name2(this, "ZodString");
   }
   _parse(input) {
     if (this._def.coerce) {
@@ -1913,9 +1950,13 @@ function floatSafeRemainder(val, step) {
   return valInt % stepInt / 10 ** decCount;
 }
 __name(floatSafeRemainder, "floatSafeRemainder");
+__name2(floatSafeRemainder, "floatSafeRemainder");
 var ZodNumber = class _ZodNumber extends ZodType {
   static {
-    __name(this, "ZodNumber");
+    __name(this, "_ZodNumber");
+  }
+  static {
+    __name2(this, "ZodNumber");
   }
   constructor() {
     super(...arguments);
@@ -2150,7 +2191,10 @@ ZodNumber.create = (params) => {
 };
 var ZodBigInt = class _ZodBigInt extends ZodType {
   static {
-    __name(this, "ZodBigInt");
+    __name(this, "_ZodBigInt");
+  }
+  static {
+    __name2(this, "ZodBigInt");
   }
   constructor() {
     super(...arguments);
@@ -2327,6 +2371,9 @@ var ZodBoolean = class extends ZodType {
   static {
     __name(this, "ZodBoolean");
   }
+  static {
+    __name2(this, "ZodBoolean");
+  }
   _parse(input) {
     if (this._def.coerce) {
       input.data = Boolean(input.data);
@@ -2353,7 +2400,10 @@ ZodBoolean.create = (params) => {
 };
 var ZodDate = class _ZodDate extends ZodType {
   static {
-    __name(this, "ZodDate");
+    __name(this, "_ZodDate");
+  }
+  static {
+    __name2(this, "ZodDate");
   }
   _parse(input) {
     if (this._def.coerce) {
@@ -2467,6 +2517,9 @@ var ZodSymbol = class extends ZodType {
   static {
     __name(this, "ZodSymbol");
   }
+  static {
+    __name2(this, "ZodSymbol");
+  }
   _parse(input) {
     const parsedType = this._getType(input);
     if (parsedType !== ZodParsedType.symbol) {
@@ -2490,6 +2543,9 @@ ZodSymbol.create = (params) => {
 var ZodUndefined = class extends ZodType {
   static {
     __name(this, "ZodUndefined");
+  }
+  static {
+    __name2(this, "ZodUndefined");
   }
   _parse(input) {
     const parsedType = this._getType(input);
@@ -2515,6 +2571,9 @@ var ZodNull = class extends ZodType {
   static {
     __name(this, "ZodNull");
   }
+  static {
+    __name2(this, "ZodNull");
+  }
   _parse(input) {
     const parsedType = this._getType(input);
     if (parsedType !== ZodParsedType.null) {
@@ -2539,6 +2598,9 @@ var ZodAny = class extends ZodType {
   static {
     __name(this, "ZodAny");
   }
+  static {
+    __name2(this, "ZodAny");
+  }
   constructor() {
     super(...arguments);
     this._any = true;
@@ -2557,6 +2619,9 @@ var ZodUnknown = class extends ZodType {
   static {
     __name(this, "ZodUnknown");
   }
+  static {
+    __name2(this, "ZodUnknown");
+  }
   constructor() {
     super(...arguments);
     this._unknown = true;
@@ -2574,6 +2639,9 @@ ZodUnknown.create = (params) => {
 var ZodNever = class extends ZodType {
   static {
     __name(this, "ZodNever");
+  }
+  static {
+    __name2(this, "ZodNever");
   }
   _parse(input) {
     const ctx = this._getOrReturnCtx(input);
@@ -2594,6 +2662,9 @@ ZodNever.create = (params) => {
 var ZodVoid = class extends ZodType {
   static {
     __name(this, "ZodVoid");
+  }
+  static {
+    __name2(this, "ZodVoid");
   }
   _parse(input) {
     const parsedType = this._getType(input);
@@ -2617,7 +2688,10 @@ ZodVoid.create = (params) => {
 };
 var ZodArray = class _ZodArray extends ZodType {
   static {
-    __name(this, "ZodArray");
+    __name(this, "_ZodArray");
+  }
+  static {
+    __name2(this, "ZodArray");
   }
   _parse(input) {
     const { ctx, status } = this._processInputParams(input);
@@ -2728,7 +2802,7 @@ function deepPartialify(schema) {
     }
     return new ZodObject({
       ...schema._def,
-      shape: /* @__PURE__ */ __name(() => newShape, "shape")
+      shape: /* @__PURE__ */ __name2(() => newShape, "shape")
     });
   } else if (schema instanceof ZodArray) {
     return new ZodArray({
@@ -2746,9 +2820,13 @@ function deepPartialify(schema) {
   }
 }
 __name(deepPartialify, "deepPartialify");
+__name2(deepPartialify, "deepPartialify");
 var ZodObject = class _ZodObject extends ZodType {
   static {
-    __name(this, "ZodObject");
+    __name(this, "_ZodObject");
+  }
+  static {
+    __name2(this, "ZodObject");
   }
   constructor() {
     super(...arguments);
@@ -2859,7 +2937,7 @@ var ZodObject = class _ZodObject extends ZodType {
       ...this._def,
       unknownKeys: "strict",
       ...message !== void 0 ? {
-        errorMap: /* @__PURE__ */ __name((issue, ctx) => {
+        errorMap: /* @__PURE__ */ __name2((issue, ctx) => {
           const defaultError = this._def.errorMap?.(issue, ctx).message ?? ctx.defaultError;
           if (issue.code === "unrecognized_keys")
             return {
@@ -2904,7 +2982,7 @@ var ZodObject = class _ZodObject extends ZodType {
   extend(augmentation) {
     return new _ZodObject({
       ...this._def,
-      shape: /* @__PURE__ */ __name(() => ({
+      shape: /* @__PURE__ */ __name2(() => ({
         ...this._def.shape(),
         ...augmentation
       }), "shape")
@@ -2919,7 +2997,7 @@ var ZodObject = class _ZodObject extends ZodType {
     const merged = new _ZodObject({
       unknownKeys: merging._def.unknownKeys,
       catchall: merging._def.catchall,
-      shape: /* @__PURE__ */ __name(() => ({
+      shape: /* @__PURE__ */ __name2(() => ({
         ...this._def.shape(),
         ...merging._def.shape()
       }), "shape"),
@@ -3001,7 +3079,7 @@ var ZodObject = class _ZodObject extends ZodType {
     }
     return new _ZodObject({
       ...this._def,
-      shape: /* @__PURE__ */ __name(() => shape, "shape")
+      shape: /* @__PURE__ */ __name2(() => shape, "shape")
     });
   }
   omit(mask) {
@@ -3013,7 +3091,7 @@ var ZodObject = class _ZodObject extends ZodType {
     }
     return new _ZodObject({
       ...this._def,
-      shape: /* @__PURE__ */ __name(() => shape, "shape")
+      shape: /* @__PURE__ */ __name2(() => shape, "shape")
     });
   }
   /**
@@ -3034,7 +3112,7 @@ var ZodObject = class _ZodObject extends ZodType {
     }
     return new _ZodObject({
       ...this._def,
-      shape: /* @__PURE__ */ __name(() => newShape, "shape")
+      shape: /* @__PURE__ */ __name2(() => newShape, "shape")
     });
   }
   required(mask) {
@@ -3053,7 +3131,7 @@ var ZodObject = class _ZodObject extends ZodType {
     }
     return new _ZodObject({
       ...this._def,
-      shape: /* @__PURE__ */ __name(() => newShape, "shape")
+      shape: /* @__PURE__ */ __name2(() => newShape, "shape")
     });
   }
   keyof() {
@@ -3062,7 +3140,7 @@ var ZodObject = class _ZodObject extends ZodType {
 };
 ZodObject.create = (shape, params) => {
   return new ZodObject({
-    shape: /* @__PURE__ */ __name(() => shape, "shape"),
+    shape: /* @__PURE__ */ __name2(() => shape, "shape"),
     unknownKeys: "strip",
     catchall: ZodNever.create(),
     typeName: ZodFirstPartyTypeKind.ZodObject,
@@ -3071,7 +3149,7 @@ ZodObject.create = (shape, params) => {
 };
 ZodObject.strictCreate = (shape, params) => {
   return new ZodObject({
-    shape: /* @__PURE__ */ __name(() => shape, "shape"),
+    shape: /* @__PURE__ */ __name2(() => shape, "shape"),
     unknownKeys: "strict",
     catchall: ZodNever.create(),
     typeName: ZodFirstPartyTypeKind.ZodObject,
@@ -3090,6 +3168,9 @@ ZodObject.lazycreate = (shape, params) => {
 var ZodUnion = class extends ZodType {
   static {
     __name(this, "ZodUnion");
+  }
+  static {
+    __name2(this, "ZodUnion");
   }
   _parse(input) {
     const { ctx } = this._processInputParams(input);
@@ -3114,6 +3195,7 @@ var ZodUnion = class extends ZodType {
       return INVALID;
     }
     __name(handleResults, "handleResults");
+    __name2(handleResults, "handleResults");
     if (ctx.common.async) {
       return Promise.all(options.map(async (option2) => {
         const childCtx = {
@@ -3182,7 +3264,7 @@ ZodUnion.create = (types, params) => {
     ...processCreateParams(params)
   });
 };
-var getDiscriminator = /* @__PURE__ */ __name((type) => {
+var getDiscriminator = /* @__PURE__ */ __name2((type) => {
   if (type instanceof ZodLazy) {
     return getDiscriminator(type.schema);
   } else if (type instanceof ZodEffects) {
@@ -3215,7 +3297,10 @@ var getDiscriminator = /* @__PURE__ */ __name((type) => {
 }, "getDiscriminator");
 var ZodDiscriminatedUnion = class _ZodDiscriminatedUnion extends ZodType {
   static {
-    __name(this, "ZodDiscriminatedUnion");
+    __name(this, "_ZodDiscriminatedUnion");
+  }
+  static {
+    __name2(this, "ZodDiscriminatedUnion");
   }
   _parse(input) {
     const { ctx } = this._processInputParams(input);
@@ -3331,13 +3416,17 @@ function mergeValues(a, b) {
   }
 }
 __name(mergeValues, "mergeValues");
+__name2(mergeValues, "mergeValues");
 var ZodIntersection = class extends ZodType {
   static {
     __name(this, "ZodIntersection");
   }
+  static {
+    __name2(this, "ZodIntersection");
+  }
   _parse(input) {
     const { status, ctx } = this._processInputParams(input);
-    const handleParsed = /* @__PURE__ */ __name((parsedLeft, parsedRight) => {
+    const handleParsed = /* @__PURE__ */ __name2((parsedLeft, parsedRight) => {
       if (isAborted(parsedLeft) || isAborted(parsedRight)) {
         return INVALID;
       }
@@ -3389,7 +3478,10 @@ ZodIntersection.create = (left, right, params) => {
 };
 var ZodTuple = class _ZodTuple extends ZodType {
   static {
-    __name(this, "ZodTuple");
+    __name(this, "_ZodTuple");
+  }
+  static {
+    __name2(this, "ZodTuple");
   }
   _parse(input) {
     const { status, ctx } = this._processInputParams(input);
@@ -3459,7 +3551,10 @@ ZodTuple.create = (schemas, params) => {
 };
 var ZodRecord = class _ZodRecord extends ZodType {
   static {
-    __name(this, "ZodRecord");
+    __name(this, "_ZodRecord");
+  }
+  static {
+    __name2(this, "ZodRecord");
   }
   get keySchema() {
     return this._def.keyType;
@@ -3516,6 +3611,9 @@ var ZodRecord = class _ZodRecord extends ZodType {
 var ZodMap = class extends ZodType {
   static {
     __name(this, "ZodMap");
+  }
+  static {
+    __name2(this, "ZodMap");
   }
   get keySchema() {
     return this._def.keyType;
@@ -3584,7 +3682,10 @@ ZodMap.create = (keyType, valueType, params) => {
 };
 var ZodSet = class _ZodSet extends ZodType {
   static {
-    __name(this, "ZodSet");
+    __name(this, "_ZodSet");
+  }
+  static {
+    __name2(this, "ZodSet");
   }
   _parse(input) {
     const { status, ctx } = this._processInputParams(input);
@@ -3636,6 +3737,7 @@ var ZodSet = class _ZodSet extends ZodType {
       return { status: status.value, value: parsedSet };
     }
     __name(finalizeSet, "finalizeSet");
+    __name2(finalizeSet, "finalizeSet");
     const elements = [...ctx.data.values()].map((item, i) => valueType._parse(new ParseInputLazyPath(ctx, item, ctx.path, i)));
     if (ctx.common.async) {
       return Promise.all(elements).then((elements2) => finalizeSet(elements2));
@@ -3673,7 +3775,10 @@ ZodSet.create = (valueType, params) => {
 };
 var ZodFunction = class _ZodFunction extends ZodType {
   static {
-    __name(this, "ZodFunction");
+    __name(this, "_ZodFunction");
+  }
+  static {
+    __name2(this, "ZodFunction");
   }
   constructor() {
     super(...arguments);
@@ -3701,6 +3806,7 @@ var ZodFunction = class _ZodFunction extends ZodType {
       });
     }
     __name(makeArgsIssue, "makeArgsIssue");
+    __name2(makeArgsIssue, "makeArgsIssue");
     function makeReturnsIssue(returns, error) {
       return makeIssue({
         data: returns,
@@ -3713,6 +3819,7 @@ var ZodFunction = class _ZodFunction extends ZodType {
       });
     }
     __name(makeReturnsIssue, "makeReturnsIssue");
+    __name2(makeReturnsIssue, "makeReturnsIssue");
     const params = { errorMap: ctx.common.contextualErrorMap };
     const fn = ctx.data;
     if (this._def.returns instanceof ZodPromise) {
@@ -3785,6 +3892,9 @@ var ZodLazy = class extends ZodType {
   static {
     __name(this, "ZodLazy");
   }
+  static {
+    __name2(this, "ZodLazy");
+  }
   get schema() {
     return this._def.getter();
   }
@@ -3804,6 +3914,9 @@ ZodLazy.create = (getter, params) => {
 var ZodLiteral = class extends ZodType {
   static {
     __name(this, "ZodLiteral");
+  }
+  static {
+    __name2(this, "ZodLiteral");
   }
   _parse(input) {
     if (input.data !== this._def.value) {
@@ -3836,9 +3949,13 @@ function createZodEnum(values, params) {
   });
 }
 __name(createZodEnum, "createZodEnum");
+__name2(createZodEnum, "createZodEnum");
 var ZodEnum = class _ZodEnum extends ZodType {
   static {
-    __name(this, "ZodEnum");
+    __name(this, "_ZodEnum");
+  }
+  static {
+    __name2(this, "ZodEnum");
   }
   _parse(input) {
     if (typeof input.data !== "string") {
@@ -3908,6 +4025,9 @@ var ZodNativeEnum = class extends ZodType {
   static {
     __name(this, "ZodNativeEnum");
   }
+  static {
+    __name2(this, "ZodNativeEnum");
+  }
   _parse(input) {
     const nativeEnumValues = util.getValidEnumValues(this._def.values);
     const ctx = this._getOrReturnCtx(input);
@@ -3949,6 +4069,9 @@ var ZodPromise = class extends ZodType {
   static {
     __name(this, "ZodPromise");
   }
+  static {
+    __name2(this, "ZodPromise");
+  }
   unwrap() {
     return this._def.type;
   }
@@ -3982,6 +4105,9 @@ var ZodEffects = class extends ZodType {
   static {
     __name(this, "ZodEffects");
   }
+  static {
+    __name2(this, "ZodEffects");
+  }
   innerType() {
     return this._def.schema;
   }
@@ -3992,7 +4118,7 @@ var ZodEffects = class extends ZodType {
     const { status, ctx } = this._processInputParams(input);
     const effect = this._def.effect || null;
     const checkCtx = {
-      addIssue: /* @__PURE__ */ __name((arg) => {
+      addIssue: /* @__PURE__ */ __name2((arg) => {
         addIssueToContext(ctx, arg);
         if (arg.fatal) {
           status.abort();
@@ -4042,7 +4168,7 @@ var ZodEffects = class extends ZodType {
       }
     }
     if (effect.type === "refinement") {
-      const executeRefinement = /* @__PURE__ */ __name((acc) => {
+      const executeRefinement = /* @__PURE__ */ __name2((acc) => {
         const result = effect.refinement(acc, checkCtx);
         if (ctx.common.async) {
           return Promise.resolve(result);
@@ -4124,6 +4250,9 @@ var ZodOptional = class extends ZodType {
   static {
     __name(this, "ZodOptional");
   }
+  static {
+    __name2(this, "ZodOptional");
+  }
   _parse(input) {
     const parsedType = this._getType(input);
     if (parsedType === ZodParsedType.undefined) {
@@ -4146,6 +4275,9 @@ var ZodNullable = class extends ZodType {
   static {
     __name(this, "ZodNullable");
   }
+  static {
+    __name2(this, "ZodNullable");
+  }
   _parse(input) {
     const parsedType = this._getType(input);
     if (parsedType === ZodParsedType.null) {
@@ -4167,6 +4299,9 @@ ZodNullable.create = (type, params) => {
 var ZodDefault = class extends ZodType {
   static {
     __name(this, "ZodDefault");
+  }
+  static {
+    __name2(this, "ZodDefault");
   }
   _parse(input) {
     const { ctx } = this._processInputParams(input);
@@ -4195,6 +4330,9 @@ ZodDefault.create = (type, params) => {
 var ZodCatch = class extends ZodType {
   static {
     __name(this, "ZodCatch");
+  }
+  static {
+    __name2(this, "ZodCatch");
   }
   _parse(input) {
     const { ctx } = this._processInputParams(input);
@@ -4252,6 +4390,9 @@ var ZodNaN = class extends ZodType {
   static {
     __name(this, "ZodNaN");
   }
+  static {
+    __name2(this, "ZodNaN");
+  }
   _parse(input) {
     const parsedType = this._getType(input);
     if (parsedType !== ZodParsedType.nan) {
@@ -4277,6 +4418,9 @@ var ZodBranded = class extends ZodType {
   static {
     __name(this, "ZodBranded");
   }
+  static {
+    __name2(this, "ZodBranded");
+  }
   _parse(input) {
     const { ctx } = this._processInputParams(input);
     const data = ctx.data;
@@ -4292,12 +4436,15 @@ var ZodBranded = class extends ZodType {
 };
 var ZodPipeline = class _ZodPipeline extends ZodType {
   static {
-    __name(this, "ZodPipeline");
+    __name(this, "_ZodPipeline");
+  }
+  static {
+    __name2(this, "ZodPipeline");
   }
   _parse(input) {
     const { status, ctx } = this._processInputParams(input);
     if (ctx.common.async) {
-      const handleAsync = /* @__PURE__ */ __name(async () => {
+      const handleAsync = /* @__PURE__ */ __name2(async () => {
         const inResult = await this._def.in._parseAsync({
           data: ctx.data,
           path: ctx.path,
@@ -4352,9 +4499,12 @@ var ZodReadonly = class extends ZodType {
   static {
     __name(this, "ZodReadonly");
   }
+  static {
+    __name2(this, "ZodReadonly");
+  }
   _parse(input) {
     const result = this._def.innerType._parse(input);
-    const freeze = /* @__PURE__ */ __name((data) => {
+    const freeze = /* @__PURE__ */ __name2((data) => {
       if (isValid(data)) {
         data.value = Object.freeze(data.value);
       }
@@ -4379,6 +4529,7 @@ function cleanParams(params, data) {
   return p2;
 }
 __name(cleanParams, "cleanParams");
+__name2(cleanParams, "cleanParams");
 function custom(check, _params = {}, fatal) {
   if (check)
     return ZodAny.create().superRefine((data, ctx) => {
@@ -4402,6 +4553,7 @@ function custom(check, _params = {}, fatal) {
   return ZodAny.create();
 }
 __name(custom, "custom");
+__name2(custom, "custom");
 var late = {
   object: ZodObject.lazycreate
 };
@@ -4444,7 +4596,7 @@ var ZodFirstPartyTypeKind;
   ZodFirstPartyTypeKind2["ZodPipeline"] = "ZodPipeline";
   ZodFirstPartyTypeKind2["ZodReadonly"] = "ZodReadonly";
 })(ZodFirstPartyTypeKind || (ZodFirstPartyTypeKind = {}));
-var instanceOfType = /* @__PURE__ */ __name((cls, params = {
+var instanceOfType = /* @__PURE__ */ __name2((cls, params = {
   message: `Input not instance of ${cls.name}`
 }) => custom((data) => data instanceof cls, params), "instanceOfType");
 var stringType = ZodString.create;
@@ -4481,22 +4633,20 @@ var optionalType = ZodOptional.create;
 var nullableType = ZodNullable.create;
 var preprocessType = ZodEffects.createWithPreprocess;
 var pipelineType = ZodPipeline.create;
-var ostring = /* @__PURE__ */ __name(() => stringType().optional(), "ostring");
-var onumber = /* @__PURE__ */ __name(() => numberType().optional(), "onumber");
-var oboolean = /* @__PURE__ */ __name(() => booleanType().optional(), "oboolean");
+var ostring = /* @__PURE__ */ __name2(() => stringType().optional(), "ostring");
+var onumber = /* @__PURE__ */ __name2(() => numberType().optional(), "onumber");
+var oboolean = /* @__PURE__ */ __name2(() => booleanType().optional(), "oboolean");
 var coerce = {
-  string: /* @__PURE__ */ __name(((arg) => ZodString.create({ ...arg, coerce: true })), "string"),
-  number: /* @__PURE__ */ __name(((arg) => ZodNumber.create({ ...arg, coerce: true })), "number"),
-  boolean: /* @__PURE__ */ __name(((arg) => ZodBoolean.create({
+  string: /* @__PURE__ */ __name2(((arg) => ZodString.create({ ...arg, coerce: true })), "string"),
+  number: /* @__PURE__ */ __name2(((arg) => ZodNumber.create({ ...arg, coerce: true })), "number"),
+  boolean: /* @__PURE__ */ __name2(((arg) => ZodBoolean.create({
     ...arg,
     coerce: true
   })), "boolean"),
-  bigint: /* @__PURE__ */ __name(((arg) => ZodBigInt.create({ ...arg, coerce: true })), "bigint"),
-  date: /* @__PURE__ */ __name(((arg) => ZodDate.create({ ...arg, coerce: true })), "date")
+  bigint: /* @__PURE__ */ __name2(((arg) => ZodBigInt.create({ ...arg, coerce: true })), "bigint"),
+  date: /* @__PURE__ */ __name2(((arg) => ZodDate.create({ ...arg, coerce: true })), "date")
 };
 var NEVER = INVALID;
-
-// ../src/domain/puzzles/campaignContracts.ts
 var hintTierIdSchema = external_exports.enum([
   "observation",
   "connection",
@@ -4672,8 +4822,6 @@ var manhwaMemoryPageSchema = external_exports.object({
     "outro"
   ]).optional()
 });
-
-// ../src/content/manhwa/finalManhwa.ts
 var FINAL_MANHWA_PUBLICATION_ID = "echo-network-final-2026-09-v1";
 var FINAL_MANHWA_PAGE_COUNT = 70;
 var FINAL_MANHWA_RELEASED_PAGE_COUNT = 9;
@@ -4684,7 +4832,7 @@ var FINAL_MANHWA_XP_REWARDS = Object.freeze({
   chapter_3: 200,
   chapter_4: 250
 });
-var publicationChapterId = /* @__PURE__ */ __name((chapterId) => `${FINAL_MANHWA_PUBLICATION_ID}_${chapterId}`.replace(/-/g, "_"), "publicationChapterId");
+var publicationChapterId = /* @__PURE__ */ __name2((chapterId) => `${FINAL_MANHWA_PUBLICATION_ID}_${chapterId}`.replace(/-/g, "_"), "publicationChapterId");
 var FINAL_MANHWA_CHAPTERS = Object.freeze([
   {
     chapterId: "chapter_1",
@@ -4744,17 +4892,19 @@ var EMPTY_ECHO_DELTA = Object.freeze({
   questionsAdded: [],
   knowledgeNodesAdded: []
 });
-var localized = /* @__PURE__ */ __name((ar, en) => ({ ar, en }), "localized");
+var localized = /* @__PURE__ */ __name2((ar, en) => ({ ar, en }), "localized");
 function pageIdFor(globalPageNumber) {
   return `${FINAL_MANHWA_PUBLICATION_ID.replace(/-/g, "_")}_page_${String(
     globalPageNumber
   ).padStart(3, "0")}`;
 }
 __name(pageIdFor, "pageIdFor");
+__name2(pageIdFor, "pageIdFor");
 function chapterForPage(globalPageNumber) {
   return FINAL_MANHWA_CHAPTERS.find((chapter) => globalPageNumber >= chapter.startPage && globalPageNumber <= chapter.endPage);
 }
 __name(chapterForPage, "chapterForPage");
+__name2(chapterForPage, "chapterForPage");
 function descriptionForPage(globalPageNumber, chapter) {
   if (globalPageNumber === 1) {
     return localized(
@@ -4774,6 +4924,7 @@ function descriptionForPage(globalPageNumber, chapter) {
   );
 }
 __name(descriptionForPage, "descriptionForPage");
+__name2(descriptionForPage, "descriptionForPage");
 function createPage(globalPageNumber) {
   const chapter = chapterForPage(globalPageNumber);
   const chapterId = chapter?.chapterId ?? "chapter_0";
@@ -4813,6 +4964,7 @@ function createPage(globalPageNumber) {
   };
 }
 __name(createPage, "createPage");
+__name2(createPage, "createPage");
 var FINAL_MANHWA_PAGES = Object.freeze(
   Array.from({ length: FINAL_MANHWA_PAGE_COUNT }, (_, index) => createPage(index + 1))
 );
@@ -4830,25 +4982,26 @@ function getFinalManhwaChapter(chapterId) {
   return FINAL_MANHWA_CHAPTERS.find((chapter) => chapter.chapterId === chapterId);
 }
 __name(getFinalManhwaChapter, "getFinalManhwaChapter");
+__name2(getFinalManhwaChapter, "getFinalManhwaChapter");
 function getFinalManhwaChapterByPublicationId(publicationChapterId2) {
   return FINAL_MANHWA_CHAPTERS.find((chapter) => chapter.publicationChapterId === publicationChapterId2);
 }
 __name(getFinalManhwaChapterByPublicationId, "getFinalManhwaChapterByPublicationId");
+__name2(getFinalManhwaChapterByPublicationId, "getFinalManhwaChapterByPublicationId");
 function getFinalManhwaChapterRewardSourceId(chapterId) {
   return getFinalManhwaChapter(chapterId)?.publicationChapterId ?? null;
 }
 __name(getFinalManhwaChapterRewardSourceId, "getFinalManhwaChapterRewardSourceId");
-
-// ../src/content/puzzles/storyPuzzleCatalog.ts
-var text = /* @__PURE__ */ __name((ar, en) => ({ ar, en }), "text");
-var option = /* @__PURE__ */ __name((id, ar, en, symbol) => ({ id, label: text(ar, en), symbol }), "option");
+__name2(getFinalManhwaChapterRewardSourceId, "getFinalManhwaChapterRewardSourceId");
+var text = /* @__PURE__ */ __name2((ar, en) => ({ ar, en }), "text");
+var option = /* @__PURE__ */ __name2((id, ar, en, symbol) => ({ id, label: text(ar, en), symbol }), "option");
 var systemOptions = Object.freeze([
   option("signal", "\u0627\u0644\u0625\u0634\u0627\u0631\u0629", "Signal", "\u2301"),
   option("access", "\u0627\u0644\u0648\u0635\u0648\u0644", "Access", "\u2318"),
   option("memory", "\u0627\u0644\u0630\u0627\u0643\u0631\u0629", "Memory", "\u25C7"),
   option("echo", "Echo", "Echo", "\u25C9")
 ]);
-var page = /* @__PURE__ */ __name((globalPageNumber) => {
+var page = /* @__PURE__ */ __name2((globalPageNumber) => {
   const source = FINAL_MANHWA_PAGE_BY_GLOBAL_NUMBER[globalPageNumber];
   if (!source) throw new Error(`Missing corrected Manhwa page ${globalPageNumber}.`);
   return { pageId: source.id, globalPageNumber: source.globalPageNumber };
@@ -4954,8 +5107,6 @@ var STORY_PUZZLE_COUNTS = Object.freeze({
   main: STORY_PUZZLES.filter((puzzle) => puzzle.classification === "main").length,
   secret: STORY_PUZZLES.filter((puzzle) => puzzle.classification === "secret").length
 });
-
-// ../src/domain/collection/collectionDefinitions.ts
 var MEMORY_SHARD_TOTAL = STORY_PUZZLES.length;
 var MEMORY_SHARD_SETS = Object.freeze([
   ["chapter_1", 1, 3],
@@ -4982,7 +5133,7 @@ var COSMETIC_CATALOG = Object.freeze([
   { id: "badge_system_recovery", type: "badge", label: "SYSTEM RECOVERY" },
   { id: "system_border_recovery", type: "system-border", label: "RECOVERY BORDER" }
 ]);
-var noEconomyReward = /* @__PURE__ */ __name((cosmetics = []) => ({
+var noEconomyReward = /* @__PURE__ */ __name2((cosmetics = []) => ({
   // Cosmetic ownership is the release reward. XP/Coins remain server-owned
   // and intentionally zero until balance is approved by the owner.
   xp: 0,
@@ -5023,8 +5174,7 @@ function cosmeticById(id) {
   return COSMETIC_CATALOG.find((cosmetic) => cosmetic.id === id);
 }
 __name(cosmeticById, "cosmeticById");
-
-// ../src/domain/collection/collectionProgression.ts
+__name2(cosmeticById, "cosmeticById");
 var SYSTEM_RECOVERY_WEIGHTS = Object.freeze({
   story: 30,
   puzzles: 20,
@@ -5037,10 +5187,12 @@ function clampPercent(value) {
   return Math.min(100, Math.max(0, Math.round(value)));
 }
 __name(clampPercent, "clampPercent");
+__name2(clampPercent, "clampPercent");
 function ratio(current, total) {
   return total > 0 ? clampPercent(current / total * 100) : 100;
 }
 __name(ratio, "ratio");
+__name2(ratio, "ratio");
 function createSystemRecovery(signals) {
   const publishedChapterCount = FINAL_MANHWA_CHAPTERS.filter(
     (chapter) => chapter.published
@@ -5065,6 +5217,7 @@ function createSystemRecovery(signals) {
   return { percent, story, puzzles, memory, secrets, archive, achievements };
 }
 __name(createSystemRecovery, "createSystemRecovery");
+__name2(createSystemRecovery, "createSystemRecovery");
 function conditionTarget(condition) {
   switch (condition.kind) {
     case "chapter-completed":
@@ -5076,6 +5229,7 @@ function conditionTarget(condition) {
   }
 }
 __name(conditionTarget, "conditionTarget");
+__name2(conditionTarget, "conditionTarget");
 function currentForAchievement(definition, signals, recoveryPercent) {
   const condition = definition.condition;
   switch (condition.kind) {
@@ -5106,6 +5260,7 @@ function currentForAchievement(definition, signals, recoveryPercent) {
   }
 }
 __name(currentForAchievement, "currentForAchievement");
+__name2(currentForAchievement, "currentForAchievement");
 function createCollectionAchievementViews(definitions, signals, unlockedById, recoveryPercent) {
   return definitions.map((definition) => {
     const target = conditionTarget(definition.condition);
@@ -5124,8 +5279,7 @@ function createCollectionAchievementViews(definitions, signals, unlockedById, re
   });
 }
 __name(createCollectionAchievementViews, "createCollectionAchievementViews");
-
-// ../src/domain/player-progression/playerProgression.ts
+__name2(createCollectionAchievementViews, "createCollectionAchievementViews");
 var PLAYER_XP_SOURCE_TYPES = [
   "puzzle",
   "manhwa",
@@ -5144,6 +5298,7 @@ function normalizeTotalXp(value) {
   return Math.min(MAX_TOTAL_XP, Math.max(0, Math.floor(numeric)));
 }
 __name(normalizeTotalXp, "normalizeTotalXp");
+__name2(normalizeTotalXp, "normalizeTotalXp");
 function totalXpRequiredForLevel(level) {
   const normalizedLevel = Math.min(
     MAX_PLAYER_LEVEL,
@@ -5152,6 +5307,7 @@ function totalXpRequiredForLevel(level) {
   return LEVEL_CURVE_BASE_XP * (normalizedLevel - 1) ** 2;
 }
 __name(totalXpRequiredForLevel, "totalXpRequiredForLevel");
+__name2(totalXpRequiredForLevel, "totalXpRequiredForLevel");
 function getPlayerLevelProgress(totalXp) {
   const normalizedXp = normalizeTotalXp(totalXp);
   const uncappedLevel = Math.floor(
@@ -5174,12 +5330,12 @@ function getPlayerLevelProgress(totalXp) {
   };
 }
 __name(getPlayerLevelProgress, "getPlayerLevelProgress");
+__name2(getPlayerLevelProgress, "getPlayerLevelProgress");
 function createXpRewardKey(sourceType, sourceId) {
   return `${sourceType}:${sourceId.trim()}:v1`;
 }
 __name(createXpRewardKey, "createXpRewardKey");
-
-// ../src/domain/manhwa/storyPuzzleManhwaAccess.ts
+__name2(createXpRewardKey, "createXpRewardKey");
 var MAIN_STORY_PUZZLES = STORY_PUZZLES.filter((puzzle) => puzzle.classification === "main").sort((left, right) => left.order - right.order);
 function deriveStoryPuzzleManhwaAccess(completedPuzzleIds) {
   const completed = new Set(
@@ -5204,21 +5360,22 @@ function deriveStoryPuzzleManhwaAccess(completedPuzzleIds) {
   };
 }
 __name(deriveStoryPuzzleManhwaAccess, "deriveStoryPuzzleManhwaAccess");
+__name2(deriveStoryPuzzleManhwaAccess, "deriveStoryPuzzleManhwaAccess");
 var INITIAL_STORY_PUZZLE_MANHWA_ACCESS = Object.freeze(
   deriveStoryPuzzleManhwaAccess([])
 );
-
-// api/player/_progressionRepository.ts
 function publicUsername(account) {
   const displayName = account.displayName?.replace(/[^\p{L}\p{N} ._-]/gu, "").replace(/\s+/g, " ").trim().slice(0, 28);
   return displayName || `SUBJECT-${account.uid.slice(-6).toUpperCase()}`;
 }
 __name(publicUsername, "publicUsername");
+__name2(publicUsername, "publicUsername");
 function toPositiveInteger(value, fallback = 1) {
   const numeric = Number(value);
   return Number.isFinite(numeric) ? Math.max(fallback, Math.floor(numeric)) : fallback;
 }
 __name(toPositiveInteger, "toPositiveInteger");
+__name2(toPositiveInteger, "toPositiveInteger");
 function mapPlayerRow(row, currentUid) {
   const progress = getPlayerLevelProgress(row.total_xp);
   return {
@@ -5229,6 +5386,7 @@ function mapPlayerRow(row, currentUid) {
   };
 }
 __name(mapPlayerRow, "mapPlayerRow");
+__name2(mapPlayerRow, "mapPlayerRow");
 function upsertPlayerStatement(db, account, now) {
   return db.prepare(`
     INSERT INTO player_progression (
@@ -5243,10 +5401,12 @@ function upsertPlayerStatement(db, account, now) {
   `).bind(account.uid, publicUsername(account), now, now);
 }
 __name(upsertPlayerStatement, "upsertPlayerStatement");
+__name2(upsertPlayerStatement, "upsertPlayerStatement");
 async function ensurePlayerProgressionRow(db, account, now = (/* @__PURE__ */ new Date()).toISOString()) {
   await upsertPlayerStatement(db, account, now).run();
 }
 __name(ensurePlayerProgressionRow, "ensurePlayerProgressionRow");
+__name2(ensurePlayerProgressionRow, "ensurePlayerProgressionRow");
 async function currentPlayerRow(db, uid) {
   const row = await db.prepare(`
     SELECT
@@ -5267,6 +5427,7 @@ async function currentPlayerRow(db, uid) {
   return row;
 }
 __name(currentPlayerRow, "currentPlayerRow");
+__name2(currentPlayerRow, "currentPlayerRow");
 async function assertRewardPrerequisites(db, uid, requiredRewardKeys) {
   if (requiredRewardKeys.length === 0) return;
   const placeholders = requiredRewardKeys.map(() => "?").join(", ");
@@ -5285,6 +5446,7 @@ async function assertRewardPrerequisites(db, uid, requiredRewardKeys) {
   }
 }
 __name(assertRewardPrerequisites, "assertRewardPrerequisites");
+__name2(assertRewardPrerequisites, "assertRewardPrerequisites");
 async function hasCompletedManhwaReading(db, uid, chapterId) {
   const chapter = getFinalManhwaChapterByPublicationId(chapterId);
   if (!chapter || !chapter.published) return false;
@@ -5313,6 +5475,7 @@ async function hasCompletedManhwaReading(db, uid, chapterId) {
   return expectedPageIds.every((pageId) => readPageIds.has(pageId));
 }
 __name(hasCompletedManhwaReading, "hasCompletedManhwaReading");
+__name2(hasCompletedManhwaReading, "hasCompletedManhwaReading");
 async function readLeaderboard(db, account, limit) {
   const now = (/* @__PURE__ */ new Date()).toISOString();
   await ensurePlayerProgressionRow(db, account, now);
@@ -5352,6 +5515,7 @@ async function readLeaderboard(db, account, limit) {
   };
 }
 __name(readLeaderboard, "readLeaderboard");
+__name2(readLeaderboard, "readLeaderboard");
 async function claimXpReward(db, account, reward) {
   await assertRewardPrerequisites(
     db,
@@ -5432,6 +5596,7 @@ async function claimXpReward(db, account, reward) {
   };
 }
 __name(claimXpReward, "claimXpReward");
+__name2(claimXpReward, "claimXpReward");
 async function readPlayerProfileStats(db, uid) {
   const puzzleRow = await db.prepare(`
     SELECT COUNT(*) AS total
@@ -5484,8 +5649,7 @@ async function readPlayerProfileStats(db, uid) {
   return { chaptersCompleted, puzzlesSolved, secretsFound };
 }
 __name(readPlayerProfileStats, "readPlayerProfileStats");
-
-// ../src/domain/player-profile/playerProfile.ts
+__name2(readPlayerProfileStats, "readPlayerProfileStats");
 var STARTER_PLAYER_AVATAR_IDS = [
   "echo",
   "silver_signal",
@@ -5510,41 +5674,45 @@ function isPlayerAvatarId(value) {
   return typeof value === "string" && PLAYER_AVATAR_IDS.includes(value);
 }
 __name(isPlayerAvatarId, "isPlayerAvatarId");
+__name2(isPlayerAvatarId, "isPlayerAvatarId");
 function isStarterPlayerAvatarId(value) {
   return typeof value === "string" && STARTER_PLAYER_AVATAR_IDS.includes(value);
 }
 __name(isStarterPlayerAvatarId, "isStarterPlayerAvatarId");
+__name2(isStarterPlayerAvatarId, "isStarterPlayerAvatarId");
 function isRarePlayerAvatarId(value) {
   return typeof value === "string" && RARE_PLAYER_AVATAR_IDS.includes(value);
 }
 __name(isRarePlayerAvatarId, "isRarePlayerAvatarId");
-
-// api/player/_profile.ts
+__name2(isRarePlayerAvatarId, "isRarePlayerAvatarId");
 function normalizeUsername(value) {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim().toLowerCase();
 }
 __name(normalizeUsername, "normalizeUsername");
+__name2(normalizeUsername, "normalizeUsername");
 function cleanUsername(value) {
   if (typeof value !== "string") return null;
   const cleaned = value.normalize("NFKC").replace(/[^\p{L}\p{N} ._-]/gu, "").replace(/\s+/g, " ").trim().slice(0, PROFILE_USERNAME_MAX_LENGTH);
   return cleaned.length >= PROFILE_USERNAME_MIN_LENGTH ? cleaned : null;
 }
 __name(cleanUsername, "cleanUsername");
+__name2(cleanUsername, "cleanUsername");
 function cleanBio(value) {
   if (typeof value !== "string") return "";
   return value.replace(/[\u0000-\u001F\u007F]/g, "").trim().slice(0, PROFILE_BIO_MAX_LENGTH);
 }
 __name(cleanBio, "cleanBio");
+__name2(cleanBio, "cleanBio");
 function fallbackUsername(account) {
   return `SUBJECT-${account.uid.slice(-10).toUpperCase()}`;
 }
 __name(fallbackUsername, "fallbackUsername");
+__name2(fallbackUsername, "fallbackUsername");
 function createSubjectId() {
   return `SUBJECT-${crypto.randomUUID().replaceAll("-", "").slice(0, 16).toUpperCase()}`;
 }
 __name(createSubjectId, "createSubjectId");
-
-// api/player/_avatarOwnership.ts
+__name2(createSubjectId, "createSubjectId");
 async function readRareUnlockedAvatarIds(db, uid) {
   const rows = await db.prepare(`
     SELECT avatar_id
@@ -5555,6 +5723,7 @@ async function readRareUnlockedAvatarIds(db, uid) {
   return (rows.results ?? []).map((row) => row.avatar_id).filter(isRarePlayerAvatarId);
 }
 __name(readRareUnlockedAvatarIds, "readRareUnlockedAvatarIds");
+__name2(readRareUnlockedAvatarIds, "readRareUnlockedAvatarIds");
 async function readUnlockedAvatarIds(db, uid) {
   return [
     ...STARTER_PLAYER_AVATAR_IDS,
@@ -5562,6 +5731,7 @@ async function readUnlockedAvatarIds(db, uid) {
   ];
 }
 __name(readUnlockedAvatarIds, "readUnlockedAvatarIds");
+__name2(readUnlockedAvatarIds, "readUnlockedAvatarIds");
 async function requireAvatarOwnership(db, uid, avatarId) {
   if (isStarterPlayerAvatarId(avatarId)) return;
   const owned = await db.prepare(`
@@ -5578,8 +5748,7 @@ async function requireAvatarOwnership(db, uid, avatarId) {
   }
 }
 __name(requireAvatarOwnership, "requireAvatarOwnership");
-
-// api/player/_profileAuthority.ts
+__name2(requireAvatarOwnership, "requireAvatarOwnership");
 function safeFeaturedIds(value) {
   try {
     const parsed = JSON.parse(value);
@@ -5589,6 +5758,7 @@ function safeFeaturedIds(value) {
   }
 }
 __name(safeFeaturedIds, "safeFeaturedIds");
+__name2(safeFeaturedIds, "safeFeaturedIds");
 function profileFromRow(row, account) {
   return {
     uid: row.user_id,
@@ -5606,6 +5776,7 @@ function profileFromRow(row, account) {
   };
 }
 __name(profileFromRow, "profileFromRow");
+__name2(profileFromRow, "profileFromRow");
 async function verifiedFeaturedIds(database, uid, requested) {
   if (requested.length === 0) return [];
   const rows = await database.prepare(`
@@ -5615,6 +5786,7 @@ async function verifiedFeaturedIds(database, uid, requested) {
   return requested.filter((id) => owned.has(id)).slice(0, 3);
 }
 __name(verifiedFeaturedIds, "verifiedFeaturedIds");
+__name2(verifiedFeaturedIds, "verifiedFeaturedIds");
 async function ensureAuthoritativePlayerProfile(database, account) {
   const existing = await database.prepare(`
     SELECT user_id, subject_id, username, bio, avatar_id,
@@ -5661,6 +5833,7 @@ async function ensureAuthoritativePlayerProfile(database, account) {
   return await ensureAuthoritativePlayerProfile(database, account);
 }
 __name(ensureAuthoritativePlayerProfile, "ensureAuthoritativePlayerProfile");
+__name2(ensureAuthoritativePlayerProfile, "ensureAuthoritativePlayerProfile");
 async function writeAuthoritativePlayerProfile(database, account, next) {
   const unlocked = await readUnlockedAvatarIds(database, account.uid);
   const avatarId = unlocked.includes(next.avatarId) ? next.avatarId : "echo";
@@ -5694,6 +5867,7 @@ async function writeAuthoritativePlayerProfile(database, account, next) {
   };
 }
 __name(writeAuthoritativePlayerProfile, "writeAuthoritativePlayerProfile");
+__name2(writeAuthoritativePlayerProfile, "writeAuthoritativePlayerProfile");
 async function readAuthoritativeFeaturedAchievementIds(database, uid) {
   const row = await database.prepare(`
     SELECT featured_achievement_ids_json FROM player_profile_authority WHERE user_id = ?
@@ -5701,6 +5875,7 @@ async function readAuthoritativeFeaturedAchievementIds(database, uid) {
   return row ? safeFeaturedIds(row.featured_achievement_ids_json) : [];
 }
 __name(readAuthoritativeFeaturedAchievementIds, "readAuthoritativeFeaturedAchievementIds");
+__name2(readAuthoritativeFeaturedAchievementIds, "readAuthoritativeFeaturedAchievementIds");
 async function readAuthoritativeDisplayName(database, uid, fallback) {
   const row = await database.prepare(`
     SELECT username FROM player_profile_authority WHERE user_id = ?
@@ -5708,8 +5883,7 @@ async function readAuthoritativeDisplayName(database, uid, fallback) {
   return row?.username || fallback;
 }
 __name(readAuthoritativeDisplayName, "readAuthoritativeDisplayName");
-
-// api/player/_collection.ts
+__name2(readAuthoritativeDisplayName, "readAuthoritativeDisplayName");
 var COLLECTION_COSMETIC_TYPES = /* @__PURE__ */ new Set([
   "title",
   "frame",
@@ -5723,10 +5897,12 @@ function integer(value) {
   return Number.isFinite(parsed) ? Math.max(0, Math.floor(parsed)) : 0;
 }
 __name(integer, "integer");
+__name2(integer, "integer");
 function isUniqueConflict(error) {
   return error instanceof Error && /unique|constraint/i.test(error.message);
 }
 __name(isUniqueConflict, "isUniqueConflict");
+__name2(isUniqueConflict, "isUniqueConflict");
 function chapterSetViews(shardIds, reconstructed) {
   return ACTIVE_MEMORY_SHARD_SETS.map((set) => {
     const collected = set.shardIds.filter((id) => shardIds.has(id)).length;
@@ -5745,6 +5921,7 @@ function chapterSetViews(shardIds, reconstructed) {
   });
 }
 __name(chapterSetViews, "chapterSetViews");
+__name2(chapterSetViews, "chapterSetViews");
 function createSignals(input) {
   const main = new Set(
     STORY_PUZZLES.filter((puzzle) => puzzle.classification === "main").map((puzzle) => puzzle.id)
@@ -5774,6 +5951,7 @@ function createSignals(input) {
   };
 }
 __name(createSignals, "createSignals");
+__name2(createSignals, "createSignals");
 async function readCollectionRows(database, uid) {
   const [completions, discoveries, shards, reconstructions, chapters, canon, achievements, cosmetics, equipped, secrets] = await Promise.all([
     database.prepare(`
@@ -5841,6 +6019,7 @@ async function readCollectionRows(database, uid) {
   };
 }
 __name(readCollectionRows, "readCollectionRows");
+__name2(readCollectionRows, "readCollectionRows");
 async function reconcileAchievements(database, uid, signals, existing) {
   const before = new Set(existing.map((row) => row.achievement_id));
   const currentById = Object.fromEntries(existing.map((row) => [row.achievement_id, row.unlocked_at]));
@@ -5883,6 +6062,7 @@ async function reconcileAchievements(database, uid, signals, existing) {
   return (after.results ?? []).map((row) => row.achievement_id).filter((id) => !before.has(id));
 }
 __name(reconcileAchievements, "reconcileAchievements");
+__name2(reconcileAchievements, "reconcileAchievements");
 function equippedView(rows) {
   const byType = new Map(rows.map((row) => [row.cosmetic_type, row.cosmetic_id]));
   return {
@@ -5894,6 +6074,7 @@ function equippedView(rows) {
   };
 }
 __name(equippedView, "equippedView");
+__name2(equippedView, "equippedView");
 function cosmeticViews(ownedRows, equipped) {
   const owned = new Set(ownedRows.map((row) => row.cosmetic_id));
   return COSMETIC_CATALOG.map((cosmetic) => ({
@@ -5903,6 +6084,7 @@ function cosmeticViews(ownedRows, equipped) {
   }));
 }
 __name(cosmeticViews, "cosmeticViews");
+__name2(cosmeticViews, "cosmeticViews");
 async function readCollectionSnapshot(database, account, idToken, env) {
   await ensurePlayerProgressionRow(database, account);
   const rows = await readCollectionRows(database, account.uid);
@@ -5972,6 +6154,7 @@ async function readCollectionSnapshot(database, account, idToken, env) {
   };
 }
 __name(readCollectionSnapshot, "readCollectionSnapshot");
+__name2(readCollectionSnapshot, "readCollectionSnapshot");
 async function reconstructMemory(database, account, idToken, chapterId, env) {
   const valid = ACTIVE_MEMORY_SHARD_SETS.find((set2) => set2.chapterId === chapterId);
   if (!valid) throw new PlayerApiError(400, "invalid_chapter", "Chapter is not available for reconstruction.");
@@ -5994,6 +6177,7 @@ async function reconstructMemory(database, account, idToken, chapterId, env) {
   };
 }
 __name(reconstructMemory, "reconstructMemory");
+__name2(reconstructMemory, "reconstructMemory");
 async function equipCosmetic(database, account, idToken, env, cosmeticId) {
   const cosmetic = cosmeticById(cosmeticId);
   if (!cosmetic || !COLLECTION_COSMETIC_TYPES.has(cosmetic.type)) {
@@ -6013,8 +6197,7 @@ async function equipCosmetic(database, account, idToken, env, cosmeticId) {
   return readCollectionSnapshot(database, account, idToken, env);
 }
 __name(equipCosmetic, "equipCosmetic");
-
-// api/player/collection/equip.ts
+__name2(equipCosmetic, "equipCosmetic");
 function parseCosmeticId(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     throw new PlayerApiError(400, "invalid_request", "Cosmetic selection is invalid.");
@@ -6026,10 +6209,12 @@ function parseCosmeticId(value) {
   return input.cosmeticId.trim();
 }
 __name(parseCosmeticId, "parseCosmeticId");
+__name2(parseCosmeticId, "parseCosmeticId");
 async function onRequestOptions({ request, env }) {
   return optionsResponse(request, env);
 }
 __name(onRequestOptions, "onRequestOptions");
+__name2(onRequestOptions, "onRequestOptions");
 async function onRequestPost({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -6052,8 +6237,7 @@ async function onRequestPost({ request, env }) {
   }
 }
 __name(onRequestPost, "onRequestPost");
-
-// api/player/collection/reconstruct.ts
+__name2(onRequestPost, "onRequestPost");
 function parseChapterId(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     throw new PlayerApiError(400, "invalid_request", "Memory reconstruction is invalid.");
@@ -6065,10 +6249,12 @@ function parseChapterId(value) {
   return input.chapterId.trim();
 }
 __name(parseChapterId, "parseChapterId");
+__name2(parseChapterId, "parseChapterId");
 async function onRequestOptions2({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions2, "onRequestOptions");
+__name(onRequestOptions2, "onRequestOptions2");
+__name2(onRequestOptions2, "onRequestOptions");
 async function onRequestPost2({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -6090,9 +6276,8 @@ async function onRequestPost2({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost2, "onRequestPost");
-
-// ../src/domain/live-challenges/liveChallengeEngine.ts
+__name(onRequestPost2, "onRequestPost2");
+__name2(onRequestPost2, "onRequestPost");
 var LIVE_CHALLENGE_VERSION = "smart-memory-v1";
 var LIVE_BALANCE_VERSION = "live-balance-v1";
 var LIVE_RESET_LABEL = "11:11";
@@ -6132,20 +6317,24 @@ function stableHash(input) {
   return hash2 >>> 0;
 }
 __name(stableHash, "stableHash");
+__name2(stableHash, "stableHash");
 function variantNumber(variant, divisor, minimum, span) {
   return minimum + Math.floor(variant / divisor) % span;
 }
 __name(variantNumber, "variantNumber");
+__name2(variantNumber, "variantNumber");
 function rotate(values, amount) {
   if (values.length === 0) return [];
   const offset = (amount % values.length + values.length) % values.length;
   return [...values.slice(offset), ...values.slice(0, offset)];
 }
 __name(rotate, "rotate");
+__name2(rotate, "rotate");
 function optionsFor(seed, answer, distractors) {
   return rotate([.../* @__PURE__ */ new Set([answer, ...distractors])], stableHash(`${seed}:options`));
 }
 __name(optionsFor, "optionsFor");
+__name2(optionsFor, "optionsFor");
 function encodeCaesar(value, shift) {
   return [...value].map((character) => {
     const code = character.charCodeAt(0);
@@ -6154,6 +6343,7 @@ function encodeCaesar(value, shift) {
   }).join("");
 }
 __name(encodeCaesar, "encodeCaesar");
+__name2(encodeCaesar, "encodeCaesar");
 var LIVE_TEMPLATE_FACTORIES = {
   signal(seed, variant) {
     const target = variantNumber(variant, 1, 46, 37);
@@ -6403,6 +6593,7 @@ function createTemplateForMechanic(seed, mechanic, variant = stableHash(seed)) {
   };
 }
 __name(createTemplateForMechanic, "createTemplateForMechanic");
+__name2(createTemplateForMechanic, "createTemplateForMechanic");
 function createLiveTemplateForSlot(seed, slot) {
   const normalizedSlot = Number.isSafeInteger(slot) ? Math.abs(slot) : 0;
   const mechanic = LIVE_MECHANIC_ROTATION[normalizedSlot % LIVE_MECHANIC_ROTATION.length];
@@ -6410,6 +6601,7 @@ function createLiveTemplateForSlot(seed, slot) {
   return createTemplateForMechanic(seed, mechanic, variant);
 }
 __name(createLiveTemplateForSlot, "createLiveTemplateForSlot");
+__name2(createLiveTemplateForSlot, "createLiveTemplateForSlot");
 var LIVE_TEMPLATE_POOL = Object.freeze(
   LIVE_MECHANIC_ROTATION.map((_, index) => createLiveTemplateForSlot(`quality-reference:${index}`, index))
 );
@@ -6417,15 +6609,15 @@ function isLiveAnswerCorrect(answer, expected) {
   return answer.trim().toLocaleUpperCase() === expected.toLocaleUpperCase();
 }
 __name(isLiveAnswerCorrect, "isLiveAnswerCorrect");
+__name2(isLiveAnswerCorrect, "isLiveAnswerCorrect");
 function validateLiveTemplate(template) {
   return template.templateId.length > 0 && template.options.length >= 3 && new Set(template.options).size === template.options.length && template.options.includes(template.answer) && template.hints.length === 3 && template.hints.every((hint) => hint.trim().length > 0);
 }
 __name(validateLiveTemplate, "validateLiveTemplate");
+__name2(validateLiveTemplate, "validateLiveTemplate");
 if (LIVE_TEMPLATE_POOL.some((template) => !validateLiveTemplate(template))) {
   throw new Error("Live challenge template pool contains an unsolvable definition.");
 }
-
-// ../src/domain/live-challenges/weeklyRewardCatalog.ts
 var WEEKLY_REWARD_PREVIEW = Object.freeze({
   tier: "rare",
   kind: "sealed",
@@ -6558,8 +6750,7 @@ function weeklyRewardPlanFor(completedWeeklyRewards, weekId, unlockedAvatarIds) 
   };
 }
 __name(weeklyRewardPlanFor, "weeklyRewardPlanFor");
-
-// ../src/domain/live-challenges/smartLivePuzzleGenerator.ts
+__name2(weeklyRewardPlanFor, "weeklyRewardPlanFor");
 var SMART_LIVE_VERSION = "smart-memory-v1";
 var SMART_WEEKLY_STAGE_COUNT = 4;
 var SMART_MECHANIC_ROTATION = Object.freeze([
@@ -6633,10 +6824,12 @@ function hash(input) {
   return value >>> 0;
 }
 __name(hash, "hash");
+__name2(hash, "hash");
 function pick(values, seed, channel) {
   return values[hash(`${seed}:${channel}`) % values.length];
 }
 __name(pick, "pick");
+__name2(pick, "pick");
 function shuffle(values, seed) {
   const result = [...values];
   for (let index = result.length - 1; index > 0; index -= 1) {
@@ -6646,10 +6839,12 @@ function shuffle(values, seed) {
   return result;
 }
 __name(shuffle, "shuffle");
+__name2(shuffle, "shuffle");
 function encodedOptions(answer, distractors, seed) {
   return shuffle([.../* @__PURE__ */ new Set([answer, ...distractors])], `${seed}:options`);
 }
 __name(encodedOptions, "encodedOptions");
+__name2(encodedOptions, "encodedOptions");
 function fourOptions(answer, candidates, seed) {
   const unique = [.../* @__PURE__ */ new Set([answer, ...candidates])];
   const filled = [...unique];
@@ -6663,6 +6858,7 @@ function fourOptions(answer, candidates, seed) {
   return shuffle([answer, ...filled.filter((option2) => option2 !== answer).slice(0, 3)], `${seed}:four-options`);
 }
 __name(fourOptions, "fourOptions");
+__name2(fourOptions, "fourOptions");
 function encodeCaesar2(value, shift) {
   return [...value].map((character) => {
     const code = character.charCodeAt(0);
@@ -6670,7 +6866,8 @@ function encodeCaesar2(value, shift) {
     return String.fromCharCode(65 + (code - 65 + shift) % 26);
   }).join("");
 }
-__name(encodeCaesar2, "encodeCaesar");
+__name(encodeCaesar2, "encodeCaesar2");
+__name2(encodeCaesar2, "encodeCaesar");
 function imagePiecePosition(index, rows, columns) {
   const row = Math.floor(index / columns);
   const column = index % columns;
@@ -6679,6 +6876,7 @@ function imagePiecePosition(index, rows, columns) {
   return `${x}% ${y}%`;
 }
 __name(imagePiecePosition, "imagePiecePosition");
+__name2(imagePiecePosition, "imagePiecePosition");
 function rewardFor(kind, difficulty) {
   if (kind === "weekly") {
     return WEEKLY_REWARD_PREVIEW;
@@ -6696,6 +6894,7 @@ function rewardFor(kind, difficulty) {
   };
 }
 __name(rewardFor, "rewardFor");
+__name2(rewardFor, "rewardFor");
 function createMemoryTemplate(seed, kind) {
   const rows = 2;
   const columns = 3;
@@ -6737,6 +6936,7 @@ function createMemoryTemplate(seed, kind) {
   };
 }
 __name(createMemoryTemplate, "createMemoryTemplate");
+__name2(createMemoryTemplate, "createMemoryTemplate");
 function createWiringTemplate(seed, kind) {
   const scene = pick(WIRING_SCENES, seed, "wiring-scene");
   const targetIndices = shuffle(scene.targets.map((_, index) => index), `${seed}:wiring-order`);
@@ -6770,6 +6970,7 @@ function createWiringTemplate(seed, kind) {
   };
 }
 __name(createWiringTemplate, "createWiringTemplate");
+__name2(createWiringTemplate, "createWiringTemplate");
 function createCipherTemplate(seed, kind) {
   const word = pick(ECHO_MEMORY_WORDS, seed, "cipher-word");
   const shift = hash(`${seed}:cipher-shift`) % 9 + 2;
@@ -6803,10 +7004,11 @@ function createCipherTemplate(seed, kind) {
   };
 }
 __name(createCipherTemplate, "createCipherTemplate");
+__name2(createCipherTemplate, "createCipherTemplate");
 function createChoiceTemplate(seed, kind, mechanic) {
   const difficulty = kind === "weekly" ? "deep" : pick(["standard", "focused", "deep"], seed, "difficulty");
   const reward = rewardFor(kind, difficulty);
-  const make = /* @__PURE__ */ __name((title, instructions, prompt, answer2, options, layout, items, hints) => ({
+  const make = /* @__PURE__ */ __name2((title, instructions, prompt, answer2, options, layout, items, hints) => ({
     templateId: `echo-memory-${mechanic}`,
     mechanic,
     title,
@@ -7035,6 +7237,7 @@ function createChoiceTemplate(seed, kind, mechanic) {
   );
 }
 __name(createChoiceTemplate, "createChoiceTemplate");
+__name2(createChoiceTemplate, "createChoiceTemplate");
 function smartLiveTemplateFor(periodKey, kind, stageIndex = 0) {
   const seed = `${SMART_LIVE_VERSION}:${kind}:${periodKey}:${stageIndex}`;
   const periodSlot = Math.floor(Date.parse(`${periodKey}T00:00:00.000Z`) / (24 * 60 * 60 * 1e3));
@@ -7047,6 +7250,7 @@ function smartLiveTemplateFor(periodKey, kind, stageIndex = 0) {
   };
 }
 __name(smartLiveTemplateFor, "smartLiveTemplateFor");
+__name2(smartLiveTemplateFor, "smartLiveTemplateFor");
 function smartLiveFingerprint(template) {
   return JSON.stringify([
     template.mechanic,
@@ -7056,6 +7260,7 @@ function smartLiveFingerprint(template) {
   ]);
 }
 __name(smartLiveFingerprint, "smartLiveFingerprint");
+__name2(smartLiveFingerprint, "smartLiveFingerprint");
 function isSmartLiveTemplateValid(template) {
   if (!template.templateId || !template.answer || template.answer.length > 80 || template.hints.length !== 3 || template.prompt.includes("NaN") || template.options.some((option2) => option2.startsWith("DECOY-"))) return false;
   if (template.mechanic === "memory-fragment") {
@@ -7078,13 +7283,12 @@ function isSmartLiveTemplateValid(template) {
   return visual.items.length >= 2 && template.options.length === 4 && new Set(template.options).size === 4 && template.options.includes(template.answer);
 }
 __name(isSmartLiveTemplateValid, "isSmartLiveTemplateValid");
+__name2(isSmartLiveTemplateValid, "isSmartLiveTemplateValid");
 var qualitySamples = Array.from({ length: 75 }, (_, index) => smartLiveTemplateFor(`2026-${String(index % 12 + 1).padStart(2, "0")}-01`, "weekly", index % SMART_WEEKLY_STAGE_COUNT));
 var invalidQualitySample = qualitySamples.find((template) => !isSmartLiveTemplateValid(template));
 if (invalidQualitySample) {
   throw new Error(`Smart live puzzle generator contains an invalid template: ${invalidQualitySample.mechanic}/${invalidQualitySample.answer}/${invalidQualitySample.options.length}`);
 }
-
-// api/player/_liveChallenges.ts
 var DAY_MS = 24 * 60 * 60 * 1e3;
 var RESET_MINUTES = 11 * 60 + 11;
 var RESET_HOUR = Math.floor(RESET_MINUTES / 60);
@@ -7094,6 +7298,7 @@ function requiredStoryChapterForLiveChallenge(mode) {
   return mode === "daily" ? "chapter_1" : "chapter_2";
 }
 __name(requiredStoryChapterForLiveChallenge, "requiredStoryChapterForLiveChallenge");
+__name2(requiredStoryChapterForLiveChallenge, "requiredStoryChapterForLiveChallenge");
 async function hasLiveChallengeProgression(database, account, mode) {
   const chapterId = requiredStoryChapterForLiveChallenge(mode);
   const rewardSourceId = getFinalManhwaChapterRewardSourceId(chapterId);
@@ -7110,6 +7315,7 @@ async function hasLiveChallengeProgression(database, account, mode) {
   return Boolean(receipt?.reward_key);
 }
 __name(hasLiveChallengeProgression, "hasLiveChallengeProgression");
+__name2(hasLiveChallengeProgression, "hasLiveChallengeProgression");
 async function requireLiveChallengeProgression(database, account, mode) {
   if (!await hasLiveChallengeProgression(database, account, mode)) {
     throw new PlayerApiError(
@@ -7120,29 +7326,35 @@ async function requireLiveChallengeProgression(database, account, mode) {
   }
 }
 __name(requireLiveChallengeProgression, "requireLiveChallengeProgression");
+__name2(requireLiveChallengeProgression, "requireLiveChallengeProgression");
 function didInsertLiveHint(result) {
   return Number(result?.meta?.changes ?? 0) > 0;
 }
 __name(didInsertLiveHint, "didInsertLiveHint");
+__name2(didInsertLiveHint, "didInsertLiveHint");
 function integer2(value) {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? Math.max(0, Math.floor(parsed)) : 0;
 }
-__name(integer2, "integer");
+__name(integer2, "integer2");
+__name2(integer2, "integer");
 function isoDate(ms) {
   return new Date(ms).toISOString().slice(0, 10);
 }
 __name(isoDate, "isoDate");
+__name2(isoDate, "isoDate");
 function dateMs(periodKey) {
   const parsed = Date.parse(`${periodKey}T00:00:00.000Z`);
   if (!Number.isFinite(parsed)) throw new Error("Invalid live period key.");
   return parsed;
 }
 __name(dateMs, "dateMs");
+__name2(dateMs, "dateMs");
 function shiftDate(periodKey, days) {
   return isoDate(dateMs(periodKey) + days * DAY_MS);
 }
 __name(shiftDate, "shiftDate");
+__name2(shiftDate, "shiftDate");
 function periodKeyFor(nowMs) {
   const date = new Date(nowMs);
   const resetAt = Date.UTC(
@@ -7155,11 +7367,13 @@ function periodKeyFor(nowMs) {
   return isoDate(nowMs < resetAt ? resetAt - DAY_MS : resetAt);
 }
 __name(periodKeyFor, "periodKeyFor");
+__name2(periodKeyFor, "periodKeyFor");
 function resetAtFor(periodKey) {
   const day = new Date(dateMs(periodKey));
   return Date.UTC(day.getUTCFullYear(), day.getUTCMonth(), day.getUTCDate(), RESET_HOUR, RESET_MINUTE);
 }
 __name(resetAtFor, "resetAtFor");
+__name2(resetAtFor, "resetAtFor");
 function weekIdFor(periodKey) {
   const day = dateMs(periodKey);
   const weekday = new Date(day).getUTCDay();
@@ -7167,6 +7381,7 @@ function weekIdFor(periodKey) {
   return shiftDate(periodKey, -daysFromMonday);
 }
 __name(weekIdFor, "weekIdFor");
+__name2(weekIdFor, "weekIdFor");
 function publicDefinition(id, kind, periodKey, template, stageIndex) {
   return {
     id,
@@ -7188,6 +7403,7 @@ function publicDefinition(id, kind, periodKey, template, stageIndex) {
   };
 }
 __name(publicDefinition, "publicDefinition");
+__name2(publicDefinition, "publicDefinition");
 function solution(template) {
   return {
     answer: template.answer,
@@ -7197,14 +7413,17 @@ function solution(template) {
   };
 }
 __name(solution, "solution");
+__name2(solution, "solution");
 function liveDailyTemplateFor(periodKey) {
   return smartLiveTemplateFor(periodKey, "daily");
 }
 __name(liveDailyTemplateFor, "liveDailyTemplateFor");
+__name2(liveDailyTemplateFor, "liveDailyTemplateFor");
 function liveWeeklyTemplatesFor(weekId) {
   return Array.from({ length: WEEKLY_STAGE_COUNT }, (_, index) => smartLiveTemplateFor(weekId, "weekly", index));
 }
 __name(liveWeeklyTemplatesFor, "liveWeeklyTemplatesFor");
+__name2(liveWeeklyTemplatesFor, "liveWeeklyTemplatesFor");
 function parseJson(value, fallback) {
   try {
     return JSON.parse(value);
@@ -7213,6 +7432,7 @@ function parseJson(value, fallback) {
   }
 }
 __name(parseJson, "parseJson");
+__name2(parseJson, "parseJson");
 function draftFromRow(value) {
   const parsed = parseJson(value ?? "{}", {});
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
@@ -7220,10 +7440,12 @@ function draftFromRow(value) {
   return typeof answer === "string" && answer.length <= 80 ? { answer } : {};
 }
 __name(draftFromRow, "draftFromRow");
+__name2(draftFromRow, "draftFromRow");
 function isLivePerfectHintConflict(error) {
   return error instanceof Error && /live perfect solve requires no hint/i.test(error.message);
 }
 __name(isLivePerfectHintConflict, "isLivePerfectHintConflict");
+__name2(isLivePerfectHintConflict, "isLivePerfectHintConflict");
 async function hasLiveHint(db, uid, challengeId, matchStages = false) {
   const row = matchStages ? await db.prepare(`
       SELECT 1 AS used
@@ -7239,6 +7461,7 @@ async function hasLiveHint(db, uid, challengeId, matchStages = false) {
   return Boolean(row?.used);
 }
 __name(hasLiveHint, "hasLiveHint");
+__name2(hasLiveHint, "hasLiveHint");
 async function ensureDefinitions(db, nowMs, includeWeekly = true) {
   const periodKey = periodKeyFor(nowMs);
   const weekId = weekIdFor(periodKey);
@@ -7348,6 +7571,7 @@ async function ensureDefinitions(db, nowMs, includeWeekly = true) {
   return { daily, weekly, stages, periodKey, weekId };
 }
 __name(ensureDefinitions, "ensureDefinitions");
+__name2(ensureDefinitions, "ensureDefinitions");
 function requireWeeklyDefinition(definition) {
   if (!definition) {
     throw new PlayerApiError(
@@ -7359,6 +7583,7 @@ function requireWeeklyDefinition(definition) {
   return definition;
 }
 __name(requireWeeklyDefinition, "requireWeeklyDefinition");
+__name2(requireWeeklyDefinition, "requireWeeklyDefinition");
 function publicFromRow(row) {
   return parseJson(row.public_definition_json, {
     id: row.challenge_id,
@@ -7373,14 +7598,17 @@ function publicFromRow(row) {
   });
 }
 __name(publicFromRow, "publicFromRow");
+__name2(publicFromRow, "publicFromRow");
 function solutionFromRow(row) {
   return parseJson(row.solution_json, { answer: "", hints: [] });
 }
 __name(solutionFromRow, "solutionFromRow");
+__name2(solutionFromRow, "solutionFromRow");
 function statusFromRow(row) {
   return row?.status ?? "available";
 }
 __name(statusFromRow, "statusFromRow");
+__name2(statusFromRow, "statusFromRow");
 function parseDraft(value) {
   if (value === void 0) return "{}";
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
@@ -7396,6 +7624,7 @@ function parseDraft(value) {
   return JSON.stringify(input);
 }
 __name(parseDraft, "parseDraft");
+__name2(parseDraft, "parseDraft");
 function parseAnswer(value) {
   if (typeof value !== "string" || value.trim().length < 1 || value.length > 80) {
     throw new PlayerApiError(400, "invalid_live_answer", "Live answer is invalid.");
@@ -7403,6 +7632,7 @@ function parseAnswer(value) {
   return value.trim();
 }
 __name(parseAnswer, "parseAnswer");
+__name2(parseAnswer, "parseAnswer");
 async function ensureDailyAttempt(db, uid, definition, now) {
   await db.prepare(`
     INSERT OR IGNORE INTO live_player_daily_attempts (
@@ -7411,6 +7641,7 @@ async function ensureDailyAttempt(db, uid, definition, now) {
   `).bind(uid, definition.challenge_id, definition.period_key, now).run();
 }
 __name(ensureDailyAttempt, "ensureDailyAttempt");
+__name2(ensureDailyAttempt, "ensureDailyAttempt");
 async function ensureWeeklyProgress(db, uid, weekId, now) {
   await db.prepare(`
     INSERT OR IGNORE INTO live_player_weekly_progress (
@@ -7419,6 +7650,7 @@ async function ensureWeeklyProgress(db, uid, weekId, now) {
   `).bind(uid, weekId, now).run();
 }
 __name(ensureWeeklyProgress, "ensureWeeklyProgress");
+__name2(ensureWeeklyProgress, "ensureWeeklyProgress");
 async function rewardLiveEvent(db, account, input) {
   const now = (/* @__PURE__ */ new Date()).toISOString();
   const sourceType = input.rewardType === "daily" ? "daily_trial" : "weekly_trial";
@@ -7467,6 +7699,7 @@ async function rewardLiveEvent(db, account, input) {
   };
 }
 __name(rewardLiveEvent, "rewardLiveEvent");
+__name2(rewardLiveEvent, "rewardLiveEvent");
 async function readDailyHistory(db, uid) {
   const rows = await db.prepare(`
     SELECT period_key, status, perfect_solve, completed_at
@@ -7483,6 +7716,7 @@ async function readDailyHistory(db, uid) {
   }));
 }
 __name(readDailyHistory, "readDailyHistory");
+__name2(readDailyHistory, "readDailyHistory");
 async function readLiveSnapshot(db, account, nowMs = Date.now()) {
   await ensurePlayerProgressionRow(db, account);
   const weeklyUnlocked = await hasLiveChallengeProgression(db, account, "weekly");
@@ -7575,10 +7809,12 @@ async function readLiveSnapshot(db, account, nowMs = Date.now()) {
   };
 }
 __name(readLiveSnapshot, "readLiveSnapshot");
+__name2(readLiveSnapshot, "readLiveSnapshot");
 async function startDaily(db, account) {
   return readLiveSnapshot(db, account);
 }
 __name(startDaily, "startDaily");
+__name2(startDaily, "startDaily");
 async function saveDailyDraft(db, account, draft) {
   await ensurePlayerProgressionRow(db, account);
   const definitions = await ensureDefinitions(db, Date.now(), false);
@@ -7591,6 +7827,7 @@ async function saveDailyDraft(db, account, draft) {
   return readLiveSnapshot(db, account);
 }
 __name(saveDailyDraft, "saveDailyDraft");
+__name2(saveDailyDraft, "saveDailyDraft");
 async function useDailyHint(db, account, hintValue) {
   const hintIndex = typeof hintValue === "number" ? hintValue : -1;
   if (!Number.isInteger(hintIndex) || hintIndex < 0 || hintIndex > 2) throw new PlayerApiError(400, "invalid_hint", "Hint index is invalid.");
@@ -7627,6 +7864,7 @@ async function useDailyHint(db, account, hintValue) {
   return { alreadyUnlocked: Boolean(existing), hint, live };
 }
 __name(useDailyHint, "useDailyHint");
+__name2(useDailyHint, "useDailyHint");
 async function completeDaily(db, account, answerValue, retriedAfterPerfectHintRace = false) {
   await ensurePlayerProgressionRow(db, account);
   const definitions = await ensureDefinitions(db, Date.now(), false);
@@ -7674,10 +7912,12 @@ async function completeDaily(db, account, answerValue, retriedAfterPerfectHintRa
   };
 }
 __name(completeDaily, "completeDaily");
+__name2(completeDaily, "completeDaily");
 async function startWeekly(db, account) {
   return readLiveSnapshot(db, account);
 }
 __name(startWeekly, "startWeekly");
+__name2(startWeekly, "startWeekly");
 async function saveWeeklyDraft(db, account, draft) {
   await ensurePlayerProgressionRow(db, account);
   const definitions = await ensureDefinitions(db, Date.now());
@@ -7689,6 +7929,7 @@ async function saveWeeklyDraft(db, account, draft) {
   return readLiveSnapshot(db, account);
 }
 __name(saveWeeklyDraft, "saveWeeklyDraft");
+__name2(saveWeeklyDraft, "saveWeeklyDraft");
 async function useWeeklyHint(db, account, hintValue) {
   const hintIndex = typeof hintValue === "number" ? hintValue : -1;
   if (!Number.isInteger(hintIndex) || hintIndex < 0 || hintIndex > 2) throw new PlayerApiError(400, "invalid_hint", "Hint index is invalid.");
@@ -7731,6 +7972,7 @@ async function useWeeklyHint(db, account, hintValue) {
   };
 }
 __name(useWeeklyHint, "useWeeklyHint");
+__name2(useWeeklyHint, "useWeeklyHint");
 async function completeWeeklyStage(db, account, stageValue, answerValue, retriedAfterPerfectHintRace = false) {
   if (typeof stageValue !== "number" || !Number.isInteger(stageValue) || stageValue < 0 || stageValue >= WEEKLY_STAGE_COUNT) throw new PlayerApiError(400, "invalid_weekly_stage", "Weekly stage is invalid.");
   await ensurePlayerProgressionRow(db, account);
@@ -7791,6 +8033,7 @@ async function completeWeeklyStage(db, account, stageValue, answerValue, retried
   return { kind: "weekly", challengeId: weeklyDefinition.challenge_id, awarded: reward.awarded, perfectSolve: perfect, xpGranted: reward.xp, coinsGranted: reward.coins, reward: reward.reward, live: await readLiveSnapshot(db, account) };
 }
 __name(completeWeeklyStage, "completeWeeklyStage");
+__name2(completeWeeklyStage, "completeWeeklyStage");
 async function maybeClaimWeeklyRecovery(db, account) {
   if (!await hasLiveChallengeProgression(db, account, "weekly")) return;
   const definitions = await ensureDefinitions(db, Date.now());
@@ -7816,6 +8059,7 @@ async function maybeClaimWeeklyRecovery(db, account) {
   }
 }
 __name(maybeClaimWeeklyRecovery, "maybeClaimWeeklyRecovery");
+__name2(maybeClaimWeeklyRecovery, "maybeClaimWeeklyRecovery");
 async function parseLiveAction(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) throw new PlayerApiError(400, "invalid_live_action", "Live action is invalid.");
   const input = value;
@@ -7839,8 +8083,7 @@ async function parseLiveAction(value) {
   return { action: input.action, draft: input.draft, answer: input.answer, stageIndex: input.stageIndex, hintIndex: input.hintIndex };
 }
 __name(parseLiveAction, "parseLiveAction");
-
-// api/player/_rolloutPolicy.ts
+__name2(parseLiveAction, "parseLiveAction");
 var ROLLOUT_FLAGS = [
   "dailyEnabled",
   "weeklyEnabled",
@@ -7866,10 +8109,12 @@ function disabledPolicy(version = 0, expiresAt = null) {
   };
 }
 __name(disabledPolicy, "disabledPolicy");
+__name2(disabledPolicy, "disabledPolicy");
 function isRecord(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 __name(isRecord, "isRecord");
+__name2(isRecord, "isRecord");
 function parseVersion(value) {
   if (typeof value !== "number" || !Number.isSafeInteger(value) || value < 1 || value > 1e6) {
     return null;
@@ -7877,6 +8122,7 @@ function parseVersion(value) {
   return value;
 }
 __name(parseVersion, "parseVersion");
+__name2(parseVersion, "parseVersion");
 function parseExpiry(value) {
   if (value === void 0) return { expiresAt: null, timestamp: null };
   if (typeof value !== "string" || !ISO_UTC_TIMESTAMP.test(value)) return null;
@@ -7892,6 +8138,7 @@ function parseExpiry(value) {
   return { expiresAt: normalized.toISOString(), timestamp };
 }
 __name(parseExpiry, "parseExpiry");
+__name2(parseExpiry, "parseExpiry");
 function resolvePlayerRolloutPolicy(rawPolicy, now = /* @__PURE__ */ new Date()) {
   const nowTimestamp = now.getTime();
   if (!Number.isFinite(nowTimestamp)) return disabledPolicy();
@@ -7917,6 +8164,7 @@ function resolvePlayerRolloutPolicy(rawPolicy, now = /* @__PURE__ */ new Date())
   return policy;
 }
 __name(resolvePlayerRolloutPolicy, "resolvePlayerRolloutPolicy");
+__name2(resolvePlayerRolloutPolicy, "resolvePlayerRolloutPolicy");
 function requirePlayerRolloutFeature(rawPolicy, feature, now) {
   const policy = resolvePlayerRolloutPolicy(rawPolicy, now);
   if (!policy[feature]) {
@@ -7929,6 +8177,7 @@ function requirePlayerRolloutFeature(rawPolicy, feature, now) {
   return policy;
 }
 __name(requirePlayerRolloutFeature, "requirePlayerRolloutFeature");
+__name2(requirePlayerRolloutFeature, "requirePlayerRolloutFeature");
 function requireAnyPlayerRolloutFeature(rawPolicy, features, now) {
   const policy = resolvePlayerRolloutPolicy(rawPolicy, now);
   if (!features.some((feature) => policy[feature])) {
@@ -7941,20 +8190,22 @@ function requireAnyPlayerRolloutFeature(rawPolicy, features, now) {
   return policy;
 }
 __name(requireAnyPlayerRolloutFeature, "requireAnyPlayerRolloutFeature");
-
-// api/player/live/action.ts
+__name2(requireAnyPlayerRolloutFeature, "requireAnyPlayerRolloutFeature");
 function liveModeForAction(action) {
   return action.includes("daily") ? "daily" : "weekly";
 }
 __name(liveModeForAction, "liveModeForAction");
+__name2(liveModeForAction, "liveModeForAction");
 function rolloutFeatureForLiveAction(action) {
   return liveModeForAction(action) === "daily" ? "dailyEnabled" : "weeklyEnabled";
 }
 __name(rolloutFeatureForLiveAction, "rolloutFeatureForLiveAction");
+__name2(rolloutFeatureForLiveAction, "rolloutFeatureForLiveAction");
 async function onRequestOptions3({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions3, "onRequestOptions");
+__name(onRequestOptions3, "onRequestOptions3");
+__name2(onRequestOptions3, "onRequestOptions");
 async function onRequestPost3({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -7996,9 +8247,8 @@ async function onRequestPost3({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost3, "onRequestPost");
-
-// ../src/domain/echo-network/glicko2.ts
+__name(onRequestPost3, "onRequestPost3");
+__name2(onRequestPost3, "onRequestPost");
 var DEFAULT_GLICKO2_RATING = Object.freeze({
   rating: 1500,
   deviation: 350,
@@ -8014,12 +8264,12 @@ function rankedMatchmakingBand(rating) {
   return `glicko-${String(lowerBound).padStart(4, "0")}`;
 }
 __name(rankedMatchmakingBand, "rankedMatchmakingBand");
-
-// api/player/_network.ts
+__name2(rankedMatchmakingBand, "rankedMatchmakingBand");
 function safeUsername(account) {
   return account.displayName?.trim().slice(0, 80) || `Signal-${account.uid.slice(0, 8)}`;
 }
 __name(safeUsername, "safeUsername");
+__name2(safeUsername, "safeUsername");
 async function ensureNetworkPlayer(db, account, now = (/* @__PURE__ */ new Date()).toISOString()) {
   await db.batch([
     db.prepare(`
@@ -8035,6 +8285,7 @@ async function ensureNetworkPlayer(db, account, now = (/* @__PURE__ */ new Date(
   ]);
 }
 __name(ensureNetworkPlayer, "ensureNetworkPlayer");
+__name2(ensureNetworkPlayer, "ensureNetworkPlayer");
 async function readNetworkEligibility(db, uid) {
   const row = await db.prepare(`
     SELECT chess_training_completed_at, casual_chess_completed,
@@ -8055,6 +8306,7 @@ async function readNetworkEligibility(db, uid) {
   };
 }
 __name(readNetworkEligibility, "readNetworkEligibility");
+__name2(readNetworkEligibility, "readNetworkEligibility");
 async function assertModeEligibility(db, uid, mode) {
   if (mode !== "chess_ranked_blitz" && mode !== "chess_ranked_rapid") return;
   const eligibility = await readNetworkEligibility(db, uid);
@@ -8067,6 +8319,7 @@ async function assertModeEligibility(db, uid, mode) {
   }
 }
 __name(assertModeEligibility, "assertModeEligibility");
+__name2(assertModeEligibility, "assertModeEligibility");
 async function assertRankedStoryEligibility(db, uid, mode) {
   if (mode !== "chess_ranked_blitz" && mode !== "chess_ranked_rapid") return;
   const rewardSourceId = getFinalManhwaChapterRewardSourceId("chapter_3");
@@ -8088,6 +8341,7 @@ async function assertRankedStoryEligibility(db, uid, mode) {
   }
 }
 __name(assertRankedStoryEligibility, "assertRankedStoryEligibility");
+__name2(assertRankedStoryEligibility, "assertRankedStoryEligibility");
 async function readRankedMatchmakingBand(db, uid, mode) {
   const speed = mode === "chess_ranked_blitz" ? "blitz" : mode === "chess_ranked_rapid" ? "rapid" : null;
   if (!speed) return void 0;
@@ -8102,6 +8356,7 @@ async function readRankedMatchmakingBand(db, uid, mode) {
   });
 }
 __name(readRankedMatchmakingBand, "readRankedMatchmakingBand");
+__name2(readRankedMatchmakingBand, "readRankedMatchmakingBand");
 async function recordNetworkTicket(db, input) {
   const rateWindow = new Date(Date.parse(input.issuedAt) - 6e4).toISOString();
   const recent = await db.prepare(`
@@ -8129,16 +8384,17 @@ async function recordNetworkTicket(db, input) {
   ).run();
 }
 __name(recordNetworkTicket, "recordNetworkTicket");
+__name2(recordNetworkTicket, "recordNetworkTicket");
 function networkDisplayName(account) {
   return safeUsername(account);
 }
 __name(networkDisplayName, "networkDisplayName");
-
-// ../node_modules/chess.js/dist/esm/chess.js
+__name2(networkDisplayName, "networkDisplayName");
 function rootNode(comment) {
   return comment !== null ? { comment, variations: [] } : { variations: [] };
 }
 __name(rootNode, "rootNode");
+__name2(rootNode, "rootNode");
 function node(move, suffix, nag, comment, variations) {
   const node2 = { move, variations };
   if (suffix) {
@@ -8153,6 +8409,7 @@ function node(move, suffix, nag, comment, variations) {
   return node2;
 }
 __name(node, "node");
+__name2(node, "node");
 function lineToTree(...nodes) {
   const [root, ...rest] = nodes;
   let parent = root;
@@ -8166,6 +8423,7 @@ function lineToTree(...nodes) {
   return root;
 }
 __name(lineToTree, "lineToTree");
+__name2(lineToTree, "lineToTree");
 function pgn(headers, game) {
   if (game.marker && game.marker.comment) {
     let node2 = game.root;
@@ -8185,15 +8443,18 @@ function pgn(headers, game) {
   };
 }
 __name(pgn, "pgn");
+__name2(pgn, "pgn");
 function peg$subclass(child, parent) {
   function C() {
     this.constructor = child;
   }
   __name(C, "C");
+  __name2(C, "C");
   C.prototype = parent.prototype;
   child.prototype = new C();
 }
 __name(peg$subclass, "peg$subclass");
+__name2(peg$subclass, "peg$subclass");
 function peg$SyntaxError(message, expected, found, location) {
   var self = Error.call(this, message);
   if (Object.setPrototypeOf) {
@@ -8206,6 +8467,7 @@ function peg$SyntaxError(message, expected, found, location) {
   return self;
 }
 __name(peg$SyntaxError, "peg$SyntaxError");
+__name2(peg$SyntaxError, "peg$SyntaxError");
 peg$subclass(peg$SyntaxError, Error);
 function peg$padEnd(str, targetLength, padString) {
   padString = padString || " ";
@@ -8217,6 +8479,7 @@ function peg$padEnd(str, targetLength, padString) {
   return str + padString.slice(0, targetLength);
 }
 __name(peg$padEnd, "peg$padEnd");
+__name2(peg$padEnd, "peg$padEnd");
 peg$SyntaxError.prototype.format = function(sources) {
   var str = "Error: " + this.message;
   if (this.location) {
@@ -8246,22 +8509,22 @@ peg$SyntaxError.prototype.format = function(sources) {
 };
 peg$SyntaxError.buildMessage = function(expected, found) {
   var DESCRIBE_EXPECTATION_FNS = {
-    literal: /* @__PURE__ */ __name(function(expectation) {
+    literal: /* @__PURE__ */ __name2(function(expectation) {
       return '"' + literalEscape(expectation.text) + '"';
     }, "literal"),
-    class: /* @__PURE__ */ __name(function(expectation) {
+    class: /* @__PURE__ */ __name2(function(expectation) {
       var escapedParts = expectation.parts.map(function(part) {
         return Array.isArray(part) ? classEscape(part[0]) + "-" + classEscape(part[1]) : classEscape(part);
       });
       return "[" + (expectation.inverted ? "^" : "") + escapedParts.join("") + "]";
     }, "class"),
-    any: /* @__PURE__ */ __name(function() {
+    any: /* @__PURE__ */ __name2(function() {
       return "any character";
     }, "any"),
-    end: /* @__PURE__ */ __name(function() {
+    end: /* @__PURE__ */ __name2(function() {
       return "end of input";
     }, "end"),
-    other: /* @__PURE__ */ __name(function(expectation) {
+    other: /* @__PURE__ */ __name2(function(expectation) {
       return expectation.description;
     }, "other")
   };
@@ -8269,6 +8532,7 @@ peg$SyntaxError.buildMessage = function(expected, found) {
     return ch.charCodeAt(0).toString(16).toUpperCase();
   }
   __name(hex, "hex");
+  __name2(hex, "hex");
   function literalEscape(s) {
     return s.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\0/g, "\\0").replace(/\t/g, "\\t").replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/[\x00-\x0F]/g, function(ch) {
       return "\\x0" + hex(ch);
@@ -8277,6 +8541,7 @@ peg$SyntaxError.buildMessage = function(expected, found) {
     });
   }
   __name(literalEscape, "literalEscape");
+  __name2(literalEscape, "literalEscape");
   function classEscape(s) {
     return s.replace(/\\/g, "\\\\").replace(/\]/g, "\\]").replace(/\^/g, "\\^").replace(/-/g, "\\-").replace(/\0/g, "\\0").replace(/\t/g, "\\t").replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/[\x00-\x0F]/g, function(ch) {
       return "\\x0" + hex(ch);
@@ -8285,10 +8550,12 @@ peg$SyntaxError.buildMessage = function(expected, found) {
     });
   }
   __name(classEscape, "classEscape");
+  __name2(classEscape, "classEscape");
   function describeExpectation(expectation) {
     return DESCRIBE_EXPECTATION_FNS[expectation.type](expectation);
   }
   __name(describeExpectation, "describeExpectation");
+  __name2(describeExpectation, "describeExpectation");
   function describeExpected(expected2) {
     var descriptions = expected2.map(describeExpectation);
     var i, j;
@@ -8312,10 +8579,12 @@ peg$SyntaxError.buildMessage = function(expected, found) {
     }
   }
   __name(describeExpected, "describeExpected");
+  __name2(describeExpected, "describeExpected");
   function describeFound(found2) {
     return found2 ? '"' + literalEscape(found2) + '"' : "end of input";
   }
   __name(describeFound, "describeFound");
+  __name2(describeFound, "describeFound");
   return "Expected " + describeExpected(expected) + " but " + describeFound(found) + " found.";
 };
 function peg$parse(input, options) {
@@ -8392,37 +8661,37 @@ function peg$parse(input, options) {
   var peg$e37 = peg$literalExpectation("*", false);
   var peg$e38 = peg$otherExpectation("whitespace");
   var peg$e39 = peg$classExpectation([" ", "	", "\r", "\n"], false, false);
-  var peg$f0 = /* @__PURE__ */ __name(function(headers, game) {
+  var peg$f0 = /* @__PURE__ */ __name2(function(headers, game) {
     return pgn(headers, game);
   }, "peg$f0");
-  var peg$f1 = /* @__PURE__ */ __name(function(tagPairs) {
+  var peg$f1 = /* @__PURE__ */ __name2(function(tagPairs) {
     return Object.fromEntries(tagPairs);
   }, "peg$f1");
-  var peg$f2 = /* @__PURE__ */ __name(function(tagName, tagValue) {
+  var peg$f2 = /* @__PURE__ */ __name2(function(tagName, tagValue) {
     return [tagName, tagValue];
   }, "peg$f2");
-  var peg$f3 = /* @__PURE__ */ __name(function(root, marker) {
+  var peg$f3 = /* @__PURE__ */ __name2(function(root, marker) {
     return { root, marker };
   }, "peg$f3");
-  var peg$f4 = /* @__PURE__ */ __name(function(comment, moves) {
+  var peg$f4 = /* @__PURE__ */ __name2(function(comment, moves) {
     return lineToTree(rootNode(comment), ...moves.flat());
   }, "peg$f4");
-  var peg$f5 = /* @__PURE__ */ __name(function(san, suffix, nag, comment, variations) {
+  var peg$f5 = /* @__PURE__ */ __name2(function(san, suffix, nag, comment, variations) {
     return node(san, suffix, nag, comment, variations);
   }, "peg$f5");
-  var peg$f6 = /* @__PURE__ */ __name(function(nag) {
+  var peg$f6 = /* @__PURE__ */ __name2(function(nag) {
     return nag;
   }, "peg$f6");
-  var peg$f7 = /* @__PURE__ */ __name(function(comment) {
+  var peg$f7 = /* @__PURE__ */ __name2(function(comment) {
     return comment.replace(/[\r\n]+/g, " ");
   }, "peg$f7");
-  var peg$f8 = /* @__PURE__ */ __name(function(comment) {
+  var peg$f8 = /* @__PURE__ */ __name2(function(comment) {
     return comment.trim();
   }, "peg$f8");
-  var peg$f9 = /* @__PURE__ */ __name(function(line) {
+  var peg$f9 = /* @__PURE__ */ __name2(function(line) {
     return line;
   }, "peg$f9");
-  var peg$f10 = /* @__PURE__ */ __name(function(result, comment) {
+  var peg$f10 = /* @__PURE__ */ __name2(function(result, comment) {
     return { result, comment };
   }, "peg$f10");
   var peg$currPos = options.peg$currPos | 0;
@@ -8441,18 +8710,22 @@ function peg$parse(input, options) {
     return { type: "literal", text: text2, ignoreCase };
   }
   __name(peg$literalExpectation, "peg$literalExpectation");
+  __name2(peg$literalExpectation, "peg$literalExpectation");
   function peg$classExpectation(parts, inverted, ignoreCase) {
     return { type: "class", parts, inverted, ignoreCase };
   }
   __name(peg$classExpectation, "peg$classExpectation");
+  __name2(peg$classExpectation, "peg$classExpectation");
   function peg$endExpectation() {
     return { type: "end" };
   }
   __name(peg$endExpectation, "peg$endExpectation");
+  __name2(peg$endExpectation, "peg$endExpectation");
   function peg$otherExpectation(description) {
     return { type: "other", description };
   }
   __name(peg$otherExpectation, "peg$otherExpectation");
+  __name2(peg$otherExpectation, "peg$otherExpectation");
   function peg$computePosDetails(pos) {
     var details = peg$posDetailsCache[pos];
     var p;
@@ -8485,6 +8758,7 @@ function peg$parse(input, options) {
     }
   }
   __name(peg$computePosDetails, "peg$computePosDetails");
+  __name2(peg$computePosDetails, "peg$computePosDetails");
   function peg$computeLocation(startPos, endPos, offset) {
     var startPosDetails = peg$computePosDetails(startPos);
     var endPosDetails = peg$computePosDetails(endPos);
@@ -8504,6 +8778,7 @@ function peg$parse(input, options) {
     return res;
   }
   __name(peg$computeLocation, "peg$computeLocation");
+  __name2(peg$computeLocation, "peg$computeLocation");
   function peg$fail(expected) {
     if (peg$currPos < peg$maxFailPos) {
       return;
@@ -8515,6 +8790,7 @@ function peg$parse(input, options) {
     peg$maxFailExpected.push(expected);
   }
   __name(peg$fail, "peg$fail");
+  __name2(peg$fail, "peg$fail");
   function peg$buildStructuredError(expected, found, location) {
     return new peg$SyntaxError(
       peg$SyntaxError.buildMessage(expected, found),
@@ -8524,6 +8800,7 @@ function peg$parse(input, options) {
     );
   }
   __name(peg$buildStructuredError, "peg$buildStructuredError");
+  __name2(peg$buildStructuredError, "peg$buildStructuredError");
   function peg$parsepgn() {
     var s0, s1, s2;
     s0 = peg$currPos;
@@ -8533,6 +8810,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsepgn, "peg$parsepgn");
+  __name2(peg$parsepgn, "peg$parsepgn");
   function peg$parsetagPairSection() {
     var s0, s1, s2;
     s0 = peg$currPos;
@@ -8547,6 +8825,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsetagPairSection, "peg$parsetagPairSection");
+  __name2(peg$parsetagPairSection, "peg$parsetagPairSection");
   function peg$parsetagPair() {
     var s0, s2, s4, s6, s7, s8, s10;
     peg$silentFails++;
@@ -8628,6 +8907,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsetagPair, "peg$parsetagPair");
+  __name2(peg$parsetagPair, "peg$parsetagPair");
   function peg$parsetagName() {
     var s0, s1, s2;
     peg$silentFails++;
@@ -8673,6 +8953,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsetagName, "peg$parsetagName");
+  __name2(peg$parsetagName, "peg$parsetagName");
   function peg$parsetagValue() {
     var s0, s1, s2;
     peg$silentFails++;
@@ -8708,6 +8989,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsetagValue, "peg$parsetagValue");
+  __name2(peg$parsetagValue, "peg$parsetagValue");
   function peg$parsemoveTextSection() {
     var s0, s1, s3;
     s0 = peg$currPos;
@@ -8722,6 +9004,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsemoveTextSection, "peg$parsemoveTextSection");
+  __name2(peg$parsemoveTextSection, "peg$parsemoveTextSection");
   function peg$parseline() {
     var s0, s1, s2, s3;
     s0 = peg$currPos;
@@ -8739,6 +9022,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parseline, "peg$parseline");
+  __name2(peg$parseline, "peg$parseline");
   function peg$parsemove() {
     var s0, s4, s5, s6, s7, s8, s9, s10;
     s0 = peg$currPos;
@@ -8776,6 +9060,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsemove, "peg$parsemove");
+  __name2(peg$parsemove, "peg$parsemove");
   function peg$parsemoveNumber() {
     var s0, s1, s2, s3, s4, s5;
     peg$silentFails++;
@@ -8851,6 +9136,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsemoveNumber, "peg$parsemoveNumber");
+  __name2(peg$parsemoveNumber, "peg$parsemoveNumber");
   function peg$parsesan() {
     var s0, s1, s2, s3, s4, s5;
     peg$silentFails++;
@@ -8982,6 +9268,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsesan, "peg$parsesan");
+  __name2(peg$parsesan, "peg$parsesan");
   function peg$parsesuffixAnnotation() {
     var s0, s1, s2;
     peg$silentFails++;
@@ -9028,6 +9315,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsesuffixAnnotation, "peg$parsesuffixAnnotation");
+  __name2(peg$parsesuffixAnnotation, "peg$parsesuffixAnnotation");
   function peg$parsenag() {
     var s0, s2, s3, s4, s5;
     peg$silentFails++;
@@ -9094,6 +9382,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsenag, "peg$parsenag");
+  __name2(peg$parsenag, "peg$parsenag");
   function peg$parsecomment() {
     var s0;
     s0 = peg$parsebraceComment();
@@ -9103,6 +9392,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsecomment, "peg$parsecomment");
+  __name2(peg$parsecomment, "peg$parsecomment");
   function peg$parsebraceComment() {
     var s0, s1, s2, s3, s4;
     peg$silentFails++;
@@ -9170,6 +9460,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsebraceComment, "peg$parsebraceComment");
+  __name2(peg$parsebraceComment, "peg$parsebraceComment");
   function peg$parserestOfLineComment() {
     var s0, s1, s2, s3, s4;
     peg$silentFails++;
@@ -9223,6 +9514,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parserestOfLineComment, "peg$parserestOfLineComment");
+  __name2(peg$parserestOfLineComment, "peg$parserestOfLineComment");
   function peg$parsevariation() {
     var s0, s2, s3, s5;
     peg$silentFails++;
@@ -9273,6 +9565,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsevariation, "peg$parsevariation");
+  __name2(peg$parsevariation, "peg$parsevariation");
   function peg$parsegameTerminationMarker() {
     var s0, s1, s3;
     peg$silentFails++;
@@ -9340,6 +9633,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parsegameTerminationMarker, "peg$parsegameTerminationMarker");
+  __name2(peg$parsegameTerminationMarker, "peg$parsegameTerminationMarker");
   function peg$parse_() {
     var s0, s1;
     peg$silentFails++;
@@ -9373,6 +9667,7 @@ function peg$parse(input, options) {
     return s0;
   }
   __name(peg$parse_, "peg$parse_");
+  __name2(peg$parse_, "peg$parse_");
   peg$result = peg$startRuleFunction();
   if (options.peg$library) {
     return (
@@ -9400,15 +9695,18 @@ function peg$parse(input, options) {
   }
 }
 __name(peg$parse, "peg$parse");
+__name2(peg$parse, "peg$parse");
 var MASK64 = 0xffffffffffffffffn;
 function rotl(x, k) {
   return (x << k | x >> 64n - k) & 0xffffffffffffffffn;
 }
 __name(rotl, "rotl");
+__name2(rotl, "rotl");
 function wrappingMul(x, y) {
   return x * y & MASK64;
 }
 __name(wrappingMul, "wrappingMul");
+__name2(wrappingMul, "wrappingMul");
 function xoroshiro128(state) {
   return function() {
     let s0 = BigInt(state & MASK64);
@@ -9422,6 +9720,7 @@ function xoroshiro128(state) {
   };
 }
 __name(xoroshiro128, "xoroshiro128");
+__name2(xoroshiro128, "xoroshiro128");
 var rand = xoroshiro128(0xa187eb39cdcaed8f31c4b365b102e01en);
 var PIECE_KEYS = Array.from({ length: 2 }, () => Array.from({ length: 6 }, () => Array.from({ length: 128 }, () => rand())));
 var EP_KEYS = Array.from({ length: 8 }, () => rand());
@@ -9439,6 +9738,9 @@ var DEFAULT_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
 var Move = class {
   static {
     __name(this, "Move");
+  }
+  static {
+    __name2(this, "Move");
   }
   color;
   from;
@@ -10156,24 +10458,29 @@ function rank(square) {
   return square >> 4;
 }
 __name(rank, "rank");
+__name2(rank, "rank");
 function file(square) {
   return square & 15;
 }
 __name(file, "file");
+__name2(file, "file");
 function isDigit(c) {
   return "0123456789".indexOf(c) !== -1;
 }
 __name(isDigit, "isDigit");
+__name2(isDigit, "isDigit");
 function algebraic(square) {
   const f = file(square);
   const r = rank(square);
   return "abcdefgh".substring(f, f + 1) + "87654321".substring(r, r + 1);
 }
 __name(algebraic, "algebraic");
+__name2(algebraic, "algebraic");
 function swapColor(color) {
   return color === WHITE ? BLACK : WHITE;
 }
 __name(swapColor, "swapColor");
+__name2(swapColor, "swapColor");
 function validateFen(fen) {
   const tokens = fen.split(/\s+/);
   if (tokens.length !== 6) {
@@ -10267,6 +10574,7 @@ function validateFen(fen) {
   return { ok: true };
 }
 __name(validateFen, "validateFen");
+__name2(validateFen, "validateFen");
 function getDisambiguator(move, moves) {
   const from = move.from;
   const to = move.to;
@@ -10300,6 +10608,7 @@ function getDisambiguator(move, moves) {
   return "";
 }
 __name(getDisambiguator, "getDisambiguator");
+__name2(getDisambiguator, "getDisambiguator");
 function addMove(moves, color, from, to, piece, captured = void 0, flags2 = BITS.NORMAL) {
   const r = rank(to);
   if (piece === PAWN && (r === RANK_1 || r === RANK_8)) {
@@ -10327,6 +10636,7 @@ function addMove(moves, color, from, to, piece, captured = void 0, flags2 = BITS
   }
 }
 __name(addMove, "addMove");
+__name2(addMove, "addMove");
 function inferPieceType(san) {
   let pieceType = san.charAt(0);
   if (pieceType >= "a" && pieceType <= "h") {
@@ -10343,13 +10653,18 @@ function inferPieceType(san) {
   return pieceType;
 }
 __name(inferPieceType, "inferPieceType");
+__name2(inferPieceType, "inferPieceType");
 function strippedSan(move) {
   return move.replace(/=/, "").replace(/[+#]?[?!]*$/, "");
 }
 __name(strippedSan, "strippedSan");
+__name2(strippedSan, "strippedSan");
 var Chess = class {
   static {
     __name(this, "Chess");
+  }
+  static {
+    __name2(this, "Chess");
   }
   _board = new Array(128);
   _turn = WHITE;
@@ -10673,7 +10988,7 @@ var Chess = class {
       this._epSquare = EMPTY;
       return;
     }
-    const canCapture = /* @__PURE__ */ __name((square) => !(square & 136) && this._board[square]?.color === this._turn && this._board[square]?.type === PAWN, "canCapture");
+    const canCapture = /* @__PURE__ */ __name2((square) => !(square & 136) && this._board[square]?.color === this._turn && this._board[square]?.type === PAWN, "canCapture");
     if (!attackers.some(canCapture)) {
       this._hash ^= this._epKey();
       this._epSquare = EMPTY;
@@ -11149,7 +11464,7 @@ var Chess = class {
     if (headerExists && this._history.length) {
       result.push(newline);
     }
-    const appendComment = /* @__PURE__ */ __name((moveString2) => {
+    const appendComment = /* @__PURE__ */ __name2((moveString2) => {
       const comment = this._comments[this.fen()];
       if (typeof comment !== "undefined") {
         const delimiter = moveString2.length > 0 ? " " : "";
@@ -11191,14 +11506,14 @@ var Chess = class {
     if (maxWidth === 0) {
       return result.join("") + moves.join(" ");
     }
-    const strip = /* @__PURE__ */ __name(function() {
+    const strip = /* @__PURE__ */ __name2(function() {
       if (result.length > 0 && result[result.length - 1] === " ") {
         result.pop();
         return true;
       }
       return false;
     }, "strip");
-    const wrapComment = /* @__PURE__ */ __name(function(width, move) {
+    const wrapComment = /* @__PURE__ */ __name2(function(width, move) {
       for (const token of move.split(" ")) {
         if (!token) {
           continue;
@@ -11569,7 +11884,7 @@ var Chess = class {
   _pruneComments() {
     const reversedHistory = [];
     const currentComments = {};
-    const copyComment = /* @__PURE__ */ __name((fen) => {
+    const copyComment = /* @__PURE__ */ __name2((fen) => {
       if (fen in this._comments) {
         currentComments[fen] = this._comments[fen];
       }
@@ -11649,8 +11964,6 @@ var Chess = class {
     return this._moveNumber;
   }
 };
-
-// api/player/network/_chessTraining.ts
 var TRAINING_PROTOCOL_VERSION = 1;
 var TRAINING_SESSION_DURATION_MS = 15 * 60 * 1e3;
 var VERIFIED_CHESS_TRAINING_STEPS = [
@@ -11675,6 +11988,7 @@ function asSafeInteger(value) {
   return Number.isSafeInteger(numberValue) ? numberValue : null;
 }
 __name(asSafeInteger, "asSafeInteger");
+__name2(asSafeInteger, "asSafeInteger");
 function asStoredSession(row) {
   if (!row || typeof row.session_id !== "string" || typeof row.user_id !== "string" || typeof row.fen !== "string" || typeof row.expires_at !== "string" || typeof row.created_at !== "string" || typeof row.updated_at !== "string" || row.status !== "active" && row.status !== "completed" && row.status !== "expired") {
     return null;
@@ -11699,6 +12013,7 @@ function asStoredSession(row) {
   };
 }
 __name(asStoredSession, "asStoredSession");
+__name2(asStoredSession, "asStoredSession");
 function requireStoredSession(row) {
   const parsed = asStoredSession(row);
   if (!parsed) {
@@ -11707,6 +12022,7 @@ function requireStoredSession(row) {
   return parsed;
 }
 __name(requireStoredSession, "requireStoredSession");
+__name2(requireStoredSession, "requireStoredSession");
 function toSnapshot(session) {
   const step = session.status === "active" ? VERIFIED_CHESS_TRAINING_STEPS[session.stepIndex] ?? null : null;
   return {
@@ -11726,6 +12042,7 @@ function toSnapshot(session) {
   };
 }
 __name(toSnapshot, "toSnapshot");
+__name2(toSnapshot, "toSnapshot");
 function nowIso(now) {
   const time = now.getTime();
   if (!Number.isFinite(time)) {
@@ -11734,15 +12051,18 @@ function nowIso(now) {
   return new Date(time).toISOString();
 }
 __name(nowIso, "nowIso");
+__name2(nowIso, "nowIso");
 function expiresAtAfter(now) {
   return new Date(now.getTime() + TRAINING_SESSION_DURATION_MS).toISOString();
 }
 __name(expiresAtAfter, "expiresAtAfter");
+__name2(expiresAtAfter, "expiresAtAfter");
 function isExpired(session, now) {
   const timestamp = Date.parse(session.expiresAt);
   return !Number.isFinite(timestamp) || timestamp <= now.getTime();
 }
 __name(isExpired, "isExpired");
+__name2(isExpired, "isExpired");
 function moveFingerprint(input) {
   return [
     "v1",
@@ -11754,6 +12074,7 @@ function moveFingerprint(input) {
   ].join(":");
 }
 __name(moveFingerprint, "moveFingerprint");
+__name2(moveFingerprint, "moveFingerprint");
 function eventStatement(database, input) {
   return database.prepare(`
     INSERT INTO chess_training_session_events (
@@ -11774,6 +12095,7 @@ function eventStatement(database, input) {
   );
 }
 __name(eventStatement, "eventStatement");
+__name2(eventStatement, "eventStatement");
 async function readSessionForUser(database, uid, sessionId) {
   const row = await database.prepare(`
     SELECT session_id, user_id, status, step_index, fen, version, expires_at,
@@ -11785,6 +12107,7 @@ async function readSessionForUser(database, uid, sessionId) {
   return requireStoredSession(row);
 }
 __name(readSessionForUser, "readSessionForUser");
+__name2(readSessionForUser, "readSessionForUser");
 async function readResumableOrCompletedSession(database, uid) {
   const row = await database.prepare(`
     SELECT session_id, user_id, status, step_index, fen, version, expires_at,
@@ -11798,6 +12121,7 @@ async function readResumableOrCompletedSession(database, uid) {
   return requireStoredSession(row);
 }
 __name(readResumableOrCompletedSession, "readResumableOrCompletedSession");
+__name2(readResumableOrCompletedSession, "readResumableOrCompletedSession");
 async function readIdempotencyEvent(database, uid, sessionId, idempotencyKey) {
   return database.prepare(`
     SELECT request_fingerprint, response_json
@@ -11806,6 +12130,7 @@ async function readIdempotencyEvent(database, uid, sessionId, idempotencyKey) {
   `).bind(sessionId, uid, idempotencyKey).first();
 }
 __name(readIdempotencyEvent, "readIdempotencyEvent");
+__name2(readIdempotencyEvent, "readIdempotencyEvent");
 function parseEventSnapshot(event) {
   try {
     const parsed = JSON.parse(event.response_json);
@@ -11818,6 +12143,7 @@ function parseEventSnapshot(event) {
   }
 }
 __name(parseEventSnapshot, "parseEventSnapshot");
+__name2(parseEventSnapshot, "parseEventSnapshot");
 async function expireTrainingSession(database, session, now) {
   if (session.status !== "active" || !isExpired(session, now)) return;
   const nowValue = nowIso(now);
@@ -11851,6 +12177,7 @@ async function expireTrainingSession(database, session, now) {
   }
 }
 __name(expireTrainingSession, "expireTrainingSession");
+__name2(expireTrainingSession, "expireTrainingSession");
 function newSession(uid, now) {
   const createdAt = nowIso(now);
   return {
@@ -11867,6 +12194,7 @@ function newSession(uid, now) {
   };
 }
 __name(newSession, "newSession");
+__name2(newSession, "newSession");
 async function startOrResumeChessTraining(database, uid, now = /* @__PURE__ */ new Date()) {
   const existing = await readResumableOrCompletedSession(database, uid);
   if (existing?.status === "completed") return toSnapshot(existing);
@@ -11912,6 +12240,7 @@ async function startOrResumeChessTraining(database, uid, now = /* @__PURE__ */ n
   }
 }
 __name(startOrResumeChessTraining, "startOrResumeChessTraining");
+__name2(startOrResumeChessTraining, "startOrResumeChessTraining");
 function moveMatchesTrainingGoal(chessBeforeMove, move, stepIndex) {
   switch (VERIFIED_CHESS_TRAINING_STEPS[stepIndex]?.id) {
     case "develop-a-knight":
@@ -11927,6 +12256,7 @@ function moveMatchesTrainingGoal(chessBeforeMove, move, stepIndex) {
   }
 }
 __name(moveMatchesTrainingGoal, "moveMatchesTrainingGoal");
+__name2(moveMatchesTrainingGoal, "moveMatchesTrainingGoal");
 function validateTrainingMove(session, input) {
   let chess;
   try {
@@ -11946,6 +12276,7 @@ function validateTrainingMove(session, input) {
   return move;
 }
 __name(validateTrainingMove, "validateTrainingMove");
+__name2(validateTrainingMove, "validateTrainingMove");
 function nextSessionAfterMove(session, move, now) {
   const completed = session.stepIndex + 1 >= VERIFIED_CHESS_TRAINING_STEPS.length;
   const timestamp = nowIso(now);
@@ -11960,12 +12291,14 @@ function nextSessionAfterMove(session, move, now) {
   };
 }
 __name(nextSessionAfterMove, "nextSessionAfterMove");
+__name2(nextSessionAfterMove, "nextSessionAfterMove");
 function requireSingleChanged(result) {
   if ((result?.[0]?.meta?.changes ?? 0) !== 1) {
     throw new PlayerApiError(409, "training_stale_version", "This training board changed. Resume the latest board.");
   }
 }
 __name(requireSingleChanged, "requireSingleChanged");
+__name2(requireSingleChanged, "requireSingleChanged");
 async function submitChessTrainingMove(database, uid, input, now = /* @__PURE__ */ new Date()) {
   const fingerprint2 = moveFingerprint(input);
   const duplicate = await readIdempotencyEvent(database, uid, input.sessionId, input.idempotencyKey);
@@ -12040,8 +12373,7 @@ async function submitChessTrainingMove(database, uid, input, now = /* @__PURE__ 
   return response;
 }
 __name(submitChessTrainingMove, "submitChessTrainingMove");
-
-// api/player/network/chess-training.ts
+__name2(submitChessTrainingMove, "submitChessTrainingMove");
 var MAX_TRAINING_REQUEST_BYTES = 2048;
 var submitSchema = external_exports.object({
   version: external_exports.literal(1),
@@ -12055,7 +12387,8 @@ var submitSchema = external_exports.object({
 async function onRequestOptions4({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions4, "onRequestOptions");
+__name(onRequestOptions4, "onRequestOptions4");
+__name2(onRequestOptions4, "onRequestOptions");
 async function onRequestGet({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -12070,6 +12403,7 @@ async function onRequestGet({ request, env }) {
   }
 }
 __name(onRequestGet, "onRequestGet");
+__name2(onRequestGet, "onRequestGet");
 async function onRequestPost4({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -12100,13 +12434,13 @@ async function onRequestPost4({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost4, "onRequestPost");
-
-// api/player/network/community.ts
+__name(onRequestPost4, "onRequestPost4");
+__name2(onRequestPost4, "onRequestPost");
 async function onRequestOptions5({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions5, "onRequestOptions");
+__name(onRequestOptions5, "onRequestOptions5");
+__name2(onRequestOptions5, "onRequestOptions");
 async function onRequestGet2({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -12133,9 +12467,8 @@ async function onRequestGet2({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet2, "onRequestGet");
-
-// ../src/domain/echo-network/communitySafety.ts
+__name(onRequestGet2, "onRequestGet2");
+__name2(onRequestGet2, "onRequestGet");
 var PRESET_MESSAGES = Object.freeze([
   { id: "ready", ar: "\u062C\u0627\u0647\u0632 \u0644\u0644\u0625\u0634\u0627\u0631\u0629.", en: "Ready for the signal." },
   { id: "memory-here", ar: "\u062F\u0644\u064A\u0644 \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u0639\u0646\u062F\u064A.", en: "I have the memory clue." },
@@ -12165,8 +12498,7 @@ function moderateCommunityText(value) {
   return { allowed: true, sanitized, reason: "ok" };
 }
 __name(moderateCommunityText, "moderateCommunityText");
-
-// api/player/network/forge.ts
+__name2(moderateCommunityText, "moderateCommunityText");
 var submissionSchema = external_exports.object({
   locale: external_exports.enum(["ar", "en"]),
   title: external_exports.string().trim().min(3).max(80),
@@ -12182,6 +12514,7 @@ async function fingerprint(value) {
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 __name(fingerprint, "fingerprint");
+__name2(fingerprint, "fingerprint");
 function assertSafeText(value) {
   const result = moderateCommunityText(value);
   if (!result.allowed) {
@@ -12190,10 +12523,12 @@ function assertSafeText(value) {
   return result.sanitized;
 }
 __name(assertSafeText, "assertSafeText");
+__name2(assertSafeText, "assertSafeText");
 async function onRequestOptions6({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions6, "onRequestOptions");
+__name(onRequestOptions6, "onRequestOptions6");
+__name2(onRequestOptions6, "onRequestOptions");
 async function onRequestGet3({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -12217,7 +12552,8 @@ async function onRequestGet3({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet3, "onRequestGet");
+__name(onRequestGet3, "onRequestGet3");
+__name2(onRequestGet3, "onRequestGet");
 async function onRequestPost5({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -12279,9 +12615,8 @@ async function onRequestPost5({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost5, "onRequestPost");
-
-// ../src/domain/echo-network/contracts.ts
+__name(onRequestPost5, "onRequestPost5");
+__name2(onRequestPost5, "onRequestPost");
 var NETWORK_LOCALES = ["ar", "en"];
 var ONLINE_MODES = [
   "chess_ranked_blitz",
@@ -12416,8 +12751,6 @@ var puzzleForgeSubmissionSchema = external_exports.object({
   status: external_exports.enum(["draft", "pending", "approved", "rejected"]),
   createdAt: external_exports.string().datetime()
 });
-
-// api/player/network/replay.ts
 var matchIdSchema = external_exports.string().trim().regex(/^match_[A-Za-z0-9_-]{3,90}$/);
 var replayEnvelopeSchema = external_exports.object({
   version: external_exports.literal(1),
@@ -12429,10 +12762,12 @@ function replayKey(mode, matchId) {
   return `${mode === "coop_breach" ? "coop" : "chess"}/${matchId}.json`;
 }
 __name(replayKey, "replayKey");
+__name2(replayKey, "replayKey");
 async function onRequestOptions7({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions7, "onRequestOptions");
+__name(onRequestOptions7, "onRequestOptions7");
+__name2(onRequestOptions7, "onRequestOptions");
 async function onRequestGet4({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -12488,9 +12823,8 @@ async function onRequestGet4({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet4, "onRequestGet");
-
-// api/player/network/rules.ts
+__name(onRequestGet4, "onRequestGet4");
+__name2(onRequestGet4, "onRequestGet");
 var acceptanceSchema = external_exports.object({
   rulesVersion: external_exports.literal(1),
   confirmsAge16Plus: external_exports.literal(true)
@@ -12498,7 +12832,8 @@ var acceptanceSchema = external_exports.object({
 async function onRequestOptions8({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions8, "onRequestOptions");
+__name(onRequestOptions8, "onRequestOptions8");
+__name2(onRequestOptions8, "onRequestOptions");
 async function onRequestPost6({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -12531,9 +12866,8 @@ async function onRequestPost6({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost6, "onRequestPost");
-
-// api/player/network/social.ts
+__name(onRequestPost6, "onRequestPost6");
+__name2(onRequestPost6, "onRequestPost");
 var socialActionSchema = external_exports.discriminatedUnion("action", [
   external_exports.object({
     action: external_exports.literal("request"),
@@ -12558,6 +12892,7 @@ function makeSignalCode() {
   return `ECHO-${suffix}`;
 }
 __name(makeSignalCode, "makeSignalCode");
+__name2(makeSignalCode, "makeSignalCode");
 async function ensureSocialProfile(db, uid, now) {
   const existing = await db.prepare(`
     SELECT signal_code FROM network_social_profiles WHERE user_id = ?
@@ -12578,6 +12913,7 @@ async function ensureSocialProfile(db, uid, now) {
   throw new PlayerApiError(503, "signal_code_unavailable", "A private signal code could not be reserved.");
 }
 __name(ensureSocialProfile, "ensureSocialProfile");
+__name2(ensureSocialProfile, "ensureSocialProfile");
 async function requireCommunityAccess(db, uid) {
   const eligibility = await readNetworkEligibility(db, uid);
   if (!eligibility.communityRulesAccepted || !eligibility.ageGateConfirmed) {
@@ -12585,6 +12921,7 @@ async function requireCommunityAccess(db, uid) {
   }
 }
 __name(requireCommunityAccess, "requireCommunityAccess");
+__name2(requireCommunityAccess, "requireCommunityAccess");
 async function assertSocialRate(db, uid, action, now) {
   const since = new Date(Date.parse(now) - 6e4).toISOString();
   const row = await db.prepare(`
@@ -12598,6 +12935,7 @@ async function assertSocialRate(db, uid, action, now) {
   }
 }
 __name(assertSocialRate, "assertSocialRate");
+__name2(assertSocialRate, "assertSocialRate");
 async function recordAction(db, uid, action, targetUid, now) {
   await db.prepare(`
     INSERT INTO social_action_events (
@@ -12606,6 +12944,7 @@ async function recordAction(db, uid, action, targetUid, now) {
   `).bind(crypto.randomUUID(), uid, action, targetUid, now).run();
 }
 __name(recordAction, "recordAction");
+__name2(recordAction, "recordAction");
 async function ensureTargetExists(db, targetUid) {
   const target = await db.prepare(`
     SELECT user_id FROM player_progression WHERE user_id = ?
@@ -12613,6 +12952,7 @@ async function ensureTargetExists(db, targetUid) {
   if (!target) throw new PlayerApiError(404, "signal_not_found", "That player signal is unavailable.");
 }
 __name(ensureTargetExists, "ensureTargetExists");
+__name2(ensureTargetExists, "ensureTargetExists");
 async function socialSnapshot(db, uid, signalCode) {
   const [relationships, blocks, mutes] = await db.batch([
     db.prepare(`
@@ -12661,10 +13001,12 @@ async function socialSnapshot(db, uid, signalCode) {
   };
 }
 __name(socialSnapshot, "socialSnapshot");
+__name2(socialSnapshot, "socialSnapshot");
 async function onRequestOptions9({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions9, "onRequestOptions");
+__name(onRequestOptions9, "onRequestOptions9");
+__name2(onRequestOptions9, "onRequestOptions");
 async function onRequestGet5({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -12680,7 +13022,8 @@ async function onRequestGet5({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet5, "onRequestGet");
+__name(onRequestGet5, "onRequestGet5");
+__name2(onRequestGet5, "onRequestGet");
 async function onRequestPost7({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -12820,9 +13163,8 @@ async function onRequestPost7({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost7, "onRequestPost");
-
-// ../src/domain/echo-network/realtimeTicket.ts
+__name(onRequestPost7, "onRequestPost7");
+__name2(onRequestPost7, "onRequestPost");
 var encoder = new TextEncoder();
 var decoder = new TextDecoder();
 function bytesToBase64Url(bytes) {
@@ -12831,6 +13173,7 @@ function bytesToBase64Url(bytes) {
   return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
 __name(bytesToBase64Url, "bytesToBase64Url");
+__name2(bytesToBase64Url, "bytesToBase64Url");
 async function importHmacKey(secret) {
   return crypto.subtle.importKey(
     "raw",
@@ -12841,6 +13184,7 @@ async function importHmacKey(secret) {
   );
 }
 __name(importHmacKey, "importHmacKey");
+__name2(importHmacKey, "importHmacKey");
 async function signRealtimeTicket(secret, payload) {
   if (secret.length < 32) {
     throw new Error("Realtime ticket secret must contain at least 32 characters.");
@@ -12852,10 +13196,9 @@ async function signRealtimeTicket(secret, payload) {
   return `${body}.${bytesToBase64Url(new Uint8Array(signature))}`;
 }
 __name(signRealtimeTicket, "signRealtimeTicket");
-
-// ../src/domain/echo-network/coopCaseCatalog.ts
-var copy = /* @__PURE__ */ __name((ar, en) => ({ ar, en }), "copy");
-var labels = /* @__PURE__ */ __name((...pairs) => Object.freeze(
+__name2(signRealtimeTicket, "signRealtimeTicket");
+var copy = /* @__PURE__ */ __name2((ar, en) => ({ ar, en }), "copy");
+var labels = /* @__PURE__ */ __name2((...pairs) => Object.freeze(
   Object.fromEntries(pairs.map(([id, ar, en]) => [id, copy(ar, en)]))
 ), "labels");
 function stage(id, mechanic, objective, prompt, options) {
@@ -12869,6 +13212,7 @@ function stage(id, mechanic, objective, prompt, options) {
   });
 }
 __name(stage, "stage");
+__name2(stage, "stage");
 var SIGNAL_OPTIONS = [
   ["echo", "Echo", "Echo"],
   ["memory", "\u0630\u0627\u0643\u0631\u0629", "Memory"],
@@ -12924,6 +13268,7 @@ function makeCase(seed) {
   });
 }
 __name(makeCase, "makeCase");
+__name2(makeCase, "makeCase");
 var CASE_SEEDS = [
   ["warm-signal", "chapter_1", 1, "\u0646\u0628\u0636 \u0627\u0644\u0628\u0648\u0627\u0628\u0629", "Gate Pulse", 7, "echo", "guided", ["wiring", "cipher", "pattern"]],
   ["broken-window", "chapter_1", 2, "\u0646\u0627\u0641\u0630\u0629 \u0627\u0644\u0623\u062B\u0631", "Trace Window", 9, "echo", "guided", ["image-reconstruction", "evidence", "routing"]],
@@ -12958,8 +13303,6 @@ var COOP_CASE_BY_ID = Object.freeze(
   Object.fromEntries(COOP_CASES.map((definition) => [definition.id, definition]))
 );
 var COOP_TRAINING_CASE_ID = COOP_CASES[0].id;
-
-// ../src/domain/echo-network/partyRoomSafety.ts
 var PARTY_ROOM_ID_PATTERN = /^party-([A-Z2-9]{8,16})$/i;
 function normalizePartyRoomId(value) {
   if (typeof value !== "string") return null;
@@ -12967,8 +13310,7 @@ function normalizePartyRoomId(value) {
   return match2 ? `party-${match2[1].toUpperCase()}` : null;
 }
 __name(normalizePartyRoomId, "normalizePartyRoomId");
-
-// api/player/network/ticket.ts
+__name2(normalizePartyRoomId, "normalizePartyRoomId");
 var MAX_TICKET_REQUEST_BYTES = 4096;
 async function assertTicketMatchLeaseAdmission(database, input) {
   const active = await database.prepare(`
@@ -12987,6 +13329,7 @@ async function assertTicketMatchLeaseAdmission(database, input) {
   }
 }
 __name(assertTicketMatchLeaseAdmission, "assertTicketMatchLeaseAdmission");
+__name2(assertTicketMatchLeaseAdmission, "assertTicketMatchLeaseAdmission");
 function isPrivateDevelopmentHost(hostname) {
   const normalized = hostname.toLowerCase();
   if (normalized === "localhost" || normalized === "127.0.0.1" || normalized === "::1") {
@@ -12999,10 +13342,12 @@ function isPrivateDevelopmentHost(hostname) {
   return octets[0] === 10 || octets[0] === 172 && octets[1] >= 16 && octets[1] <= 31 || octets[0] === 192 && octets[1] === 168;
 }
 __name(isPrivateDevelopmentHost, "isPrivateDevelopmentHost");
+__name2(isPrivateDevelopmentHost, "isPrivateDevelopmentHost");
 function configuredOrigins(env) {
   return new Set((env.PLAYER_ALLOWED_ORIGINS ?? "").split(",").map((origin) => origin.trim()).filter(Boolean));
 }
 __name(configuredOrigins, "configuredOrigins");
+__name2(configuredOrigins, "configuredOrigins");
 function realtimeBaseUrl(env, request) {
   const raw = env.PLAYER_REALTIME_URL?.trim();
   if (!raw) {
@@ -13031,6 +13376,7 @@ function realtimeBaseUrl(env, request) {
   return url;
 }
 __name(realtimeBaseUrl, "realtimeBaseUrl");
+__name2(realtimeBaseUrl, "realtimeBaseUrl");
 function requireTicketSecret(env) {
   const secret = env.REALTIME_TICKET_SECRET?.trim() ?? "";
   if (secret.length < 32) {
@@ -13039,10 +13385,12 @@ function requireTicketSecret(env) {
   return secret;
 }
 __name(requireTicketSecret, "requireTicketSecret");
+__name2(requireTicketSecret, "requireTicketSecret");
 async function onRequestOptions10({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions10, "onRequestOptions");
+__name(onRequestOptions10, "onRequestOptions10");
+__name2(onRequestOptions10, "onRequestOptions");
 async function onRequestPost8({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -13166,9 +13514,8 @@ async function onRequestPost8({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost8, "onRequestPost");
-
-// api/player/network/training.ts
+__name(onRequestPost8, "onRequestPost8");
+__name2(onRequestPost8, "onRequestPost");
 var trainingSchema = external_exports.object({
   training: external_exports.enum(["chess", "coop"]),
   version: external_exports.literal(1)
@@ -13176,7 +13523,8 @@ var trainingSchema = external_exports.object({
 async function onRequestOptions11({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions11, "onRequestOptions");
+__name(onRequestOptions11, "onRequestOptions11");
+__name2(onRequestOptions11, "onRequestOptions");
 async function onRequestPost9({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -13202,9 +13550,8 @@ async function onRequestPost9({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost9, "onRequestPost");
-
-// ../src/domain/opening/openingProgress.ts
+__name(onRequestPost9, "onRequestPost9");
+__name2(onRequestPost9, "onRequestPost");
 var OPENING_COVER_PUZZLE_ID = "opening_cover_reconstruction_v1";
 var OPENING_ROOM_ID = "opening_room_echo_lab_v1";
 var OPENING_MANHWA_PACKET_ID = "opening_room_pages_01_09_v1";
@@ -13229,6 +13576,7 @@ function createInitialStoryUnlockState() {
   };
 }
 __name(createInitialStoryUnlockState, "createInitialStoryUnlockState");
+__name2(createInitialStoryUnlockState, "createInitialStoryUnlockState");
 function normalizeStoryUnlockState(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     return createInitialStoryUnlockState();
@@ -13246,17 +13594,18 @@ function normalizeStoryUnlockState(value) {
   };
 }
 __name(normalizeStoryUnlockState, "normalizeStoryUnlockState");
+__name2(normalizeStoryUnlockState, "normalizeStoryUnlockState");
 function isOpeningRoomEventId(value) {
   return typeof value === "string" && OPENING_ROOM_EVENT_SEQUENCE.includes(value);
 }
 __name(isOpeningRoomEventId, "isOpeningRoomEventId");
-
-// api/player/_opening.ts
+__name2(isOpeningRoomEventId, "isOpeningRoomEventId");
 var OPENING_VERSION = 1;
 function isRecord2(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
-__name(isRecord2, "isRecord");
+__name(isRecord2, "isRecord2");
+__name2(isRecord2, "isRecord");
 function readRecoveryRow(row) {
   return {
     receiptId: row.receipt_id,
@@ -13267,6 +13616,7 @@ function readRecoveryRow(row) {
   };
 }
 __name(readRecoveryRow, "readRecoveryRow");
+__name2(readRecoveryRow, "readRecoveryRow");
 function readRoomRow(row) {
   let pageIds = [];
   try {
@@ -13288,6 +13638,7 @@ function readRoomRow(row) {
   };
 }
 __name(readRoomRow, "readRoomRow");
+__name2(readRoomRow, "readRoomRow");
 function parseCorrectImageOrder(value) {
   if (!Array.isArray(value) || value.length !== 12 && value.length !== 16) {
     throw new PlayerApiError(
@@ -13308,6 +13659,7 @@ function parseCorrectImageOrder(value) {
   return order;
 }
 __name(parseCorrectImageOrder, "parseCorrectImageOrder");
+__name2(parseCorrectImageOrder, "parseCorrectImageOrder");
 function parseOpeningRecoveryBody(value) {
   if (!isRecord2(value) || Object.keys(value).some((key) => key !== "imageOrder")) {
     throw new PlayerApiError(400, "invalid_request", "Opening recovery is invalid.");
@@ -13315,6 +13667,7 @@ function parseOpeningRecoveryBody(value) {
   return { imageOrder: parseCorrectImageOrder(value.imageOrder) };
 }
 __name(parseOpeningRecoveryBody, "parseOpeningRecoveryBody");
+__name2(parseOpeningRecoveryBody, "parseOpeningRecoveryBody");
 function parseOpeningRoomBody(value) {
   if (!isRecord2(value) || Object.keys(value).some((key) => key !== "eventIds")) {
     throw new PlayerApiError(400, "invalid_request", "Opening room completion is invalid.");
@@ -13330,6 +13683,7 @@ function parseOpeningRoomBody(value) {
   return { eventIds };
 }
 __name(parseOpeningRoomBody, "parseOpeningRoomBody");
+__name2(parseOpeningRoomBody, "parseOpeningRoomBody");
 async function completeOpeningRecovery(database, account, imageOrder) {
   parseCorrectImageOrder(imageOrder);
   const existing = await database.prepare(`
@@ -13364,6 +13718,7 @@ async function completeOpeningRecovery(database, account, imageOrder) {
   };
 }
 __name(completeOpeningRecovery, "completeOpeningRecovery");
+__name2(completeOpeningRecovery, "completeOpeningRecovery");
 async function completeOpeningRoom(database, account, eventIds) {
   parseOpeningRoomBody({ eventIds });
   const recovery = await database.prepare(`
@@ -13412,8 +13767,7 @@ async function completeOpeningRoom(database, account, eventIds) {
   };
 }
 __name(completeOpeningRoom, "completeOpeningRoom");
-
-// ../src/content/story/finalManhwaCanonEvents.ts
+__name2(completeOpeningRoom, "completeOpeningRoom");
 var RETIRED_FINAL_MANHWA_CANON_EVENT_IDS = Object.freeze([
   "manhwa_chapter_04_black_coronation",
   "manhwa_chapter_04_lina_protocol",
@@ -13464,12 +13818,12 @@ function getFinalManhwaCanonEvent(eventId) {
   return FINAL_MANHWA_CANON_EVENT_BY_ID[eventId];
 }
 __name(getFinalManhwaCanonEvent, "getFinalManhwaCanonEvent");
+__name2(getFinalManhwaCanonEvent, "getFinalManhwaCanonEvent");
 function getFinalManhwaCanonEventsForCheckpoint(input) {
   return FINAL_MANHWA_CANON_EVENTS.filter((event) => event.source.chapterId === input.chapterId && event.source.pageId === input.pageId && event.source.globalPageNumber === input.globalPageNumber);
 }
 __name(getFinalManhwaCanonEventsForCheckpoint, "getFinalManhwaCanonEventsForCheckpoint");
-
-// ../src/domain/story/storyState.ts
+__name2(getFinalManhwaCanonEventsForCheckpoint, "getFinalManhwaCanonEventsForCheckpoint");
 var CHAPTER_IDS = /* @__PURE__ */ new Set([
   "chapter_1",
   "chapter_2",
@@ -13481,10 +13835,12 @@ function uniqueStrings(values) {
   return [...new Set(values.map((value) => value.trim()).filter(Boolean))];
 }
 __name(uniqueStrings, "uniqueStrings");
+__name2(uniqueStrings, "uniqueStrings");
 function validTimestamp(value) {
   return typeof value === "string" && Boolean(value.trim()) && Number.isFinite(Date.parse(value));
 }
 __name(validTimestamp, "validTimestamp");
+__name2(validTimestamp, "validTimestamp");
 function createInitialAuthoritativeStoryState() {
   const opening = createInitialStoryUnlockState();
   return {
@@ -13496,6 +13852,7 @@ function createInitialAuthoritativeStoryState() {
   };
 }
 __name(createInitialAuthoritativeStoryState, "createInitialAuthoritativeStoryState");
+__name2(createInitialAuthoritativeStoryState, "createInitialAuthoritativeStoryState");
 function normalizeAuthoritativeStoryState(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     return createInitialAuthoritativeStoryState();
@@ -13559,6 +13916,7 @@ function normalizeAuthoritativeStoryState(value) {
   };
 }
 __name(normalizeAuthoritativeStoryState, "normalizeAuthoritativeStoryState");
+__name2(normalizeAuthoritativeStoryState, "normalizeAuthoritativeStoryState");
 function getAuthoritativeEchoKnowledgeIds(value) {
   const authoritative = normalizeAuthoritativeStoryState(value);
   const reached = new Set(
@@ -13567,17 +13925,18 @@ function getAuthoritativeEchoKnowledgeIds(value) {
   return uniqueStrings(FINAL_MANHWA_CANON_EVENTS.filter((event) => reached.has(event.eventId)).flatMap((event) => event.knowledgeGrants).filter((grant) => grant.audience === "echo").map((grant) => grant.nodeId));
 }
 __name(getAuthoritativeEchoKnowledgeIds, "getAuthoritativeEchoKnowledgeIds");
-
-// api/player/_storyState.ts
+__name2(getAuthoritativeEchoKnowledgeIds, "getAuthoritativeEchoKnowledgeIds");
 function toNonNegativeInteger(value) {
   const numeric = Number(value);
   return Number.isFinite(numeric) ? Math.max(0, Math.floor(numeric)) : 0;
 }
 __name(toNonNegativeInteger, "toNonNegativeInteger");
+__name2(toNonNegativeInteger, "toNonNegativeInteger");
 function hasRows(row) {
   return toNonNegativeInteger(row?.total) > 0;
 }
 __name(hasRows, "hasRows");
+__name2(hasRows, "hasRows");
 function assertOnlyCheckpointFields(body) {
   const allowed = /* @__PURE__ */ new Set(["chapterId", "pageId", "globalPageNumber"]);
   if (Object.keys(body).some((key) => !allowed.has(key))) {
@@ -13592,6 +13951,7 @@ function assertOnlyCheckpointFields(body) {
   }
 }
 __name(assertOnlyCheckpointFields, "assertOnlyCheckpointFields");
+__name2(assertOnlyCheckpointFields, "assertOnlyCheckpointFields");
 function parseManhwaReaderCheckpoint(body) {
   if (typeof body !== "object" || body === null || Array.isArray(body)) {
     throw new PlayerApiError(400, "invalid_request", "Story checkpoint is invalid.");
@@ -13613,6 +13973,7 @@ function parseManhwaReaderCheckpoint(body) {
   return checkpoint;
 }
 __name(parseManhwaReaderCheckpoint, "parseManhwaReaderCheckpoint");
+__name2(parseManhwaReaderCheckpoint, "parseManhwaReaderCheckpoint");
 async function recordManhwaPageCheckpoint(database, account, checkpoint) {
   await database.prepare(`
     INSERT OR IGNORE INTO player_manhwa_page_records (
@@ -13631,6 +13992,7 @@ async function recordManhwaPageCheckpoint(database, account, checkpoint) {
   ).run();
 }
 __name(recordManhwaPageCheckpoint, "recordManhwaPageCheckpoint");
+__name2(recordManhwaPageCheckpoint, "recordManhwaPageCheckpoint");
 async function assertCheckpointWithinReaderWindow(database, uid, pageId) {
   if (await hasOpeningPacketPage(database, uid, pageId)) return;
   const completed = await database.prepare(`
@@ -13650,10 +14012,12 @@ async function assertCheckpointWithinReaderWindow(database, uid, pageId) {
   }
 }
 __name(assertCheckpointWithinReaderWindow, "assertCheckpointWithinReaderWindow");
+__name2(assertCheckpointWithinReaderWindow, "assertCheckpointWithinReaderWindow");
 function isMissingOpeningTablesError(error) {
   return error instanceof Error && /no such table|Unhandled fake D1/i.test(error.message);
 }
 __name(isMissingOpeningTablesError, "isMissingOpeningTablesError");
+__name2(isMissingOpeningTablesError, "isMissingOpeningTablesError");
 async function hasOpeningPacketPage(database, uid, pageId) {
   try {
     const row = await database.prepare(`
@@ -13670,6 +14034,7 @@ async function hasOpeningPacketPage(database, uid, pageId) {
   }
 }
 __name(hasOpeningPacketPage, "hasOpeningPacketPage");
+__name2(hasOpeningPacketPage, "hasOpeningPacketPage");
 async function readOpeningUnlockSnapshot(database, uid) {
   try {
     const [recovery, room] = await Promise.all([
@@ -13701,6 +14066,7 @@ async function readOpeningUnlockSnapshot(database, uid) {
   }
 }
 __name(readOpeningUnlockSnapshot, "readOpeningUnlockSnapshot");
+__name2(readOpeningUnlockSnapshot, "readOpeningUnlockSnapshot");
 async function hasReadChapterThroughPage(database, uid, chapterId, throughPageNumber) {
   const chapter = FINAL_MANHWA_CHAPTERS.find((candidate) => candidate.chapterId === chapterId);
   if (!chapter || !chapter.published || throughPageNumber < chapter.startPage || throughPageNumber > chapter.endPage) {
@@ -13721,6 +14087,7 @@ async function hasReadChapterThroughPage(database, uid, chapterId, throughPageNu
   return expectedPageIds.every((pageId) => readPageIds.has(pageId));
 }
 __name(hasReadChapterThroughPage, "hasReadChapterThroughPage");
+__name2(hasReadChapterThroughPage, "hasReadChapterThroughPage");
 async function hasReward(database, uid, rewardKey) {
   const row = await database.prepare(`
     SELECT COUNT(*) AS total
@@ -13730,6 +14097,7 @@ async function hasReward(database, uid, rewardKey) {
   return hasRows(row);
 }
 __name(hasReward, "hasReward");
+__name2(hasReward, "hasReward");
 async function hasCanonEvent(database, uid, eventId) {
   const row = await database.prepare(`
     SELECT COUNT(*) AS total
@@ -13739,6 +14107,7 @@ async function hasCanonEvent(database, uid, eventId) {
   return hasRows(row);
 }
 __name(hasCanonEvent, "hasCanonEvent");
+__name2(hasCanonEvent, "hasCanonEvent");
 async function assertCheckpointPrerequisites(database, uid, event) {
   const completedChapter = await hasReward(
     database,
@@ -13779,6 +14148,7 @@ async function assertCheckpointPrerequisites(database, uid, event) {
   }
 }
 __name(assertCheckpointPrerequisites, "assertCheckpointPrerequisites");
+__name2(assertCheckpointPrerequisites, "assertCheckpointPrerequisites");
 async function readSnapshot(database, account) {
   await ensurePlayerProgressionRow(database, account);
   const [events, chapters, fragments, opening] = await Promise.all([
@@ -13835,10 +14205,12 @@ async function readSnapshot(database, account) {
   });
 }
 __name(readSnapshot, "readSnapshot");
+__name2(readSnapshot, "readSnapshot");
 async function readAuthoritativeStoryState(database, account) {
   return readSnapshot(database, account);
 }
 __name(readAuthoritativeStoryState, "readAuthoritativeStoryState");
+__name2(readAuthoritativeStoryState, "readAuthoritativeStoryState");
 async function claimManhwaStoryCheckpoint(database, account, checkpoint) {
   await ensurePlayerProgressionRow(database, account);
   await assertCheckpointWithinReaderWindow(
@@ -13882,12 +14254,12 @@ async function claimManhwaStoryCheckpoint(database, account, checkpoint) {
   };
 }
 __name(claimManhwaStoryCheckpoint, "claimManhwaStoryCheckpoint");
-
-// api/player/opening-recovery/complete.ts
+__name2(claimManhwaStoryCheckpoint, "claimManhwaStoryCheckpoint");
 async function onRequestOptions12({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions12, "onRequestOptions");
+__name(onRequestOptions12, "onRequestOptions12");
+__name2(onRequestOptions12, "onRequestOptions");
 async function onRequestPost10({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -13906,13 +14278,13 @@ async function onRequestPost10({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost10, "onRequestPost");
-
-// api/player/opening-room/complete.ts
+__name(onRequestPost10, "onRequestPost10");
+__name2(onRequestPost10, "onRequestPost");
 async function onRequestOptions13({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions13, "onRequestOptions");
+__name(onRequestOptions13, "onRequestOptions13");
+__name2(onRequestOptions13, "onRequestOptions");
 async function onRequestPost11({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -13931,9 +14303,8 @@ async function onRequestPost11({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost11, "onRequestPost");
-
-// api/player/_storyPuzzleDefinitions.ts
+__name(onRequestPost11, "onRequestPost11");
+__name2(onRequestPost11, "onRequestPost");
 var STORY_PUZZLE_BALANCE = Object.freeze({
   intro: { xp: 75, coins: 18, perfectBonusCoins: 6 },
   standard: { xp: 100, coins: 24, perfectBonusCoins: 8 },
@@ -13966,12 +14337,14 @@ function arraysEqual(left, right) {
   return left.every((value, index) => value === right[index]);
 }
 __name(arraysEqual, "arraysEqual");
+__name2(arraysEqual, "arraysEqual");
 function recordsEqual(left, right) {
   const leftEntries = Object.entries(left ?? {}).sort(([a], [b]) => a.localeCompare(b));
   const rightEntries = Object.entries(right ?? {}).sort(([a], [b]) => a.localeCompare(b));
   return leftEntries.length === rightEntries.length && leftEntries.every(([key, value], index) => key === rightEntries[index]?.[0] && value === rightEntries[index]?.[1]);
 }
 __name(recordsEqual, "recordsEqual");
+__name2(recordsEqual, "recordsEqual");
 function matchesSolution(solution2, draft) {
   if (solution2.stages) {
     const submittedStages = draft.assignments.__stages;
@@ -13987,18 +14360,18 @@ function matchesSolution(solution2, draft) {
   return tokensMatch && (!solution2.assignments || recordsEqual(solution2.assignments, draft.assignments)) && (!solution2.imageOrder || arraysEqual(solution2.imageOrder, draft.imageOrder)) && (!solution2.rotations || recordsEqual(solution2.rotations, draft.rotations));
 }
 __name(matchesSolution, "matchesSolution");
+__name2(matchesSolution, "matchesSolution");
 function isServerStoryPuzzleSubmissionCorrect(puzzleId, draft) {
   const definition = SERVER_STORY_PUZZLE_BY_ID[puzzleId];
   return Boolean(definition && matchesSolution(definition.solution, draft));
 }
 __name(isServerStoryPuzzleSubmissionCorrect, "isServerStoryPuzzleSubmissionCorrect");
+__name2(isServerStoryPuzzleSubmissionCorrect, "isServerStoryPuzzleSubmissionCorrect");
 for (const puzzle of STORY_PUZZLES) {
   if (!STORY_PUZZLE_BY_ID[puzzle.id] || !SERVER_STORY_PUZZLE_BY_ID[puzzle.id]) {
     throw new Error(`Story puzzle catalog drift: ${puzzle.id}`);
   }
 }
-
-// api/player/_storyPuzzles.ts
 var MAX_TOKEN_COUNT = 32;
 var MAX_ASSIGNMENTS = 20;
 var MAX_DRAFT_BYTES = 12e3;
@@ -14006,7 +14379,8 @@ function toNonNegativeInteger2(value) {
   const numeric = Number(value);
   return Number.isFinite(numeric) ? Math.max(0, Math.floor(numeric)) : 0;
 }
-__name(toNonNegativeInteger2, "toNonNegativeInteger");
+__name(toNonNegativeInteger2, "toNonNegativeInteger2");
+__name2(toNonNegativeInteger2, "toNonNegativeInteger");
 function cleanTokenList(value) {
   if (!Array.isArray(value) || value.length > MAX_TOKEN_COUNT) {
     throw new PlayerApiError(400, "invalid_puzzle_state", "Puzzle state is invalid.");
@@ -14018,6 +14392,7 @@ function cleanTokenList(value) {
   return tokens;
 }
 __name(cleanTokenList, "cleanTokenList");
+__name2(cleanTokenList, "cleanTokenList");
 function cleanAssignments(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     throw new PlayerApiError(400, "invalid_puzzle_state", "Puzzle state is invalid.");
@@ -14029,6 +14404,7 @@ function cleanAssignments(value) {
   return Object.fromEntries(entries.map(([key, entry]) => [key, String(entry).trim()]));
 }
 __name(cleanAssignments, "cleanAssignments");
+__name2(cleanAssignments, "cleanAssignments");
 function cleanRotations(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     throw new PlayerApiError(400, "invalid_puzzle_state", "Puzzle state is invalid.");
@@ -14040,6 +14416,7 @@ function cleanRotations(value) {
   return Object.fromEntries(entries);
 }
 __name(cleanRotations, "cleanRotations");
+__name2(cleanRotations, "cleanRotations");
 function parseStoryPuzzleDraft(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     throw new PlayerApiError(400, "invalid_puzzle_state", "Puzzle state is invalid.");
@@ -14065,6 +14442,7 @@ function parseStoryPuzzleDraft(value) {
   return draft;
 }
 __name(parseStoryPuzzleDraft, "parseStoryPuzzleDraft");
+__name2(parseStoryPuzzleDraft, "parseStoryPuzzleDraft");
 function parseStoredDraft(serialized) {
   try {
     return parseStoryPuzzleDraft(JSON.parse(serialized));
@@ -14073,6 +14451,7 @@ function parseStoredDraft(serialized) {
   }
 }
 __name(parseStoredDraft, "parseStoredDraft");
+__name2(parseStoredDraft, "parseStoredDraft");
 function getPuzzle(puzzleId) {
   const puzzle = STORY_PUZZLE_BY_ID[puzzleId];
   if (!puzzle || !SERVER_STORY_PUZZLE_BY_ID[puzzleId]) {
@@ -14081,6 +14460,7 @@ function getPuzzle(puzzleId) {
   return puzzle;
 }
 __name(getPuzzle, "getPuzzle");
+__name2(getPuzzle, "getPuzzle");
 function parseStoryPuzzleId(value) {
   if (typeof value !== "string" || !/^story_puzzle_\d{2}_[a-z0-9_]+$/.test(value)) {
     throw new PlayerApiError(400, "invalid_puzzle", "Puzzle ID is invalid.");
@@ -14088,11 +14468,13 @@ function parseStoryPuzzleId(value) {
   return value;
 }
 __name(parseStoryPuzzleId, "parseStoryPuzzleId");
+__name2(parseStoryPuzzleId, "parseStoryPuzzleId");
 function isPuzzleReadable(puzzleId, readPageIds, canonEventIds) {
   const puzzle = getPuzzle(puzzleId);
   return readPageIds.has(puzzle.source.pageId) && (!puzzle.source.requiredCanonEventId || canonEventIds.has(puzzle.source.requiredCanonEventId));
 }
 __name(isPuzzleReadable, "isPuzzleReadable");
+__name2(isPuzzleReadable, "isPuzzleReadable");
 async function readPlayerPuzzleRows(database, uid) {
   const [pages, canonEvents, completions, discoveries, hints, progress, balance, shards] = await Promise.all([
     database.prepare(`SELECT page_id FROM player_manhwa_page_records WHERE user_id = ?`).bind(uid).all(),
@@ -14135,11 +14517,13 @@ async function readPlayerPuzzleRows(database, uid) {
   };
 }
 __name(readPlayerPuzzleRows, "readPlayerPuzzleRows");
+__name2(readPlayerPuzzleRows, "readPlayerPuzzleRows");
 function canReachPuzzle(puzzleId, rows) {
   const puzzle = getPuzzle(puzzleId);
   return isPuzzleReadable(puzzleId, rows.readPageIds, rows.canonEventIds) && puzzle.prerequisitePuzzleIds.every((requiredId) => rows.completionByPuzzleId.has(requiredId));
 }
 __name(canReachPuzzle, "canReachPuzzle");
+__name2(canReachPuzzle, "canReachPuzzle");
 function entryForPuzzle(puzzleId, rows) {
   const puzzle = getPuzzle(puzzleId);
   const completion = rows.completionByPuzzleId.get(puzzleId);
@@ -14160,6 +14544,7 @@ function entryForPuzzle(puzzleId, rows) {
   };
 }
 __name(entryForPuzzle, "entryForPuzzle");
+__name2(entryForPuzzle, "entryForPuzzle");
 function snapshotFromRows(rows) {
   const entries = STORY_PUZZLES.map((puzzle) => entryForPuzzle(puzzle.id, rows));
   const mainCompletedCount = STORY_PUZZLES.filter((puzzle) => puzzle.classification === "main" && rows.completionByPuzzleId.has(puzzle.id)).length;
@@ -14194,11 +14579,13 @@ function snapshotFromRows(rows) {
   };
 }
 __name(snapshotFromRows, "snapshotFromRows");
+__name2(snapshotFromRows, "snapshotFromRows");
 async function readStoryPuzzleSnapshot(database, account) {
   await ensurePlayerProgressionRow(database, account);
   return snapshotFromRows(await readPlayerPuzzleRows(database, account.uid));
 }
 __name(readStoryPuzzleSnapshot, "readStoryPuzzleSnapshot");
+__name2(readStoryPuzzleSnapshot, "readStoryPuzzleSnapshot");
 function assertPuzzleAccessible(puzzleId, snapshot) {
   const entry = snapshot.entries.find((candidate) => candidate.puzzleId === puzzleId);
   if (!entry || entry.status === "hidden" || entry.status === "locked") {
@@ -14207,6 +14594,7 @@ function assertPuzzleAccessible(puzzleId, snapshot) {
   return entry;
 }
 __name(assertPuzzleAccessible, "assertPuzzleAccessible");
+__name2(assertPuzzleAccessible, "assertPuzzleAccessible");
 async function saveStoryPuzzleDraft(database, account, puzzleId, draft) {
   const puzzle = getPuzzle(puzzleId);
   const snapshot = await readStoryPuzzleSnapshot(database, account);
@@ -14231,6 +14619,7 @@ async function saveStoryPuzzleDraft(database, account, puzzleId, draft) {
   return readStoryPuzzleSnapshot(database, account);
 }
 __name(saveStoryPuzzleDraft, "saveStoryPuzzleDraft");
+__name2(saveStoryPuzzleDraft, "saveStoryPuzzleDraft");
 async function discoverStoryPuzzle(database, account, puzzleId) {
   const puzzle = getPuzzle(puzzleId);
   if (puzzle.classification !== "secret") {
@@ -14250,6 +14639,7 @@ async function discoverStoryPuzzle(database, account, puzzleId) {
   return readStoryPuzzleSnapshot(database, account);
 }
 __name(discoverStoryPuzzle, "discoverStoryPuzzle");
+__name2(discoverStoryPuzzle, "discoverStoryPuzzle");
 function xpProgressionUpdateStatement(database, uid, now) {
   return database.prepare(`
     UPDATE player_progression
@@ -14262,18 +14652,22 @@ function xpProgressionUpdateStatement(database, uid, now) {
   `).bind(uid, now, uid);
 }
 __name(xpProgressionUpdateStatement, "xpProgressionUpdateStatement");
+__name2(xpProgressionUpdateStatement, "xpProgressionUpdateStatement");
 function isUniqueConflict2(error) {
   return error instanceof Error && /unique|constraint/i.test(error.message);
 }
-__name(isUniqueConflict2, "isUniqueConflict");
+__name(isUniqueConflict2, "isUniqueConflict2");
+__name2(isUniqueConflict2, "isUniqueConflict");
 function isInsufficientCoinBalanceError(error) {
   return error instanceof Error && /insufficient verified coins/i.test(error.message);
 }
 __name(isInsufficientCoinBalanceError, "isInsufficientCoinBalanceError");
+__name2(isInsufficientCoinBalanceError, "isInsufficientCoinBalanceError");
 function isCompletedStoryPuzzleError(error) {
   return error instanceof Error && /story puzzle already complete/i.test(error.message);
 }
 __name(isCompletedStoryPuzzleError, "isCompletedStoryPuzzleError");
+__name2(isCompletedStoryPuzzleError, "isCompletedStoryPuzzleError");
 async function completeStoryPuzzle(database, account, puzzleId, draft) {
   const puzzle = getPuzzle(puzzleId);
   const serverDefinition = SERVER_STORY_PUZZLE_BY_ID[puzzle.id];
@@ -14404,6 +14798,7 @@ async function completeStoryPuzzle(database, account, puzzleId, draft) {
   };
 }
 __name(completeStoryPuzzle, "completeStoryPuzzle");
+__name2(completeStoryPuzzle, "completeStoryPuzzle");
 async function unlockStoryPuzzleHint(database, account, puzzleId, hintIndex) {
   const puzzle = getPuzzle(puzzleId);
   if (!Number.isInteger(hintIndex) || hintIndex < 0 || hintIndex > 2) {
@@ -14445,8 +14840,7 @@ async function unlockStoryPuzzleHint(database, account, puzzleId, hintIndex) {
   return { alreadyUnlocked: false, snapshot: await readStoryPuzzleSnapshot(database, account) };
 }
 __name(unlockStoryPuzzleHint, "unlockStoryPuzzleHint");
-
-// api/player/puzzles/complete.ts
+__name2(unlockStoryPuzzleHint, "unlockStoryPuzzleHint");
 var MAX_BODY_BYTES = 16e3;
 function parseBody(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
@@ -14459,10 +14853,12 @@ function parseBody(value) {
   return { puzzleId: parseStoryPuzzleId(input.puzzleId), draft: parseStoryPuzzleDraft(input.draft) };
 }
 __name(parseBody, "parseBody");
+__name2(parseBody, "parseBody");
 async function onRequestOptions14({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions14, "onRequestOptions");
+__name(onRequestOptions14, "onRequestOptions14");
+__name2(onRequestOptions14, "onRequestOptions");
 async function onRequestPost12({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -14479,9 +14875,8 @@ async function onRequestPost12({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost12, "onRequestPost");
-
-// api/player/puzzles/discover.ts
+__name(onRequestPost12, "onRequestPost12");
+__name2(onRequestPost12, "onRequestPost");
 function parseBody2(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     throw new PlayerApiError(400, "invalid_request", "Secret signal is invalid.");
@@ -14492,11 +14887,13 @@ function parseBody2(value) {
   }
   return parseStoryPuzzleId(input.puzzleId);
 }
-__name(parseBody2, "parseBody");
+__name(parseBody2, "parseBody2");
+__name2(parseBody2, "parseBody");
 async function onRequestOptions15({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions15, "onRequestOptions");
+__name(onRequestOptions15, "onRequestOptions15");
+__name2(onRequestOptions15, "onRequestOptions");
 async function onRequestPost13({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -14514,9 +14911,8 @@ async function onRequestPost13({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost13, "onRequestPost");
-
-// api/player/puzzles/hints.ts
+__name(onRequestPost13, "onRequestPost13");
+__name2(onRequestPost13, "onRequestPost");
 function parseBody3(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     throw new PlayerApiError(400, "invalid_request", "Hint request is invalid.");
@@ -14530,11 +14926,13 @@ function parseBody3(value) {
   }
   return { puzzleId: parseStoryPuzzleId(input.puzzleId), hintIndex: input.hintIndex };
 }
-__name(parseBody3, "parseBody");
+__name(parseBody3, "parseBody3");
+__name2(parseBody3, "parseBody");
 async function onRequestOptions16({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions16, "onRequestOptions");
+__name(onRequestOptions16, "onRequestOptions16");
+__name2(onRequestOptions16, "onRequestOptions");
 async function onRequestPost14({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -14551,9 +14949,8 @@ async function onRequestPost14({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost14, "onRequestPost");
-
-// api/player/puzzles/progress.ts
+__name(onRequestPost14, "onRequestPost14");
+__name2(onRequestPost14, "onRequestPost");
 var MAX_BODY_BYTES2 = 16e3;
 function parseBody4(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
@@ -14565,11 +14962,13 @@ function parseBody4(value) {
   }
   return { puzzleId: parseStoryPuzzleId(input.puzzleId), draft: parseStoryPuzzleDraft(input.draft) };
 }
-__name(parseBody4, "parseBody");
+__name(parseBody4, "parseBody4");
+__name2(parseBody4, "parseBody");
 async function onRequestOptions17({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions17, "onRequestOptions");
+__name(onRequestOptions17, "onRequestOptions17");
+__name2(onRequestOptions17, "onRequestOptions");
 async function onRequestPost15({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -14587,9 +14986,8 @@ async function onRequestPost15({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost15, "onRequestPost");
-
-// api/player/story-state/checkpoint.ts
+__name(onRequestPost15, "onRequestPost15");
+__name2(onRequestPost15, "onRequestPost");
 var MAX_CHECKPOINT_BYTES = 4096;
 async function onRequestOptions18({
   request,
@@ -14597,7 +14995,8 @@ async function onRequestOptions18({
 }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions18, "onRequestOptions");
+__name(onRequestOptions18, "onRequestOptions18");
+__name2(onRequestOptions18, "onRequestOptions");
 async function onRequestPost16({
   request,
   env
@@ -14621,9 +15020,8 @@ async function onRequestPost16({
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost16, "onRequestPost");
-
-// api/player/_xpRewards.ts
+__name(onRequestPost16, "onRequestPost16");
+__name2(onRequestPost16, "onRequestPost");
 function cleanSourceId(value) {
   if (typeof value !== "string") {
     throw new PlayerApiError(400, "invalid_request", "sourceId is invalid.");
@@ -14635,6 +15033,7 @@ function cleanSourceId(value) {
   return sourceId;
 }
 __name(cleanSourceId, "cleanSourceId");
+__name2(cleanSourceId, "cleanSourceId");
 function cleanSourceType(value) {
   if (typeof value !== "string" || !PLAYER_XP_SOURCE_TYPES.includes(value)) {
     throw new PlayerApiError(400, "invalid_request", "sourceType is invalid.");
@@ -14642,6 +15041,7 @@ function cleanSourceType(value) {
   return value;
 }
 __name(cleanSourceType, "cleanSourceType");
+__name2(cleanSourceType, "cleanSourceType");
 function cleanManhwaProof(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     throw new PlayerApiError(400, "invalid_proof", "Manhwa proof is invalid.");
@@ -14653,6 +15053,7 @@ function cleanManhwaProof(value) {
   return { finalPageNumber };
 }
 __name(cleanManhwaProof, "cleanManhwaProof");
+__name2(cleanManhwaProof, "cleanManhwaProof");
 function verifyManhwaChapterReward(sourceId, proof) {
   const chapter = FINAL_MANHWA_CHAPTERS.find(({ chapterId }) => chapterId === sourceId);
   if (!chapter) {
@@ -14692,6 +15093,7 @@ function verifyManhwaChapterReward(sourceId, proof) {
   };
 }
 __name(verifyManhwaChapterReward, "verifyManhwaChapterReward");
+__name2(verifyManhwaChapterReward, "verifyManhwaChapterReward");
 function verifyXpRewardClaim(body) {
   if (typeof body !== "object" || body === null || Array.isArray(body)) {
     throw new PlayerApiError(400, "invalid_request", "XP claim is invalid.");
@@ -14716,8 +15118,7 @@ function verifyXpRewardClaim(body) {
   );
 }
 __name(verifyXpRewardClaim, "verifyXpRewardClaim");
-
-// api/player/xp/claim.ts
+__name2(verifyXpRewardClaim, "verifyXpRewardClaim");
 var MAX_CLAIM_BYTES = 48e3;
 async function onRequestOptions19({
   request,
@@ -14725,7 +15126,8 @@ async function onRequestOptions19({
 }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions19, "onRequestOptions");
+__name(onRequestOptions19, "onRequestOptions19");
+__name2(onRequestOptions19, "onRequestOptions");
 async function onRequestPost17({
   request,
   env
@@ -14756,9 +15158,8 @@ async function onRequestPost17({
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost17, "onRequestPost");
-
-// api/echo/providers.ts
+__name(onRequestPost17, "onRequestPost17");
+__name2(onRequestPost17, "onRequestPost");
 var DEFAULT_PROVIDER_ORDER = [
   "cloudflare",
   "gemini",
@@ -14790,17 +15191,20 @@ function splitList(...values) {
   return values.flatMap((value) => (value ?? "").split(/[\n,]/)).map((value) => value.trim()).filter(Boolean);
 }
 __name(splitList, "splitList");
+__name2(splitList, "splitList");
 function configuredList(value, fallback) {
   const configured = splitList(value);
   return configured.length > 0 ? configured : [...fallback];
 }
 __name(configuredList, "configuredList");
+__name2(configuredList, "configuredList");
 function boundedInteger(value, fallback, minimum, maximum) {
   const parsed = Number.parseInt(value ?? "", 10);
   if (!Number.isFinite(parsed)) return fallback;
   return Math.min(maximum, Math.max(minimum, parsed));
 }
 __name(boundedInteger, "boundedInteger");
+__name2(boundedInteger, "boundedInteger");
 function textFromContent(content) {
   if (typeof content === "string") return content;
   if (!Array.isArray(content)) return "";
@@ -14811,16 +15215,19 @@ function textFromContent(content) {
   }).join("");
 }
 __name(textFromContent, "textFromContent");
+__name2(textFromContent, "textFromContent");
 function cleanModelText(value) {
   return value.replace(/<think>[\s\S]*?<\/think>/gi, "").replace(/^```(?:text|markdown)?\s*/i, "").replace(/\s*```$/i, "").trim().slice(0, 5e3);
 }
 __name(cleanModelText, "cleanModelText");
+__name2(cleanModelText, "cleanModelText");
 function extractChatCompletionText(payload) {
   if (typeof payload !== "object" || payload === null) return "";
   const response = payload;
   return cleanModelText(textFromContent(response.choices?.[0]?.message?.content));
 }
 __name(extractChatCompletionText, "extractChatCompletionText");
+__name2(extractChatCompletionText, "extractChatCompletionText");
 function extractResponsesText(payload) {
   if (typeof payload !== "object" || payload === null) return "";
   const response = payload;
@@ -14831,6 +15238,7 @@ function extractResponsesText(payload) {
   return cleanModelText(text2);
 }
 __name(extractResponsesText, "extractResponsesText");
+__name2(extractResponsesText, "extractResponsesText");
 function extractGeminiText(payload) {
   if (typeof payload !== "object" || payload === null) return "";
   const response = payload;
@@ -14838,6 +15246,7 @@ function extractGeminiText(payload) {
   return cleanModelText(text2);
 }
 __name(extractGeminiText, "extractGeminiText");
+__name2(extractGeminiText, "extractGeminiText");
 async function fetchJson(url, init, timeoutMs) {
   const controller = new AbortController();
   const timeout = globalThis.setTimeout(() => controller.abort(), timeoutMs);
@@ -14852,6 +15261,7 @@ async function fetchJson(url, init, timeoutMs) {
   }
 }
 __name(fetchJson, "fetchJson");
+__name2(fetchJson, "fetchJson");
 async function withTimeout(operation, timeoutMs) {
   let timeout;
   try {
@@ -14869,6 +15279,7 @@ async function withTimeout(operation, timeoutMs) {
   }
 }
 __name(withTimeout, "withTimeout");
+__name2(withTimeout, "withTimeout");
 async function runCompatibleChat(url, key, model, messages, timeoutMs, extraHeaders = {}) {
   const payload = await fetchJson(url, {
     method: "POST",
@@ -14888,6 +15299,7 @@ async function runCompatibleChat(url, key, model, messages, timeoutMs, extraHead
   return extractChatCompletionText(payload);
 }
 __name(runCompatibleChat, "runCompatibleChat");
+__name2(runCompatibleChat, "runCompatibleChat");
 function createCloudflareAttempts(env, messages) {
   if (!env.AI) return [];
   return configuredList(
@@ -14895,7 +15307,7 @@ function createCloudflareAttempts(env, messages) {
     DEFAULT_CLOUDFLARE_MODELS
   ).map((model) => ({
     id: `cloudflare:${model}`,
-    run: /* @__PURE__ */ __name(async (timeoutMs) => {
+    run: /* @__PURE__ */ __name2(async (timeoutMs) => {
       const response = await withTimeout(
         env.AI.run(model, {
           messages,
@@ -14914,12 +15326,13 @@ function createCloudflareAttempts(env, messages) {
   }));
 }
 __name(createCloudflareAttempts, "createCloudflareAttempts");
+__name2(createCloudflareAttempts, "createCloudflareAttempts");
 function createOpenRouterAttempts(env, messages, referer) {
   const keys = splitList(env.OPENROUTER_API_KEYS, env.OPENROUTER_API_KEY);
   const models = configuredList(env.OPENROUTER_MODELS, ["openrouter/free"]);
   return keys.flatMap((key, keyIndex) => models.map((model) => ({
     id: `openrouter:${keyIndex}:${model}`,
-    run: /* @__PURE__ */ __name((timeoutMs) => runCompatibleChat(
+    run: /* @__PURE__ */ __name2((timeoutMs) => runCompatibleChat(
       "https://openrouter.ai/api/v1/chat/completions",
       key,
       model,
@@ -14933,6 +15346,7 @@ function createOpenRouterAttempts(env, messages, referer) {
   })));
 }
 __name(createOpenRouterAttempts, "createOpenRouterAttempts");
+__name2(createOpenRouterAttempts, "createOpenRouterAttempts");
 function createGeminiAttempts(env, messages, instructions) {
   const keys = splitList(env.GEMINI_API_KEYS, env.GEMINI_API_KEY);
   const models = configuredList(env.GEMINI_MODELS, DEFAULT_GEMINI_MODELS);
@@ -14942,7 +15356,7 @@ function createGeminiAttempts(env, messages, instructions) {
   }));
   return keys.flatMap((key, keyIndex) => models.map((model) => ({
     id: `gemini:${keyIndex}:${model}`,
-    run: /* @__PURE__ */ __name(async (timeoutMs) => {
+    run: /* @__PURE__ */ __name2(async (timeoutMs) => {
       const payload = await fetchJson(
         `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
         {
@@ -14969,12 +15383,13 @@ function createGeminiAttempts(env, messages, instructions) {
   })));
 }
 __name(createGeminiAttempts, "createGeminiAttempts");
+__name2(createGeminiAttempts, "createGeminiAttempts");
 function createGroqAttempts(env, messages) {
   const keys = splitList(env.GROQ_API_KEYS, env.GROQ_API_KEY);
   const models = configuredList(env.GROQ_MODELS, DEFAULT_GROQ_MODELS);
   return keys.flatMap((key, keyIndex) => models.map((model) => ({
     id: `groq:${keyIndex}:${model}`,
-    run: /* @__PURE__ */ __name((timeoutMs) => runCompatibleChat(
+    run: /* @__PURE__ */ __name2((timeoutMs) => runCompatibleChat(
       "https://api.groq.com/openai/v1/chat/completions",
       key,
       model,
@@ -14984,12 +15399,13 @@ function createGroqAttempts(env, messages) {
   })));
 }
 __name(createGroqAttempts, "createGroqAttempts");
+__name2(createGroqAttempts, "createGroqAttempts");
 function createHuggingFaceAttempts(env, messages) {
   const keys = splitList(env.HF_TOKENS, env.HF_TOKEN);
   const models = configuredList(env.HF_MODELS, DEFAULT_HF_MODELS);
   return keys.flatMap((key, keyIndex) => models.map((model) => ({
     id: `huggingface:${keyIndex}:${model}`,
-    run: /* @__PURE__ */ __name((timeoutMs) => runCompatibleChat(
+    run: /* @__PURE__ */ __name2((timeoutMs) => runCompatibleChat(
       "https://router.huggingface.co/v1/chat/completions",
       key,
       model,
@@ -14999,6 +15415,7 @@ function createHuggingFaceAttempts(env, messages) {
   })));
 }
 __name(createHuggingFaceAttempts, "createHuggingFaceAttempts");
+__name2(createHuggingFaceAttempts, "createHuggingFaceAttempts");
 function createOpenAiAttempts(env, messages, instructions, safetyIdentifier) {
   const keys = splitList(env.OPENAI_API_KEYS, env.OPENAI_API_KEY);
   const models = configuredList(
@@ -15008,7 +15425,7 @@ function createOpenAiAttempts(env, messages, instructions, safetyIdentifier) {
   const input = messages.filter((message) => message.role !== "system");
   return keys.flatMap((key, keyIndex) => models.map((model) => ({
     id: `openai:${keyIndex}:${model}`,
-    run: /* @__PURE__ */ __name(async (timeoutMs) => {
+    run: /* @__PURE__ */ __name2(async (timeoutMs) => {
       const payload = await fetchJson("https://api.openai.com/v1/responses", {
         method: "POST",
         headers: {
@@ -15030,6 +15447,7 @@ function createOpenAiAttempts(env, messages, instructions, safetyIdentifier) {
   })));
 }
 __name(createOpenAiAttempts, "createOpenAiAttempts");
+__name2(createOpenAiAttempts, "createOpenAiAttempts");
 function createAttempts(input) {
   const { env, messages, instructions, safetyIdentifier, referer } = input;
   const groups = {
@@ -15050,12 +15468,14 @@ function createAttempts(input) {
   return order.flatMap((provider) => groups[provider.toLowerCase()] ?? []);
 }
 __name(createAttempts, "createAttempts");
+__name2(createAttempts, "createAttempts");
 function hasConfiguredEchoProvider(env) {
   return Boolean(
     env.AI || splitList(env.GEMINI_API_KEYS, env.GEMINI_API_KEY).length || splitList(env.OPENROUTER_API_KEYS, env.OPENROUTER_API_KEY).length || splitList(env.GROQ_API_KEYS, env.GROQ_API_KEY).length || splitList(env.HF_TOKENS, env.HF_TOKEN).length || splitList(env.OPENAI_API_KEYS, env.OPENAI_API_KEY).length
   );
 }
 __name(hasConfiguredEchoProvider, "hasConfiguredEchoProvider");
+__name2(hasConfiguredEchoProvider, "hasConfiguredEchoProvider");
 function resolveEchoProviderTiming(env) {
   const deadlineMs = boundedInteger(
     env.ECHO_PROVIDER_DEADLINE_MS,
@@ -15080,6 +15500,7 @@ function resolveEchoProviderTiming(env) {
   };
 }
 __name(resolveEchoProviderTiming, "resolveEchoProviderTiming");
+__name2(resolveEchoProviderTiming, "resolveEchoProviderTiming");
 async function generateEchoReply(input) {
   const attempts = createAttempts(input);
   const {
@@ -15103,13 +15524,13 @@ async function generateEchoReply(input) {
   throw new Error("echo_provider_pool_exhausted");
 }
 __name(generateEchoReply, "generateEchoReply");
-
-// api/echo/_guard.ts
+__name2(generateEchoReply, "generateEchoReply");
 var ECHO_EVENT_RETENTION_MS = 24 * 60 * 60 * 1e3;
 function isEchoRateLimit(error) {
   return error instanceof Error && /echo (?:minute|daily) rate limit exceeded/i.test(error.message);
 }
 __name(isEchoRateLimit, "isEchoRateLimit");
+__name2(isEchoRateLimit, "isEchoRateLimit");
 async function authenticateEchoRequest(request, env) {
   const { account } = await authenticatePlayer(request, env);
   const database = requirePlayerDatabase(env);
@@ -15117,6 +15538,7 @@ async function authenticateEchoRequest(request, env) {
   return { account, database };
 }
 __name(authenticateEchoRequest, "authenticateEchoRequest");
+__name2(authenticateEchoRequest, "authenticateEchoRequest");
 async function consumeEchoQuota(authorized, capability) {
   const { account, database } = authorized;
   const nowMs = Date.now();
@@ -15155,8 +15577,7 @@ async function consumeEchoQuota(authorized, capability) {
   }
 }
 __name(consumeEchoQuota, "consumeEchoQuota");
-
-// api/echo/chat.ts
+__name2(consumeEchoQuota, "consumeEchoQuota");
 function corsHeaders2(request, env) {
   const requestOrigin = request.headers.get("Origin") ?? "";
   const sameOrigin = requestOrigin === new URL(request.url).origin;
@@ -15170,7 +15591,8 @@ function corsHeaders2(request, env) {
     Vary: "Origin"
   };
 }
-__name(corsHeaders2, "corsHeaders");
+__name(corsHeaders2, "corsHeaders2");
+__name2(corsHeaders2, "corsHeaders");
 function jsonResponse2(body, status, headers) {
   return new Response(JSON.stringify(body), {
     status,
@@ -15180,17 +15602,20 @@ function jsonResponse2(body, status, headers) {
     }
   });
 }
-__name(jsonResponse2, "jsonResponse");
+__name(jsonResponse2, "jsonResponse2");
+__name2(jsonResponse2, "jsonResponse");
 function cleanText(value, maximumLength) {
   if (typeof value !== "string") return "";
   return value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim().slice(0, maximumLength);
 }
 __name(cleanText, "cleanText");
+__name2(cleanText, "cleanText");
 function cleanStringArray(value, maximumItems, maximumLength) {
   if (!Array.isArray(value)) return [];
   return value.slice(-maximumItems).map((item) => cleanText(item, maximumLength)).filter(Boolean);
 }
 __name(cleanStringArray, "cleanStringArray");
+__name2(cleanStringArray, "cleanStringArray");
 function sanitizeHistory(value) {
   if (!Array.isArray(value)) return [];
   return value.slice(-7).flatMap((item) => {
@@ -15202,6 +15627,7 @@ function sanitizeHistory(value) {
   });
 }
 __name(sanitizeHistory, "sanitizeHistory");
+__name2(sanitizeHistory, "sanitizeHistory");
 function sanitizeKnowledge(value) {
   if (typeof value !== "object" || value === null) return {};
   const source = value;
@@ -15212,7 +15638,7 @@ function sanitizeKnowledge(value) {
       return typeof raw === "number" && Number.isFinite(raw) ? [[key, Math.min(100, Math.max(0, raw))]] : [];
     })
   );
-  const cleanObjects = /* @__PURE__ */ __name((candidate, maximumItems, map) => (Array.isArray(candidate) ? candidate : []).slice(-maximumItems).flatMap((item) => typeof item === "object" && item !== null ? [map(item)] : []), "cleanObjects");
+  const cleanObjects = /* @__PURE__ */ __name2((candidate, maximumItems, map) => (Array.isArray(candidate) ? candidate : []).slice(-maximumItems).flatMap((item) => typeof item === "object" && item !== null ? [map(item)] : []), "cleanObjects");
   return {
     chapterId: /^chapter_[1-7]$/.test(cleanText(source.chapterId, 20)) ? cleanText(source.chapterId, 20) : "chapter_1",
     personality,
@@ -15254,6 +15680,7 @@ function sanitizeKnowledge(value) {
   };
 }
 __name(sanitizeKnowledge, "sanitizeKnowledge");
+__name2(sanitizeKnowledge, "sanitizeKnowledge");
 async function resolveAuthoritativeEchoKnowledge(database, account, knowledge) {
   const nonCanonTone = {
     personality: knowledge.personality
@@ -15284,6 +15711,7 @@ async function resolveAuthoritativeEchoKnowledge(database, account, knowledge) {
   }
 }
 __name(resolveAuthoritativeEchoKnowledge, "resolveAuthoritativeEchoKnowledge");
+__name2(resolveAuthoritativeEchoKnowledge, "resolveAuthoritativeEchoKnowledge");
 function restrictedGameplayRequest(message) {
   const normalized = message.normalize("NFKC").toLowerCase();
   const asksForPuzzleAnswer = /\b(puzzle|solution|answer|hint|solve)\b|لغز|تلميح|(?:^|\s)(?:ال)?حل(?:\s|$)|(?:^|\s)(?:ال)?(?:[اأإآ]جاب|جواب)(?:ة|ه)?(?:\s|$)/iu.test(normalized);
@@ -15292,6 +15720,7 @@ function restrictedGameplayRequest(message) {
   return asksForChessMove ? "chess" : null;
 }
 __name(restrictedGameplayRequest, "restrictedGameplayRequest");
+__name2(restrictedGameplayRequest, "restrictedGameplayRequest");
 function restrictedGameplayResponse(locale, kind) {
   if (locale === "en") {
     return kind === "puzzle" ? "I can stay with you while you read the evidence, but I will not choose an answer. Use the puzzle\u2019s own hint action if you want another clue." : "I can react after a legal move, but I will not choose or recommend a move for you. Read the board, then make the move you trust.";
@@ -15299,6 +15728,7 @@ function restrictedGameplayResponse(locale, kind) {
   return kind === "puzzle" ? "\u0633\u0623\u0628\u0642\u0649 \u0645\u0639\u0643 \u0648\u0623\u0646\u062A \u062A\u0642\u0631\u0623 \u0627\u0644\u062F\u0644\u064A\u0644\u060C \u0644\u0643\u0646\u0646\u064A \u0644\u0646 \u0623\u062E\u062A\u0627\u0631 \u0627\u0644\u0625\u062C\u0627\u0628\u0629. \u0627\u0633\u062A\u062E\u062F\u0645 \u0625\u062C\u0631\u0627\u0621 \u0627\u0644\u062A\u0644\u0645\u064A\u062D \u062F\u0627\u062E\u0644 \u0627\u0644\u0644\u063A\u0632 \u0625\u0646 \u0623\u0631\u062F\u062A \u062F\u0644\u064A\u0644\u064B\u0627 \u0625\u0636\u0627\u0641\u064A\u064B\u0627." : "\u0623\u0633\u062A\u0637\u064A\u0639 \u0627\u0644\u062A\u0641\u0627\u0639\u0644 \u0628\u0639\u062F \u0646\u0642\u0644\u0629 \u0642\u0627\u0646\u0648\u0646\u064A\u0629\u060C \u0644\u0643\u0646\u0646\u064A \u0644\u0646 \u0623\u062E\u062A\u0627\u0631 \u0623\u0648 \u0623\u0648\u0635\u064A \u0628\u0646\u0642\u0644\u0629 \u0644\u0643. \u0627\u0642\u0631\u0623 \u0627\u0644\u0631\u0642\u0639\u0629 \u062B\u0645 \u0627\u062E\u062A\u0631 \u0646\u0642\u0644\u062A\u0643 \u0628\u0646\u0641\u0633\u0643.";
 }
 __name(restrictedGameplayResponse, "restrictedGameplayResponse");
+__name2(restrictedGameplayResponse, "restrictedGameplayResponse");
 function echoInstructions(locale) {
   const language = locale === "en" ? "English" : "Arabic";
   return [
@@ -15321,6 +15751,7 @@ function echoInstructions(locale) {
   ].join("\n");
 }
 __name(echoInstructions, "echoInstructions");
+__name2(echoInstructions, "echoInstructions");
 function createProviderMessages(instructions, knowledge, history, message) {
   return [
     { role: "system", content: instructions },
@@ -15336,6 +15767,7 @@ function createProviderMessages(instructions, knowledge, history, message) {
   ];
 }
 __name(createProviderMessages, "createProviderMessages");
+__name2(createProviderMessages, "createProviderMessages");
 function streamTextResponse(text2, headers) {
   const encoder3 = new TextEncoder();
   const characters = Array.from(text2);
@@ -15374,6 +15806,7 @@ function streamTextResponse(text2, headers) {
   });
 }
 __name(streamTextResponse, "streamTextResponse");
+__name2(streamTextResponse, "streamTextResponse");
 async function onRequestOptions20({
   request,
   env
@@ -15383,7 +15816,8 @@ async function onRequestOptions20({
     headers: corsHeaders2(request, env)
   });
 }
-__name(onRequestOptions20, "onRequestOptions");
+__name(onRequestOptions20, "onRequestOptions20");
+__name2(onRequestOptions20, "onRequestOptions");
 async function onRequestPost18({
   request,
   env
@@ -15486,9 +15920,8 @@ ${JSON.stringify(knowledge)}`
     return jsonResponse2({ error: "Echo AI is temporarily unavailable." }, 503, headers);
   }
 }
-__name(onRequestPost18, "onRequestPost");
-
-// ../src/domain/echo/echoAgentTicket.ts
+__name(onRequestPost18, "onRequestPost18");
+__name2(onRequestPost18, "onRequestPost");
 var encoder2 = new TextEncoder();
 var decoder2 = new TextDecoder();
 var ECHO_AGENT_TICKET_TTL_SECONDS = 120;
@@ -15498,7 +15931,8 @@ function bytesToBase64Url2(bytes) {
   for (const byte of bytes) binary += String.fromCharCode(byte);
   return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
-__name(bytesToBase64Url2, "bytesToBase64Url");
+__name(bytesToBase64Url2, "bytesToBase64Url2");
+__name2(bytesToBase64Url2, "bytesToBase64Url");
 function isPrivateDevelopmentHost2(hostname) {
   const normalized = hostname.toLowerCase().replace(/^\[|\]$/g, "");
   if (normalized === "localhost" || normalized === "::1" || normalized === "127.0.0.1") {
@@ -15508,7 +15942,8 @@ function isPrivateDevelopmentHost2(hostname) {
   if (octets.length !== 4 || octets.some((octet) => !Number.isInteger(octet) || octet < 0 || octet > 255)) return false;
   return octets[0] === 10 || octets[0] === 172 && octets[1] >= 16 && octets[1] <= 31 || octets[0] === 192 && octets[1] === 168;
 }
-__name(isPrivateDevelopmentHost2, "isPrivateDevelopmentHost");
+__name(isPrivateDevelopmentHost2, "isPrivateDevelopmentHost2");
+__name2(isPrivateDevelopmentHost2, "isPrivateDevelopmentHost");
 function normalizeEchoAgentOrigin(value) {
   if (typeof value !== "string" || value.length > 320) return null;
   try {
@@ -15520,6 +15955,7 @@ function normalizeEchoAgentOrigin(value) {
   }
 }
 __name(normalizeEchoAgentOrigin, "normalizeEchoAgentOrigin");
+__name2(normalizeEchoAgentOrigin, "normalizeEchoAgentOrigin");
 async function importHmacKey2(secret) {
   if (secret.length < 32) {
     throw new Error("Echo agent ticket secret must contain at least 32 characters.");
@@ -15532,13 +15968,15 @@ async function importHmacKey2(secret) {
     ["sign", "verify"]
   );
 }
-__name(importHmacKey2, "importHmacKey");
+__name(importHmacKey2, "importHmacKey2");
+__name2(importHmacKey2, "importHmacKey");
 async function hmacSha256Hex(secret, value) {
   const key = await importHmacKey2(secret);
   const signature = await crypto.subtle.sign("HMAC", key, encoder2.encode(value));
   return [...new Uint8Array(signature)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 __name(hmacSha256Hex, "hmacSha256Hex");
+__name2(hmacSha256Hex, "hmacSha256Hex");
 async function deriveEchoAgentSubject(secret, uid) {
   const normalizedUid = uid.trim();
   if (!normalizedUid || normalizedUid.length > 128) {
@@ -15547,6 +15985,7 @@ async function deriveEchoAgentSubject(secret, uid) {
   return hmacSha256Hex(secret, `eleven-eleven:echo-agent-subject:v1:${normalizedUid}`);
 }
 __name(deriveEchoAgentSubject, "deriveEchoAgentSubject");
+__name2(deriveEchoAgentSubject, "deriveEchoAgentSubject");
 async function issueEchoAgentTicket(secret, input) {
   const origin = normalizeEchoAgentOrigin(input.origin);
   if (!origin) throw new Error("Echo agent ticket origin is invalid.");
@@ -15576,8 +16015,7 @@ async function issueEchoAgentTicket(secret, input) {
   return `${body}.${bytesToBase64Url2(new Uint8Array(signature))}`;
 }
 __name(issueEchoAgentTicket, "issueEchoAgentTicket");
-
-// api/echo/session.ts
+__name2(issueEchoAgentTicket, "issueEchoAgentTicket");
 var ECHO_AGENT_PROTOCOL = "echo-agent-v1";
 function isPrivateDevelopmentHost3(hostname) {
   const normalized = hostname.toLowerCase().replace(/^\[|\]$/g, "");
@@ -15590,11 +16028,13 @@ function isPrivateDevelopmentHost3(hostname) {
   }
   return octets[0] === 10 || octets[0] === 172 && octets[1] >= 16 && octets[1] <= 31 || octets[0] === 192 && octets[1] === 168;
 }
-__name(isPrivateDevelopmentHost3, "isPrivateDevelopmentHost");
+__name(isPrivateDevelopmentHost3, "isPrivateDevelopmentHost3");
+__name2(isPrivateDevelopmentHost3, "isPrivateDevelopmentHost");
 function configuredOrigins2(env) {
   return new Set((env.ECHO_AGENT_ALLOWED_ORIGINS ?? "").split(",").map((origin) => normalizeEchoAgentOrigin(origin.trim())).filter((origin) => Boolean(origin)));
 }
-__name(configuredOrigins2, "configuredOrigins");
+__name(configuredOrigins2, "configuredOrigins2");
+__name2(configuredOrigins2, "configuredOrigins");
 function requireAllowedOrigin(request, env) {
   const origin = normalizeEchoAgentOrigin(request.headers.get("Origin") ?? "");
   const sameOrigin = new URL(request.url).origin;
@@ -15604,6 +16044,7 @@ function requireAllowedOrigin(request, env) {
   return origin;
 }
 __name(requireAllowedOrigin, "requireAllowedOrigin");
+__name2(requireAllowedOrigin, "requireAllowedOrigin");
 function echoAgentCorsHeaders(request, env) {
   const origin = normalizeEchoAgentOrigin(request.headers.get("Origin") ?? "");
   const sameOrigin = origin === new URL(request.url).origin;
@@ -15617,6 +16058,7 @@ function echoAgentCorsHeaders(request, env) {
   };
 }
 __name(echoAgentCorsHeaders, "echoAgentCorsHeaders");
+__name2(echoAgentCorsHeaders, "echoAgentCorsHeaders");
 function requireTicketSecret2(env) {
   const secret = env.ECHO_AGENT_TICKET_SECRET?.trim() ?? "";
   if (secret.length < 32) {
@@ -15624,13 +16066,15 @@ function requireTicketSecret2(env) {
   }
   return secret;
 }
-__name(requireTicketSecret2, "requireTicketSecret");
+__name(requireTicketSecret2, "requireTicketSecret2");
+__name2(requireTicketSecret2, "requireTicketSecret");
 function requireAgentEnabled(env) {
   if (env.ECHO_AGENT_ENABLED?.trim().toLowerCase() !== "true") {
     throw new PlayerApiError(503, "echo_agent_unavailable", "Echo companion is not available.");
   }
 }
 __name(requireAgentEnabled, "requireAgentEnabled");
+__name2(requireAgentEnabled, "requireAgentEnabled");
 function echoAgentBaseUrl(env, request) {
   const raw = env.ECHO_AGENT_URL?.trim();
   if (!raw) {
@@ -15659,10 +16103,12 @@ function echoAgentBaseUrl(env, request) {
   return url;
 }
 __name(echoAgentBaseUrl, "echoAgentBaseUrl");
+__name2(echoAgentBaseUrl, "echoAgentBaseUrl");
 async function onRequestOptions21({ request, env }) {
   return new Response(null, { status: 204, headers: echoAgentCorsHeaders(request, env) });
 }
-__name(onRequestOptions21, "onRequestOptions");
+__name(onRequestOptions21, "onRequestOptions21");
+__name2(onRequestOptions21, "onRequestOptions");
 async function onRequestPost19({ request, env }) {
   const headers = echoAgentCorsHeaders(request, env);
   try {
@@ -15689,9 +16135,8 @@ async function onRequestPost19({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost19, "onRequestPost");
-
-// api/echo/transcribe.ts
+__name(onRequestPost19, "onRequestPost19");
+__name2(onRequestPost19, "onRequestPost");
 var MAX_AUDIO_BYTES = 8 * 1024 * 1024;
 var SUPPORTED_AUDIO_TYPES = /* @__PURE__ */ new Set([
   "audio/wav",
@@ -15709,13 +16154,15 @@ var DEFAULT_GEMINI_MODELS2 = [
 function splitList2(...values) {
   return values.flatMap((value) => (value ?? "").split(/[\n,]/)).map((value) => value.trim()).filter(Boolean);
 }
-__name(splitList2, "splitList");
+__name(splitList2, "splitList2");
+__name2(splitList2, "splitList");
 function boundedInteger2(value, fallback, minimum, maximum) {
   const parsed = Number.parseInt(value ?? "", 10);
   if (!Number.isFinite(parsed)) return fallback;
   return Math.min(maximum, Math.max(minimum, parsed));
 }
-__name(boundedInteger2, "boundedInteger");
+__name(boundedInteger2, "boundedInteger2");
+__name2(boundedInteger2, "boundedInteger");
 function corsHeaders3(request, env) {
   const requestOrigin = request.headers.get("Origin") ?? "";
   const sameOrigin = requestOrigin === new URL(request.url).origin;
@@ -15729,7 +16176,8 @@ function corsHeaders3(request, env) {
     Vary: "Origin"
   };
 }
-__name(corsHeaders3, "corsHeaders");
+__name(corsHeaders3, "corsHeaders3");
+__name2(corsHeaders3, "corsHeaders");
 function jsonResponse3(body, status, headers) {
   return new Response(JSON.stringify(body), {
     status,
@@ -15739,7 +16187,8 @@ function jsonResponse3(body, status, headers) {
     }
   });
 }
-__name(jsonResponse3, "jsonResponse");
+__name(jsonResponse3, "jsonResponse3");
+__name2(jsonResponse3, "jsonResponse");
 function bytesToBase64(bytes) {
   let binary = "";
   const chunkSize = 32768;
@@ -15751,6 +16200,7 @@ function bytesToBase64(bytes) {
   return btoa(binary);
 }
 __name(bytesToBase64, "bytesToBase64");
+__name2(bytesToBase64, "bytesToBase64");
 async function readAudioBody(request) {
   const reader = request.body?.getReader();
   if (!reader) {
@@ -15784,6 +16234,7 @@ async function readAudioBody(request) {
   return bytes;
 }
 __name(readAudioBody, "readAudioBody");
+__name2(readAudioBody, "readAudioBody");
 function requestErrorResponse(error, headers) {
   if (error instanceof PlayerApiError) {
     return jsonResponse3(
@@ -15802,10 +16253,12 @@ function requestErrorResponse(error, headers) {
   );
 }
 __name(requestErrorResponse, "requestErrorResponse");
+__name2(requestErrorResponse, "requestErrorResponse");
 function normalizeAudioType(value) {
   return value.split(";", 1)[0]?.trim().toLowerCase() ?? "";
 }
 __name(normalizeAudioType, "normalizeAudioType");
+__name2(normalizeAudioType, "normalizeAudioType");
 function transcriptionPrompt(locale) {
   const language = locale === "en" ? "English" : "Arabic";
   return [
@@ -15816,6 +16269,7 @@ function transcriptionPrompt(locale) {
   ].join(" ");
 }
 __name(transcriptionPrompt, "transcriptionPrompt");
+__name2(transcriptionPrompt, "transcriptionPrompt");
 async function transcribeWithGemini(key, model, mimeType, audioData, locale, timeoutMs) {
   const controller = new AbortController();
   const timeout = globalThis.setTimeout(() => controller.abort(), timeoutMs);
@@ -15857,6 +16311,7 @@ async function transcribeWithGemini(key, model, mimeType, audioData, locale, tim
   }
 }
 __name(transcribeWithGemini, "transcribeWithGemini");
+__name2(transcribeWithGemini, "transcribeWithGemini");
 async function onRequestOptions22({
   request,
   env
@@ -15866,7 +16321,8 @@ async function onRequestOptions22({
     headers: corsHeaders3(request, env)
   });
 }
-__name(onRequestOptions22, "onRequestOptions");
+__name(onRequestOptions22, "onRequestOptions22");
+__name2(onRequestOptions22, "onRequestOptions");
 async function onRequestPost20({
   request,
   env
@@ -15940,9 +16396,8 @@ async function onRequestPost20({
     headers
   );
 }
-__name(onRequestPost20, "onRequestPost");
-
-// api/player/bootstrap.ts
+__name(onRequestPost20, "onRequestPost20");
+__name2(onRequestPost20, "onRequestPost");
 function saveResponse(document) {
   if (!document) return null;
   const payloadJson = readStringField(document, "payloadJson");
@@ -15959,13 +16414,15 @@ function saveResponse(document) {
   }
 }
 __name(saveResponse, "saveResponse");
+__name2(saveResponse, "saveResponse");
 async function onRequestOptions23({
   request,
   env
 }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions23, "onRequestOptions");
+__name(onRequestOptions23, "onRequestOptions23");
+__name2(onRequestOptions23, "onRequestOptions");
 async function onRequestGet6({
   request,
   env
@@ -16003,13 +16460,13 @@ async function onRequestGet6({
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet6, "onRequestGet");
-
-// api/player/collection.ts
+__name(onRequestGet6, "onRequestGet6");
+__name2(onRequestGet6, "onRequestGet");
 async function onRequestOptions24({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions24, "onRequestOptions");
+__name(onRequestOptions24, "onRequestOptions24");
+__name2(onRequestOptions24, "onRequestOptions");
 async function onRequestGet7({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -16020,9 +16477,8 @@ async function onRequestGet7({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet7, "onRequestGet");
-
-// api/player/leaderboard.ts
+__name(onRequestGet7, "onRequestGet7");
+__name2(onRequestGet7, "onRequestGet");
 var DEFAULT_LIMIT = 25;
 var MAX_LIMIT = 100;
 function leaderboardLimit(request) {
@@ -16035,13 +16491,15 @@ function leaderboardLimit(request) {
   return value;
 }
 __name(leaderboardLimit, "leaderboardLimit");
+__name2(leaderboardLimit, "leaderboardLimit");
 async function onRequestOptions25({
   request,
   env
 }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions25, "onRequestOptions");
+__name(onRequestOptions25, "onRequestOptions25");
+__name2(onRequestOptions25, "onRequestOptions");
 async function onRequestGet8({
   request,
   env
@@ -16063,13 +16521,13 @@ async function onRequestGet8({
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet8, "onRequestGet");
-
-// api/player/live.ts
+__name(onRequestGet8, "onRequestGet8");
+__name2(onRequestGet8, "onRequestGet");
 async function onRequestOptions26({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions26, "onRequestOptions");
+__name(onRequestOptions26, "onRequestOptions26");
+__name2(onRequestOptions26, "onRequestOptions");
 async function onRequestGet9({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -16086,13 +16544,13 @@ async function onRequestGet9({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet9, "onRequestGet");
-
-// api/player/network.ts
+__name(onRequestGet9, "onRequestGet9");
+__name2(onRequestGet9, "onRequestGet");
 async function onRequestOptions27({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions27, "onRequestOptions");
+__name(onRequestOptions27, "onRequestOptions27");
+__name2(onRequestOptions27, "onRequestOptions");
 async function onRequestGet10({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -16143,9 +16601,8 @@ async function onRequestGet10({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet10, "onRequestGet");
-
-// api/player/profile.ts
+__name(onRequestGet10, "onRequestGet10");
+__name2(onRequestGet10, "onRequestGet");
 async function ensureProgressionRow(db, uid, username, createdAt) {
   await db.prepare(`
     INSERT INTO player_progression (
@@ -16159,6 +16616,7 @@ async function ensureProgressionRow(db, uid, username, createdAt) {
   `).bind(uid, username, createdAt, (/* @__PURE__ */ new Date()).toISOString()).run();
 }
 __name(ensureProgressionRow, "ensureProgressionRow");
+__name2(ensureProgressionRow, "ensureProgressionRow");
 async function reserveUsername(db, uid, username, createdAt) {
   const normalized = normalizeUsername(username);
   await ensureProgressionRow(db, uid, username, createdAt);
@@ -16208,6 +16666,7 @@ async function reserveUsername(db, uid, username, createdAt) {
   }
 }
 __name(reserveUsername, "reserveUsername");
+__name2(reserveUsername, "reserveUsername");
 function validateUpdateBody(body) {
   if (typeof body !== "object" || body === null || Array.isArray(body)) {
     throw new PlayerApiError(400, "invalid_request", "Profile update is invalid.");
@@ -16236,6 +16695,7 @@ function validateUpdateBody(body) {
   return input;
 }
 __name(validateUpdateBody, "validateUpdateBody");
+__name2(validateUpdateBody, "validateUpdateBody");
 async function validateFeaturedAchievementOwnership(db, uid, requested, fallback) {
   const ids = [...new Set(requested ?? fallback)].slice(0, PROFILE_FEATURED_ACHIEVEMENT_LIMIT);
   if (ids.length === 0) return [];
@@ -16251,6 +16711,7 @@ async function validateFeaturedAchievementOwnership(db, uid, requested, fallback
   return ids;
 }
 __name(validateFeaturedAchievementOwnership, "validateFeaturedAchievementOwnership");
+__name2(validateFeaturedAchievementOwnership, "validateFeaturedAchievementOwnership");
 async function responseProfile(db, account, stored) {
   const [leaderboard, stats, unlockedAvatarIds] = await Promise.all([
     readLeaderboard(db, account, 1),
@@ -16285,13 +16746,15 @@ async function responseProfile(db, account, stored) {
   };
 }
 __name(responseProfile, "responseProfile");
+__name2(responseProfile, "responseProfile");
 async function onRequestOptions28({
   request,
   env
 }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions28, "onRequestOptions");
+__name(onRequestOptions28, "onRequestOptions28");
+__name2(onRequestOptions28, "onRequestOptions");
 async function onRequestGet11({
   request,
   env
@@ -16321,7 +16784,8 @@ async function onRequestGet11({
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet11, "onRequestGet");
+__name(onRequestGet11, "onRequestGet11");
+__name2(onRequestGet11, "onRequestGet");
 async function onRequestPut({
   request,
   env
@@ -16366,12 +16830,12 @@ async function onRequestPut({
   }
 }
 __name(onRequestPut, "onRequestPut");
-
-// api/player/puzzles/index.ts
+__name2(onRequestPut, "onRequestPut");
 async function onRequestOptions29({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions29, "onRequestOptions");
+__name(onRequestOptions29, "onRequestOptions29");
+__name2(onRequestOptions29, "onRequestOptions");
 async function onRequestGet12({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -16383,9 +16847,8 @@ async function onRequestGet12({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet12, "onRequestGet");
-
-// api/player/rollout.ts
+__name(onRequestGet12, "onRequestGet12");
+__name2(onRequestGet12, "onRequestGet");
 async function onRequestGet13({
   request,
   env
@@ -16400,16 +16863,16 @@ async function onRequestGet13({
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet13, "onRequestGet");
+__name(onRequestGet13, "onRequestGet13");
+__name2(onRequestGet13, "onRequestGet");
 async function onRequestOptions30({
   request,
   env
 }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions30, "onRequestOptions");
-
-// api/player/save.ts
+__name(onRequestOptions30, "onRequestOptions30");
+__name2(onRequestOptions30, "onRequestOptions");
 var MAX_SAVE_BYTES = 48e4;
 function saveResponse2(document) {
   const payloadJson = readStringField(document, "payloadJson");
@@ -16427,7 +16890,8 @@ function saveResponse2(document) {
     throw new PlayerApiError(502, "invalid_cloud_save", "The cloud save is invalid.");
   }
 }
-__name(saveResponse2, "saveResponse");
+__name(saveResponse2, "saveResponse2");
+__name2(saveResponse2, "saveResponse");
 function requireInteger(value, field, minimum, maximum) {
   if (typeof value !== "number" || !Number.isInteger(value) || value < minimum || value > maximum) {
     throw new PlayerApiError(400, "invalid_request", `${field} is invalid.`);
@@ -16435,13 +16899,15 @@ function requireInteger(value, field, minimum, maximum) {
   return value;
 }
 __name(requireInteger, "requireInteger");
+__name2(requireInteger, "requireInteger");
 async function onRequestOptions31({
   request,
   env
 }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions31, "onRequestOptions");
+__name(onRequestOptions31, "onRequestOptions31");
+__name2(onRequestOptions31, "onRequestOptions");
 async function onRequestGet14({
   request,
   env
@@ -16461,7 +16927,8 @@ async function onRequestGet14({
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet14, "onRequestGet");
+__name(onRequestGet14, "onRequestGet14");
+__name2(onRequestGet14, "onRequestGet");
 async function onRequestPut2({
   request,
   env
@@ -16521,16 +16988,16 @@ async function onRequestPut2({
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPut2, "onRequestPut");
-
-// api/player/story-state.ts
+__name(onRequestPut2, "onRequestPut2");
+__name2(onRequestPut2, "onRequestPut");
 async function onRequestOptions32({
   request,
   env
 }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions32, "onRequestOptions");
+__name(onRequestOptions32, "onRequestOptions32");
+__name2(onRequestOptions32, "onRequestOptions");
 async function onRequestGet15({
   request,
   env
@@ -16547,9 +17014,8 @@ async function onRequestGet15({
     return errorResponse(error, headers);
   }
 }
-__name(onRequestGet15, "onRequestGet");
-
-// ../src/domain/telemetry/telemetryContracts.ts
+__name(onRequestGet15, "onRequestGet15");
+__name2(onRequestGet15, "onRequestGet");
 var TELEMETRY_EVENTS = [
   "application_started",
   "screen_viewed",
@@ -16603,13 +17069,13 @@ function toTelemetryDataPoint(event) {
   };
 }
 __name(toTelemetryDataPoint, "toTelemetryDataPoint");
-
-// api/player/telemetry.ts
+__name2(toTelemetryDataPoint, "toTelemetryDataPoint");
 var MAX_TELEMETRY_BODY_BYTES = 1024;
 async function onRequestOptions33({ request, env }) {
   return optionsResponse(request, env);
 }
-__name(onRequestOptions33, "onRequestOptions");
+__name(onRequestOptions33, "onRequestOptions33");
+__name2(onRequestOptions33, "onRequestOptions");
 async function onRequestPost21({ request, env }) {
   const headers = corsHeaders(request, env);
   try {
@@ -16636,9 +17102,8 @@ async function onRequestPost21({ request, env }) {
     return errorResponse(error, headers);
   }
 }
-__name(onRequestPost21, "onRequestPost");
-
-// ../.wrangler/tmp/pages-HGBhvO/functionsRoutes-0.36160398847809494.mjs
+__name(onRequestPost21, "onRequestPost21");
+__name2(onRequestPost21, "onRequestPost");
 var routes = [
   {
     routePath: "/api/player/collection/equip",
@@ -17138,8 +17603,6 @@ var routes = [
     modules: [onRequestPost21]
   }
 ];
-
-// ../node_modules/path-to-regexp/dist.es2015/index.js
 function lexer(str) {
   var tokens = [];
   var i = 0;
@@ -17224,6 +17687,7 @@ function lexer(str) {
   return tokens;
 }
 __name(lexer, "lexer");
+__name2(lexer, "lexer");
 function parse(str, options) {
   if (options === void 0) {
     options = {};
@@ -17234,18 +17698,18 @@ function parse(str, options) {
   var key = 0;
   var i = 0;
   var path = "";
-  var tryConsume = /* @__PURE__ */ __name(function(type) {
+  var tryConsume = /* @__PURE__ */ __name2(function(type) {
     if (i < tokens.length && tokens[i].type === type)
       return tokens[i++].value;
   }, "tryConsume");
-  var mustConsume = /* @__PURE__ */ __name(function(type) {
+  var mustConsume = /* @__PURE__ */ __name2(function(type) {
     var value2 = tryConsume(type);
     if (value2 !== void 0)
       return value2;
     var _a2 = tokens[i], nextType = _a2.type, index = _a2.index;
     throw new TypeError("Unexpected ".concat(nextType, " at ").concat(index, ", expected ").concat(type));
   }, "mustConsume");
-  var consumeText = /* @__PURE__ */ __name(function() {
+  var consumeText = /* @__PURE__ */ __name2(function() {
     var result2 = "";
     var value2;
     while (value2 = tryConsume("CHAR") || tryConsume("ESCAPED_CHAR")) {
@@ -17253,7 +17717,7 @@ function parse(str, options) {
     }
     return result2;
   }, "consumeText");
-  var isSafe = /* @__PURE__ */ __name(function(value2) {
+  var isSafe = /* @__PURE__ */ __name2(function(value2) {
     for (var _i = 0, delimiter_1 = delimiter; _i < delimiter_1.length; _i++) {
       var char2 = delimiter_1[_i];
       if (value2.indexOf(char2) > -1)
@@ -17261,7 +17725,7 @@ function parse(str, options) {
     }
     return false;
   }, "isSafe");
-  var safePattern = /* @__PURE__ */ __name(function(prefix2) {
+  var safePattern = /* @__PURE__ */ __name2(function(prefix2) {
     var prev = result[result.length - 1];
     var prevText = prefix2 || (prev && typeof prev === "string" ? prev : "");
     if (prev && !prevText) {
@@ -17324,12 +17788,14 @@ function parse(str, options) {
   return result;
 }
 __name(parse, "parse");
+__name2(parse, "parse");
 function match(str, options) {
   var keys = [];
   var re = pathToRegexp(str, keys, options);
   return regexpToFunction(re, keys, options);
 }
 __name(match, "match");
+__name2(match, "match");
 function regexpToFunction(re, keys, options) {
   if (options === void 0) {
     options = {};
@@ -17343,7 +17809,7 @@ function regexpToFunction(re, keys, options) {
       return false;
     var path = m[0], index = m.index;
     var params = /* @__PURE__ */ Object.create(null);
-    var _loop_1 = /* @__PURE__ */ __name(function(i2) {
+    var _loop_1 = /* @__PURE__ */ __name2(function(i2) {
       if (m[i2] === void 0)
         return "continue";
       var key = keys[i2 - 1];
@@ -17362,14 +17828,17 @@ function regexpToFunction(re, keys, options) {
   };
 }
 __name(regexpToFunction, "regexpToFunction");
+__name2(regexpToFunction, "regexpToFunction");
 function escapeString(str) {
   return str.replace(/([.+*?=^!:${}()[\]|/\\])/g, "\\$1");
 }
 __name(escapeString, "escapeString");
+__name2(escapeString, "escapeString");
 function flags(options) {
   return options && options.sensitive ? "" : "i";
 }
 __name(flags, "flags");
+__name2(flags, "flags");
 function regexpToRegexp(path, keys) {
   if (!keys)
     return path;
@@ -17390,6 +17859,7 @@ function regexpToRegexp(path, keys) {
   return path;
 }
 __name(regexpToRegexp, "regexpToRegexp");
+__name2(regexpToRegexp, "regexpToRegexp");
 function arrayToRegexp(paths, keys, options) {
   var parts = paths.map(function(path) {
     return pathToRegexp(path, keys, options).source;
@@ -17397,10 +17867,12 @@ function arrayToRegexp(paths, keys, options) {
   return new RegExp("(?:".concat(parts.join("|"), ")"), flags(options));
 }
 __name(arrayToRegexp, "arrayToRegexp");
+__name2(arrayToRegexp, "arrayToRegexp");
 function stringToRegexp(path, keys, options) {
   return tokensToRegexp(parse(path, options), keys, options);
 }
 __name(stringToRegexp, "stringToRegexp");
+__name2(stringToRegexp, "stringToRegexp");
 function tokensToRegexp(tokens, keys, options) {
   if (options === void 0) {
     options = {};
@@ -17456,6 +17928,7 @@ function tokensToRegexp(tokens, keys, options) {
   return new RegExp(route, flags(options));
 }
 __name(tokensToRegexp, "tokensToRegexp");
+__name2(tokensToRegexp, "tokensToRegexp");
 function pathToRegexp(path, keys, options) {
   if (path instanceof RegExp)
     return regexpToRegexp(path, keys);
@@ -17464,8 +17937,7 @@ function pathToRegexp(path, keys, options) {
   return stringToRegexp(path, keys, options);
 }
 __name(pathToRegexp, "pathToRegexp");
-
-// ../node_modules/wrangler/templates/pages-template-worker.ts
+__name2(pathToRegexp, "pathToRegexp");
 var escapeRegex = /[.+?^${}()|[\]\\]/g;
 function* executeRequest(request) {
   const requestPath = new URL(request.url).pathname;
@@ -17516,13 +17988,14 @@ function* executeRequest(request) {
   }
 }
 __name(executeRequest, "executeRequest");
+__name2(executeRequest, "executeRequest");
 var pages_template_worker_default = {
   async fetch(originalRequest, env, workerContext) {
     let request = originalRequest;
     const handlerIterator = executeRequest(request);
     let data = {};
     let isFailOpen = false;
-    const next = /* @__PURE__ */ __name(async (input, init) => {
+    const next = /* @__PURE__ */ __name2(async (input, init) => {
       if (input !== void 0) {
         let url = input;
         if (typeof input === "string") {
@@ -17549,7 +18022,7 @@ var pages_template_worker_default = {
           },
           env,
           waitUntil: workerContext.waitUntil.bind(workerContext),
-          passThroughOnException: /* @__PURE__ */ __name(() => {
+          passThroughOnException: /* @__PURE__ */ __name2(() => {
             isFailOpen = true;
           }, "passThroughOnException")
         };
@@ -17577,16 +18050,14 @@ var pages_template_worker_default = {
     }
   }
 };
-var cloneResponse = /* @__PURE__ */ __name((response) => (
+var cloneResponse = /* @__PURE__ */ __name2((response) => (
   // https://fetch.spec.whatwg.org/#null-body-status
   new Response(
     [101, 204, 205, 304].includes(response.status) ? null : response.body,
     response
   )
 ), "cloneResponse");
-
-// ../node_modules/wrangler/templates/middleware/middleware-ensure-req-body-drained.ts
-var drainBody = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx) => {
+var drainBody = /* @__PURE__ */ __name2(async (request, env, _ctx, middlewareCtx) => {
   try {
     return await middlewareCtx.next(request, env);
   } finally {
@@ -17602,8 +18073,6 @@ var drainBody = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
   }
 }, "drainBody");
 var middleware_ensure_req_body_drained_default = drainBody;
-
-// ../node_modules/wrangler/templates/middleware/middleware-miniflare3-json-error.ts
 function reduceError(e) {
   return {
     name: e?.name,
@@ -17613,7 +18082,8 @@ function reduceError(e) {
   };
 }
 __name(reduceError, "reduceError");
-var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx) => {
+__name2(reduceError, "reduceError");
+var jsonError = /* @__PURE__ */ __name2(async (request, env, _ctx, middlewareCtx) => {
   try {
     return await middlewareCtx.next(request, env);
   } catch (e) {
@@ -17631,20 +18101,17 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
   }
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
-
-// ../.wrangler/tmp/bundle-MmTqTM/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
 ];
 var middleware_insertion_facade_default = pages_template_worker_default;
-
-// ../node_modules/wrangler/templates/middleware/common.ts
 var __facade_middleware__ = [];
 function __facade_register__(...args) {
   __facade_middleware__.push(...args.flat());
 }
 __name(__facade_register__, "__facade_register__");
+__name2(__facade_register__, "__facade_register__");
 function __facade_invokeChain__(request, env, ctx, dispatch, middlewareChain) {
   const [head, ...tail] = middlewareChain;
   const middlewareCtx = {
@@ -17656,6 +18123,7 @@ function __facade_invokeChain__(request, env, ctx, dispatch, middlewareChain) {
   return head(request, env, ctx, middlewareCtx);
 }
 __name(__facade_invokeChain__, "__facade_invokeChain__");
+__name2(__facade_invokeChain__, "__facade_invokeChain__");
 function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
   return __facade_invokeChain__(request, env, ctx, dispatch, [
     ...__facade_middleware__,
@@ -17663,9 +18131,11 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
   ]);
 }
 __name(__facade_invoke__, "__facade_invoke__");
-
-// ../.wrangler/tmp/bundle-MmTqTM/middleware-loader.entry.ts
+__name2(__facade_invoke__, "__facade_invoke__");
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
+  static {
+    __name(this, "___Facade_ScheduledController__");
+  }
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
     this.cron = cron;
@@ -17674,7 +18144,7 @@ var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   scheduledTime;
   cron;
   static {
-    __name(this, "__Facade_ScheduledController__");
+    __name2(this, "__Facade_ScheduledController__");
   }
   #noRetry;
   noRetry() {
@@ -17691,7 +18161,7 @@ function wrapExportedHandler(worker) {
   for (const middleware of __INTERNAL_WRANGLER_MIDDLEWARE__) {
     __facade_register__(middleware);
   }
-  const fetchDispatcher = /* @__PURE__ */ __name(function(request, env, ctx) {
+  const fetchDispatcher = /* @__PURE__ */ __name2(function(request, env, ctx) {
     if (worker.fetch === void 0) {
       throw new Error("Handler does not export a fetch() function.");
     }
@@ -17700,7 +18170,7 @@ function wrapExportedHandler(worker) {
   return {
     ...worker,
     fetch(request, env, ctx) {
-      const dispatcher = /* @__PURE__ */ __name(function(type, init) {
+      const dispatcher = /* @__PURE__ */ __name2(function(type, init) {
         if (type === "scheduled" && worker.scheduled !== void 0) {
           const controller = new __Facade_ScheduledController__(
             Date.now(),
@@ -17716,6 +18186,7 @@ function wrapExportedHandler(worker) {
   };
 }
 __name(wrapExportedHandler, "wrapExportedHandler");
+__name2(wrapExportedHandler, "wrapExportedHandler");
 function wrapWorkerEntrypoint(klass) {
   if (__INTERNAL_WRANGLER_MIDDLEWARE__ === void 0 || __INTERNAL_WRANGLER_MIDDLEWARE__.length === 0) {
     return klass;
@@ -17724,7 +18195,7 @@ function wrapWorkerEntrypoint(klass) {
     __facade_register__(middleware);
   }
   return class extends klass {
-    #fetchDispatcher = /* @__PURE__ */ __name((request, env, ctx) => {
+    #fetchDispatcher = /* @__PURE__ */ __name2((request, env, ctx) => {
       this.env = env;
       this.ctx = ctx;
       if (super.fetch === void 0) {
@@ -17732,7 +18203,7 @@ function wrapWorkerEntrypoint(klass) {
       }
       return super.fetch(request);
     }, "#fetchDispatcher");
-    #dispatcher = /* @__PURE__ */ __name((type, init) => {
+    #dispatcher = /* @__PURE__ */ __name2((type, init) => {
       if (type === "scheduled" && super.scheduled !== void 0) {
         const controller = new __Facade_ScheduledController__(
           Date.now(),
@@ -17755,6 +18226,7 @@ function wrapWorkerEntrypoint(klass) {
   };
 }
 __name(wrapWorkerEntrypoint, "wrapWorkerEntrypoint");
+__name2(wrapWorkerEntrypoint, "wrapWorkerEntrypoint");
 var WRAPPED_ENTRY;
 if (typeof middleware_insertion_facade_default === "object") {
   WRAPPED_ENTRY = wrapExportedHandler(middleware_insertion_facade_default);
@@ -17762,9 +18234,187 @@ if (typeof middleware_insertion_facade_default === "object") {
   WRAPPED_ENTRY = wrapWorkerEntrypoint(middleware_insertion_facade_default);
 }
 var middleware_loader_entry_default = WRAPPED_ENTRY;
+
+// node_modules/wrangler/templates/middleware/middleware-ensure-req-body-drained.ts
+var drainBody2 = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx) => {
+  try {
+    return await middlewareCtx.next(request, env);
+  } finally {
+    try {
+      if (request.body !== null && !request.bodyUsed) {
+        const reader = request.body.getReader();
+        while (!(await reader.read()).done) {
+        }
+      }
+    } catch (e) {
+      console.error("Failed to drain the unused request body.", e);
+    }
+  }
+}, "drainBody");
+var middleware_ensure_req_body_drained_default2 = drainBody2;
+
+// node_modules/wrangler/templates/middleware/middleware-miniflare3-json-error.ts
+function reduceError2(e) {
+  return {
+    name: e?.name,
+    message: e?.message ?? String(e),
+    stack: e?.stack,
+    cause: e?.cause === void 0 ? void 0 : reduceError2(e.cause)
+  };
+}
+__name(reduceError2, "reduceError");
+var jsonError2 = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx) => {
+  try {
+    return await middlewareCtx.next(request, env);
+  } catch (e) {
+    const error = reduceError2(e);
+    const body = JSON.stringify(error);
+    const headers = {
+      "Content-Type": "application/json",
+      "MF-Experimental-Error-Stack": "true"
+    };
+    const encoded = encodeURIComponent(body);
+    if (encoded.length <= 8192) {
+      headers["MF-Experimental-Error-Stack-Payload"] = encoded;
+    }
+    return new Response(body, { status: 500, headers });
+  }
+}, "jsonError");
+var middleware_miniflare3_json_error_default2 = jsonError2;
+
+// .wrangler/tmp/bundle-7e4r65/middleware-insertion-facade.js
+var __INTERNAL_WRANGLER_MIDDLEWARE__2 = [
+  middleware_ensure_req_body_drained_default2,
+  middleware_miniflare3_json_error_default2
+];
+var middleware_insertion_facade_default2 = middleware_loader_entry_default;
+
+// node_modules/wrangler/templates/middleware/common.ts
+var __facade_middleware__2 = [];
+function __facade_register__2(...args) {
+  __facade_middleware__2.push(...args.flat());
+}
+__name(__facade_register__2, "__facade_register__");
+function __facade_invokeChain__2(request, env, ctx, dispatch, middlewareChain) {
+  const [head, ...tail] = middlewareChain;
+  const middlewareCtx = {
+    dispatch,
+    next(newRequest, newEnv) {
+      return __facade_invokeChain__2(newRequest, newEnv, ctx, dispatch, tail);
+    }
+  };
+  return head(request, env, ctx, middlewareCtx);
+}
+__name(__facade_invokeChain__2, "__facade_invokeChain__");
+function __facade_invoke__2(request, env, ctx, dispatch, finalMiddleware) {
+  return __facade_invokeChain__2(request, env, ctx, dispatch, [
+    ...__facade_middleware__2,
+    finalMiddleware
+  ]);
+}
+__name(__facade_invoke__2, "__facade_invoke__");
+
+// .wrangler/tmp/bundle-7e4r65/middleware-loader.entry.ts
+var __Facade_ScheduledController__2 = class ___Facade_ScheduledController__2 {
+  constructor(scheduledTime, cron, noRetry) {
+    this.scheduledTime = scheduledTime;
+    this.cron = cron;
+    this.#noRetry = noRetry;
+  }
+  scheduledTime;
+  cron;
+  static {
+    __name(this, "__Facade_ScheduledController__");
+  }
+  #noRetry;
+  noRetry() {
+    if (!(this instanceof ___Facade_ScheduledController__2)) {
+      throw new TypeError("Illegal invocation");
+    }
+    this.#noRetry();
+  }
+};
+function wrapExportedHandler2(worker) {
+  if (__INTERNAL_WRANGLER_MIDDLEWARE__2 === void 0 || __INTERNAL_WRANGLER_MIDDLEWARE__2.length === 0) {
+    return worker;
+  }
+  for (const middleware of __INTERNAL_WRANGLER_MIDDLEWARE__2) {
+    __facade_register__2(middleware);
+  }
+  const fetchDispatcher = /* @__PURE__ */ __name(function(request, env, ctx) {
+    if (worker.fetch === void 0) {
+      throw new Error("Handler does not export a fetch() function.");
+    }
+    return worker.fetch(request, env, ctx);
+  }, "fetchDispatcher");
+  return {
+    ...worker,
+    fetch(request, env, ctx) {
+      const dispatcher = /* @__PURE__ */ __name(function(type, init) {
+        if (type === "scheduled" && worker.scheduled !== void 0) {
+          const controller = new __Facade_ScheduledController__2(
+            Date.now(),
+            init.cron ?? "",
+            () => {
+            }
+          );
+          return worker.scheduled(controller, env, ctx);
+        }
+      }, "dispatcher");
+      return __facade_invoke__2(request, env, ctx, dispatcher, fetchDispatcher);
+    }
+  };
+}
+__name(wrapExportedHandler2, "wrapExportedHandler");
+function wrapWorkerEntrypoint2(klass) {
+  if (__INTERNAL_WRANGLER_MIDDLEWARE__2 === void 0 || __INTERNAL_WRANGLER_MIDDLEWARE__2.length === 0) {
+    return klass;
+  }
+  for (const middleware of __INTERNAL_WRANGLER_MIDDLEWARE__2) {
+    __facade_register__2(middleware);
+  }
+  return class extends klass {
+    #fetchDispatcher = /* @__PURE__ */ __name((request, env, ctx) => {
+      this.env = env;
+      this.ctx = ctx;
+      if (super.fetch === void 0) {
+        throw new Error("Entrypoint class does not define a fetch() function.");
+      }
+      return super.fetch(request);
+    }, "#fetchDispatcher");
+    #dispatcher = /* @__PURE__ */ __name((type, init) => {
+      if (type === "scheduled" && super.scheduled !== void 0) {
+        const controller = new __Facade_ScheduledController__2(
+          Date.now(),
+          init.cron ?? "",
+          () => {
+          }
+        );
+        return super.scheduled(controller);
+      }
+    }, "#dispatcher");
+    fetch(request) {
+      return __facade_invoke__2(
+        request,
+        this.env,
+        this.ctx,
+        this.#dispatcher,
+        this.#fetchDispatcher
+      );
+    }
+  };
+}
+__name(wrapWorkerEntrypoint2, "wrapWorkerEntrypoint");
+var WRAPPED_ENTRY2;
+if (typeof middleware_insertion_facade_default2 === "object") {
+  WRAPPED_ENTRY2 = wrapExportedHandler2(middleware_insertion_facade_default2);
+} else if (typeof middleware_insertion_facade_default2 === "function") {
+  WRAPPED_ENTRY2 = wrapWorkerEntrypoint2(middleware_insertion_facade_default2);
+}
+var middleware_loader_entry_default2 = WRAPPED_ENTRY2;
 export {
-  __INTERNAL_WRANGLER_MIDDLEWARE__,
-  middleware_loader_entry_default as default
+  __INTERNAL_WRANGLER_MIDDLEWARE__2 as __INTERNAL_WRANGLER_MIDDLEWARE__,
+  middleware_loader_entry_default2 as default
 };
 /*! Bundled license information:
 
@@ -17796,4 +18446,4 @@ chess.js/dist/esm/chess.js:
    * POSSIBILITY OF SUCH DAMAGE.
    *)
 */
-//# sourceMappingURL=functionsWorker-0.3516677673922365.mjs.map
+//# sourceMappingURL=functionsWorker-0.8964023874302226.js.map
