@@ -1,0 +1,11 @@
+﻿
+
+[mcp_servers.playwright]
+command = "C:\\Program Files\\nodejs\\npx.ps1"
+args = []
+cwd = "C:\\Users\\yasmo\\Downloads\\ReplitExport-adreanhr078\\Futuristic-Eleven-Eleven"
+enabled = true
+required = false
+startup_timeout_sec = 90
+tool_timeout_sec = 180
+

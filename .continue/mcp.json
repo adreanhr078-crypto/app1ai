@@ -1,0 +1,13 @@
+﻿{
+    "mcpServers":  {
+                       "playwright":  {
+                                          "args":  [
+                                                       "-y",
+                                                       "@playwright/mcp@0.0.82",
+                                                       "--browser=msedge",
+                                                       "--caps=vision,devtools"
+                                                   ],
+                                          "command":  "C:\\Program Files\\nodejs\\npx.ps1"
+                                      }
+                   }
+}

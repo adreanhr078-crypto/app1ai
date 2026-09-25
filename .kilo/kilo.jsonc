@@ -1,4 +1,10 @@
 {
   "$schema": "https://app.kilo.ai/config.json",
-  "snapshot": false
+  "snapshot": false,
+  "mcp": {
+    "airbyte-agent-mcp": {
+      "type": "remote",
+      "url": "https://mcp.airbyte.ai/mcp"
+    }
+  }
 }
