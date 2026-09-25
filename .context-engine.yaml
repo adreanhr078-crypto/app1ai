@@ -1,0 +1,7 @@
+﻿compression:
+  level: standard
+  output: standard
+
+retrieval:
+  top_k: 30
+  confidence_threshold: 0.35
